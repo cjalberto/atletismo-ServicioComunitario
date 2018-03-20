@@ -1,2 +1,22 @@
-body {
-  background-color: gray; }
+html, body {
+  height: 100%; }
+
+.section-center {
+  height: calc( 100vh - 180px);
+  background-color: aliceblue; }
+
+header {
+  height: 180px; }
+  header .container {
+    height: 100%; }
+    header .container .row {
+      height: 100%; }
+      header .container .row .col {
+        text-align: center; }
+        header .container .row .col img {
+          height: 150px; }
+
+footer .position-bottom {
+  position: fixed;
+  bottom: 0;
+  text-align: center; }

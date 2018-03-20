@@ -18,10 +18,14 @@ app.get('/', function(req, res) {
 	res.render('index');
 });
 
-app.get('/home', function(req, res){
-	res.render('index');
+app.get('/carreras', function(req, res){
+	res.render('carreras');
 });
 
-app.get('/about', function(req, res){
-	res.render('about');
+app.get('/competidores', function(req, res){
+	res.render('competidores');
+});
+
+app.get('/historial', function(req, res){
+	res.render('historial');
 });
