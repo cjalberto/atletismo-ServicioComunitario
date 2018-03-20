@@ -1,5 +1,5 @@
 node_modules/
 *.log
 yarn.lock
-bower_components/
+public/bower_components/
 scss/main.scss
