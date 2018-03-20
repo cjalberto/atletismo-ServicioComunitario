@@ -1,9 +1,15 @@
 header{
-	height: 180px;
+	@media (min-width: 768px) {
+		height: 180px;
+	}
 	.container{
 		height: 100%;
 		.row{
 			height: 100%;
+			padding: 20px 0;
+			@media (min-width: 768px) {
+				padding: 0;
+			}
 			.col{
 				text-align: center;
 				img{
