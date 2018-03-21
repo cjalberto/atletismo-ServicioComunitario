@@ -1,4 +1,5 @@
 header{
+	background-color: white;
 	@media (min-width: 768px) {
 		height: 180px;
 	}
@@ -8,10 +9,9 @@ header{
 			height: 100%;
 			padding: 20px 0;
 			@media (min-width: 768px) {
-				padding: 0;
+				padding: 0htdocs;
 			}
-			.col{
-				text-align: center;
+			.col-12{
 				img{
 					height: 150px;
 				}
