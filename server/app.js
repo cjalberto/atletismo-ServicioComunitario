@@ -20,6 +20,7 @@ app
 	.use(bodyParser.json())
 	.use(bodyParser.urlencoded({extended : false}))
 	.use(express.static('public'))
+	.use('/carreras',express.static('public'))
 	.use(routes)
 	.use(conexion)
 

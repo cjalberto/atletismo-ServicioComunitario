@@ -41,9 +41,37 @@ footer .position-bottom {
       .section-center .row .col-12 {
         padding: 0; } }
 
+.section-center button {
+  margin: 20px 0; }
+
 @media (min-width: 768px) {
   .section-center {
     height: calc( 100vh - 180px); } }
 
-.content-carreras .form-wrapper .form {
+@media (min-width: 768px) {
+  .content-carreras .title {
+    padding: 10px 0; } }
+
+@media (min-width: 768px) {
+  .content-carreras .container {
+    padding: 10px 0; } }
+
+.content-carreras .container .form-wrapper .form {
   display: none; }
+  .content-carreras .container .form-wrapper .form .infoCarrer {
+    padding: 20px 0; }
+  .content-carreras .container .form-wrapper .form .table-responsive {
+    overflow-y: auto;
+    height: 150px; }
+  .content-carreras .container .form-wrapper .form .results tr[visible='false'],
+  .content-carreras .container .form-wrapper .form .no-result {
+    display: none; }
+  .content-carreras .container .form-wrapper .form .results tr[visible='true'] {
+    display: table-row; }
+  .content-carreras .container .form-wrapper .form .counter {
+    padding: 8px;
+    color: #4e4e4e; }
+  .content-carreras .container .form-wrapper .form #select-all {
+    margin: 0; }
+  .content-carreras .container .form-wrapper .form .select-all {
+    display: none; }

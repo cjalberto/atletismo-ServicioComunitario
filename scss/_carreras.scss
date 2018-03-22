@@ -1,7 +1,43 @@
 .content-carreras{
-	.form-wrapper{
-		.form{
+	.title{
+		@media (min-width: 768px) {
+			padding: 10px 0;
+		}
+	}
+	.container{
+		@media (min-width: 768px) {
+			padding: 10px 0;
+		}
+		.form-wrapper{
+			.form{
 				display: none;
+				.infoCarrer{
+					padding: 20px 0;
+				}
+				.table-responsive{
+					overflow-y: auto;
+					height: 150px;
+				}
+				.results tr[visible='false'],
+				.no-result{
+					display:none;
+				}
+
+				.results tr[visible='true']{
+					display:table-row;
+				}
+
+				.counter{
+					padding:8px; 
+					color:#4e4e4e;
+				}
+				#select-all{
+					margin: 0;
+				}
+				.select-all{
+					display: none;
+				}
+			}
 		}
 	}
 }            
