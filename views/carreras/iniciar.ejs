@@ -1,16 +1,35 @@
 <% include ../partials/head %>
 
 
-<div class="section-center d-flex align-items-center justify-content-center flex-column content-carreras">
+<div >
 
-	<div class="title text-center">
-		<h1>CARRERAS - INICIAR</h1>
+	<div class="iniciar">
+		<h1 >CARRERAS - INICIAR</h1>
 	</div>
 
-	<div class="container">
-
-		
+	<div id="contenedor">
+		<div class="reloj" id="Horas">00</div>
+		<div class="reloj" id="Minutos">:00</div>
+		<div class="reloj" id="Segundos">:00</div>
+		<div class="reloj" id="Centesimas">:00</div>
+		<input type="button" class="btn btn-secondary btn-lg text-uppercase" id="parar" value="Stop" onclick="parar();" disabled>
+		<input type="button" class="btn btn-secondary btn-lg text-uppercase" id="continuar" value="Resume" onclick="inicio();" disabled>
+		<input type="button" class="btn btn-secondary btn-lg text-uppercase" id="reinicio" value="Reset" onclick="reinicio();" disabled>
+		<h6>Presion enter para comenzar</h6>
 	</div>
+
+	<div class="table1">
+		<div class="table-title">
+			<div class="row">
+				<div class="col-sm-8"><h2><b>Tiempo de Atletas</b></h2></div>
+			</div>
+		</div>
+		<table class="table table-bordered table-hover" id="tab_logic">
+			<thead><tr><th class="text-center">Tiempo</th><th class="text-center">Numero</th></tr></thead>
+			<tbody><tr ></tr></tbody>
+		</table>
+	</div>
+
 
 </div>
 
