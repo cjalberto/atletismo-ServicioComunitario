@@ -8,13 +8,97 @@
 				$form1 = $(this).find('.form--step1 form'),
 				$form2 = $(this).find('.form--step2 form');
 
+			function init() {
+				$.validate({
+					form: $form_wrapper.find('form'),
+					errorMessageClass: "error",
+					scrollToTopOnError: false,
+					validateHiddenInputs: true,
+					onSuccess: function () {
+						$('.form-submit-error__step4 .help-block').fadeOut("fast");
+					},
+					onError: function () {
+						$('.form-submit-error__step4 .help-block').fadeIn("fast");
+					},
+				});
+			}
+
+			var table = $('#myTable').DataTable({
+				autoWidth: true,
+				scrollCollapse: true,
+				"paging": false,
+				fixedHeader: true,
+				buttons: [
+					'selectAll',
+					'selectNone'
+				],
+				"language": {
+					"zeroRecords": "No se encontraro coincidencias",
+					"search": "Buscar:",
+					"infoFiltered": "(filtrado de _MAX_ competidores)",
+					"infoEmpty": "Mostrando 0 a 0 de 0 competidores",
+					"info": "Mostrando _TOTAL_ competidores",
+				}
+			});
+
+			function countRow() {
+				var counts = table.rows('.selected').data().length + ' Competidores Seleccionados';
+				return counts;
+			}
+
+			$('#myTable_wrapper .row:eq(0) .col-md-6:eq(0)').html('<a id="select-all" class="btn btn-secondary">Seleccionar Todos</a><a id="deselect-all" class="btn btn-secondary">Deseleccionar Todos</a>');
+
+			$('#myTable_wrapper .row:eq(2) .col-md-7').html('<div class="selected-count"></div>');
+
+			$('.selected-count').text(countRow());
+
+			$('#myTable tbody').on('click', 'tr', function () {
+				$(this).toggleClass('selected');
+				$('.selected-count').text(countRow());
+			});
+
+			$("#select-all").click(function () {
+				$("#myTable tbody tr").addClass('selected');
+				$('.selected-count').text(countRow());
+			});
+
+			$("#deselect-all").click(function () {
+				$("#myTable tbody tr").removeClass('selected');
+				$('.selected-count').text(countRow());
+			});
+
+
+			//init();
+
+			function dataCompetidores(){
+			var array = [];
+				var rowsBody= $("#myTable").find('tbody > tr ');
+
+				for (var i = 0; i < rowsBody.length; i++) {
+
+					if(($('#myTable tbody tr').eq(i).hasClass('selected'))){
+
+						var numComp = $('#myTable tbody tr').eq(i).children('th').text();
+						
+						array.push(numComp);
+					}
+	
+				}
+				return array;
+			}
+
+
+
 			function dataForm() {
+				var numCompe = dataCompetidores();
 				var formData = {
 					nombre: $("#inputNombreCompetencia").val(),
 					fecha: $("#inputFecha").val(),
 					hora: $("#inputHora").val(),
 					categoria: $("#inputCategoria").val(),
+					competidores: numCompe
 				};
+
 				return formData;
 			}
 
@@ -54,9 +138,11 @@
 				var formData = dataForm();
 
 				console.log(formData);
-				alert("Carrera Guardada");
+				//console.log(arrayComeptidores);
 
-				location.href = "/carreras";
+				//alert("Carrera Guardada");
+
+				//location.href = "/carreras";
 				event.preventDefault();
 				return false;
 			});
@@ -64,14 +150,12 @@
 			$form2.find('.btn-back').click(function () {
 				showStep1();
 			});
-			
+
 			$form2.find('#select-all').click(function () {
-				
+
 				event.preventDefault();
 				return false;
 			});
-
-
 
 		});
 	};
@@ -79,48 +163,6 @@
 	$(document).ready(function () {
 
 		$('.content-carreras').carrerasForm();
-
-		var jobCount = $('.results tbody tr').length;
-		$('.counter').text(jobCount + ' Competidores');
-
-
-		$(".search").keyup(function () {
-			var searchTerm = $(".search").val();
-			var listItem = $('.results tbody').children('tr');
-			var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
-
-			$.extend($.expr[':'], {
-				'containsi': function (elem, i, match, array) {
-					return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
-				}
-			});
-
-			$(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function (e) {
-				$(this).attr('visible', 'false');
-			});
-
-			$(".results tbody tr:containsi('" + searchSplit + "')").each(function (e) {
-				$(this).attr('visible', 'true');
-			});
-
-			var jobCount = $('.results tbody tr[visible="true"]').length;
-			$('.counter').text(jobCount + ' Competidores');
-
-			if (jobCount == '0') {
-				$('.no-result').show();
-			} else {
-				$('.no-result').hide();
-			}
-		});
-
-		$("#select-all").click(function () {
-			var all = $("input.select-all")[0];
-			all.checked = !all.checked
-			var checked = all.checked;
-			$("input.select-item").each(function (index, item) {
-				item.checked = checked;
-			});
-		});
 
 	});
 

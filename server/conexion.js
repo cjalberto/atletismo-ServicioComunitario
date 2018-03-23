@@ -3,12 +3,12 @@
 var mysql = require('mysql'),
 	expressMyconnection = require('express-myconnection'),
 	dbOptions = {
-      host: 'coneccion',
-      user: 'usuario-principal',
-      password: '123456',
-      port: 3307,
-      database: 'atletismo_IDT'
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      port: 3306,
+      database: 'atletismo_idt'
     },
     db = expressMyconnection(mysql , dbOptions , 'request')
- 
+
 module.exports = db

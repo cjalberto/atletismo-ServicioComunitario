@@ -6,7 +6,7 @@ header {
   background-color: white; }
   @media (min-width: 768px) {
     header {
-      height: 180px; } }
+      height: 140px; } }
   header .container {
     height: 100%; }
     header .container .row {
@@ -16,7 +16,7 @@ header {
         header .container .row {
           padding: 0htdocs; } }
       header .container .row .col-12 img {
-        height: 150px; }
+        height: 120px; }
 
 footer .position-bottom {
   position: fixed;
@@ -46,11 +46,11 @@ footer .position-bottom {
 
 @media (min-width: 768px) {
   .section-center {
-    height: calc( 100vh - 180px); } }
+    height: calc( 100vh - 140px); } }
 
 @media (min-width: 768px) {
   .content-carreras .title {
-    padding: 10px 0; } }
+    padding: 0; } }
 
 @media (min-width: 768px) {
   .content-carreras .container {
@@ -59,19 +59,39 @@ footer .position-bottom {
 .content-carreras .container .form-wrapper .form {
   display: none; }
   .content-carreras .container .form-wrapper .form .infoCarrer {
-    padding: 20px 0; }
-  .content-carreras .container .form-wrapper .form .table-responsive {
+    font-weight: bold;
+    padding: 0; }
+    @media (min-width: 768px) {
+      .content-carreras .container .form-wrapper .form .infoCarrer {
+        padding: 10px 0; } }
+  .content-carreras .container .form-wrapper .form #myTable_wrapper .row {
+    padding: 10px 0; }
+    @media (min-width: 768px) {
+      .content-carreras .container .form-wrapper .form #myTable_wrapper .row {
+        padding: 0; } }
+  .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+1) {
+    display: flex;
+    align-items: center; }
+    .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+1) a {
+      color: white; }
+    .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+1) #select-all {
+      margin-right: 5px; }
+    .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+1) label {
+      margin-bottom: 0; }
+    .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+1) .col-sm-12 {
+      padding: 10px 15px; }
+      @media (min-width: 768px) {
+        .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+1) .col-sm-12 {
+          padding: 0; } }
+  .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+2) .col-sm-12 {
     overflow-y: auto;
-    height: 150px; }
-  .content-carreras .container .form-wrapper .form .results tr[visible='false'],
-  .content-carreras .container .form-wrapper .form .no-result {
-    display: none; }
-  .content-carreras .container .form-wrapper .form .results tr[visible='true'] {
-    display: table-row; }
-  .content-carreras .container .form-wrapper .form .counter {
-    padding: 8px;
-    color: #4e4e4e; }
-  .content-carreras .container .form-wrapper .form #select-all {
-    margin: 0; }
-  .content-carreras .container .form-wrapper .form .select-all {
-    display: none; }
+    height: 200px; }
+  .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+3) {
+    display: flex;
+    align-items: center; }
+    .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+3) .col-sm-12 {
+      padding: 0 15px; }
+      .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+3) .col-sm-12 .dataTables_info {
+        padding-top: 0; }
+  .content-carreras .container .form-wrapper .form button {
+    margin: 10px 0; }
