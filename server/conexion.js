@@ -3,10 +3,10 @@
 var mysql = require('mysql'),
 	expressMyconnection = require('express-myconnection'),
 	dbOptions = {
-      host: 'coneccion',
-      user: 'usuario-principal',
-      password: '123456',
+      host: 'localhost',
       port: 3307,
+      user: 'root',
+      password: '',
       database: 'atletismo_IDT'
     },
     db = expressMyconnection(mysql , dbOptions , 'request')

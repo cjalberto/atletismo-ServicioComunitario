@@ -1,6 +1,7 @@
 'use strict'
 
-var express = require('express'),
+var conexion = require('../conexion'),
+ 	express = require('express'),
 	router = express.Router()
 
 
@@ -12,84 +13,134 @@ function error404(req , res , next){
 			error : error
 		}
 	error.status = 404
-	///mrenderizar la pagina de error
+	///renderizar la pagina de error
 	next()
 }
 
 router
-	.get('/', (req, res) => {
+	.use(conexion)
+	.get('/', (req, res , next) => {
+
+		//consulta todos los competidores
+		req.getConnection((err , conexion) => {
+			conexion.query('SELECT * FROM  atleta' , (err , rows) =>{
+				let listCompetidores = rows
+				console.log(listCompetidores)
+			})
+		})
+
+		//
+		req.getConnection((err , conexion) => {
+			conexion.query('SELECT * FROM  atleta' , (err , rows) =>{
+				let listCompetidores = rows
+				console.log(listCompetidores)
+			})
+		})
+		
 		res.render('index');
 	})
-	.get('/carreras', (req, res) => {
+	.get('/carreras', (req, res , next) => {
 		res.render('carreras');
 	})
-	.get('/carreras/crear', (req, res) => {
+	.get('/carreras/crear', (req, res , next) => {
 		res.render('carreras/crear');
 	})
-	.get('/carreras/modificar', (req, res) => {
+	.get('/carreras/modificar', (req, res , next) => {
 		res.render('carreras/modificar');
 	})
-	.get('/carreras/iniciar', (req, res) => {
+	.get('/carreras/iniciar', (req, res , next) => {
 		res.render('carreras/iniciar');
 	})
-	.get('/competidores', (req, res) => {
+	.get('/competidores', (req, res , next) => {
 		res.render('competidores');
 	})
-	.get('/historial', (req, res) => {
+	.get('/historial', (req, res , next) => {
 		res.render('historial');
 	})
 
 	///crud de atletas
-	.get('/atleta/crear', (req, res) => {
+	.get('/competidores/crear', (req, res , next) => {
 		res.end('<h1>crud crear atleta</h1>')
 	})
-	.get('/atleta/eliminar', (req, res) => {
+	.get('/competidores/eliminar', (req, res , next) => {
 		///eliminar de la base de datos
 		res.render('atletas')
 	})
-	.get('/atleta/modificar', (req, res) => {
+	.get('/competidores/modificar', (req, res , next) => {
 		///modificar de la base de datos
 		res.render('atletas')
 	})
+	.get('/competidores/listar', (req, res , next) => {
+		res.render('competidores')
+	})
 
 	///crud de categorias
-	.get('/categoria/crear', (req, res) => {
+	.get('/categoria/crear', (req, res , next) => {
 		res.end('<h1>crud crear categoria</h1>')
 	})
-	.get('/categoria/eliminar', (req, res) => {
+	.get('/categoria/eliminar', (req, res , next) => {
 		///eliminar de la base de datos
 		res.render('categoria')
 	})
-	.get('/categoria/modificar', (req, res) => {
+	.get('/categoria/modificar', (req, res , next) => {
+		///modificar de la base de datos
+		res.render('categoria')
+	})
+	.get('/categoria/listar', (req, res , next) => {
 		///modificar de la base de datos
 		res.render('categoria')
 	})
 
 	///crud de club
-	.get('/club/crear', (req, res) => {
+	.get('/club/crear', (req, res , next) => {
 		res.end('<h1>crud crear club</h1>')
 	})
-	.get('/club/eliminar', (req, res) => {
+	.get('/club/eliminar', (req, res , next) => {
 		///eliminar de la base de datos
 		res.render('club')
 	})
-	.get('/club/modificar', (req, res) => {
+	.get('/club/modificar', (req, res , next) => {
+		///modificar de la base de datos
+		res.render('club')
+	})
+	.get('/club/listar', (req, res , next) => {
 		///modificar de la base de datos
 		res.render('club')
 	})
 
 
 	///crud de competencia
-	.get('/competencia/crear', (req, res) => {
+	.get('/competencia/crear', (req, res , next) => {
 		res.end('<h1>crud crear competencia</h1>')
 	})
-	.get('/competencia/eliminar', (req, res) => {
+	.get('/competencia/eliminar', (req, res , next) => {
 		///eliminar de la base de datos
 		res.render('competencia')
 	})
-	.get('/competencia/modificar', (req, res) => {
+	.get('/competencia/modificar', (req, res , next) => {
 		///modificar de la base de datos
 		res.render('competencia')
+	})
+	.get('/competencia/listar', (req, res , next) => {
+		///modificar de la base de datos
+		res.render('competencia')
+	})
+
+	.post('crear/competidor' , (req, res , next) => {
+		req.getConnection((err , conexion) => {
+			let competidor = {
+				primer_nombre : req.body.primer_nombre,
+				segundo_nombre : req.body.segundo_nombre,
+				primer_apellido : req.body.primer_apellido,
+				segundo_apellido : req.body.segundo_apellido,
+				cedula : req.body.cedula,
+				fecha_nacimiento : req.body.fecha_nacimiento,
+				id_club : req.body.id_club
+			}
+			conexion.query('INSERT INTO atleta SET ?' , competidor, (err , rows) =>{
+				return (err) ? res.redirect('/competidores/crear') : res.redirect('/competidores/listar')
+			})
+		})
 	})
 
 	.use(error404)

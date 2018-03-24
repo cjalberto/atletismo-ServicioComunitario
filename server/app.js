@@ -8,11 +8,6 @@ var express = require('express'),
 	conexion = require('./conexion.js')
 
 
-
-app.listen(port, () => {
-	console.log('app started')
-})
-
 app
 	.set('view engine' , 'ejs')
 	.set('port' , port)
@@ -22,6 +17,5 @@ app
 	.use(express.static('public'))
 	.use('/carreras',express.static('public'))
 	.use(routes)
-	.use(conexion)
 
 module.exports = app
