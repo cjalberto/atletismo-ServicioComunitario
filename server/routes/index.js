@@ -8,13 +8,20 @@ var conexion = require('../conexion'),
 router
 	.use(conexion)
 	.get('/', (req, res , next) => {
-		res.render('index');
+		res.render('index')
 	})
+
 	.get('/carreras', (req, res , next) => {
 		res.render('carreras');
 	})
 	.get('/carreras/crear', (req, res , next) => {
-		res.render('carreras/crear');
+				//consulta todos los competidores
+		req.getConnection((err , conexion) => {
+			conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM  atleta at LEFT JOIN club cl ON at.id_club=cl.id' , (err , rows) =>{
+				console.log(rows)
+				res.render('carreras/crear', { datosCompetidores: rows })
+			})
+		})
 	})
 	.get('/carreras/modificar', (req, res , next) => {
 		res.render('carreras/modificar');

@@ -77,42 +77,17 @@
 								</tr>
 							</thead>
 							<tbody>
+	
+
+
+								<% for(var i=0; i<datosCompetidores.length; i++) {%>
 								<tr>
-									<th scope="row" class="idCompetidor">1</th>
-									<td>Mark</td>
-									<td>Otto</td>
-									<td>@mdo</td>
+									<th scope="row" class="idCompetidor"><%= datosCompetidores[i]['id'] %></th>
+									<td><%= datosCompetidores[i]['primer_nombre'] %></td>
+									<td><%= datosCompetidores[i]['primer_apellido'] %></td>
+									<td><%= datosCompetidores[i]['club_nombre'] %></td>
 								</tr>
-								<tr>
-									<th scope="row" class="idCompetidor">2</th>
-									<td>Jacob</td>
-									<td>Thornton</td>
-									<td>@fat</td>
-								</tr>
-								<tr>
-									<th scope="row" class="idCompetidor">3</th>
-									<td>Larry</td>
-									<td>the Bird</td>
-									<td>@twitter</td>
-								</tr>
-								<tr>
-									<th scope="row" class="idCompetidor">1</th>
-									<td>Mark</td>
-									<td>Otto</td>
-									<td>@mdo</td>
-								</tr>
-								<tr>
-									<th scope="row" class="idCompetidor">2</th>
-									<td>Jacob</td>
-									<td>Thornton</td>
-									<td>@fat</td>
-								</tr>
-								<tr>
-									<th scope="row" class="idCompetidor">3</th>
-									<td>Larry</td>
-									<td>the Bird</td>
-									<td>@twitter</td>
-								</tr>
+								<% } %>
 							</tbody>
 						</table>
 					</div>
