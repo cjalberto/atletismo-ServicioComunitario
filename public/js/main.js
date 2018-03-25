@@ -172,7 +172,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////INICIAR CARRERAS/////////////////////////////////////////////////////////////////////
 
-
 var centesimas = 0;
 var segundos = 0;
 var minutos = 0;
@@ -233,9 +232,15 @@ function cronometro () {
 		Horas.innerHTML = horas;
 	}
 }
-
-      var i=0;
-      function info(elEvento) {
+var i=0;
+           function mostrar() {
+				document.getElementById('oculto').style.display = 'block';
+				document.getElementById('oculto1').style.display = 'none';
+				
+				
+			}
+			
+function info(elEvento) {
          var evento = elEvento || window.event // definir objeto event
          if (evento.type ==  "keypress" && evento.keyCode==13 ) { //el número de caracter sólo está en el evento keypress
          	if(i==0){inicio();}
@@ -246,28 +251,24 @@ function cronometro () {
             } 
 
              if (evento.type ==  "keypress" && evento.keyCode==115 ) {
-             	 if(i>1){
-				 $("#addr"+(i-1)).html('');
-				 i--;
-				 }
+              if(i>1){
+			   $("#addr"+(i-1)).html('');
+				i--;
+			   }
              }
 
-             if (evento.type ==  "keypress" && evento.keyCode==97 ) {
-                
-                for(var e=1; e<i;e++){
-                  console.log(e);
-                
-                var campo2="campo"+e;
-           		var num2="num"+e;
-                  console.log(document.getElementById(campo2).innerText); 
-                  console.log(document.getElementById(num2).value);
-                
-                }
-              }
-      } 
-      	window.onload = function() { //acceso a los eventos.
-		document.onkeypress = info;
-		}
+} 
+function Guardar(){
+  for(var e=1; e<i;e++){
+var campo2="campo"+e;
+var num2="num"+e;
+console.log(document.getElementById(campo2).innerText); console.log(document.getElementById(num2).value);
+   }
+}
+
+window.onload = function() { //acceso a los eventos.
+document.onkeypress = info;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

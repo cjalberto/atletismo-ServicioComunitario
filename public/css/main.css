@@ -97,32 +97,45 @@ footer .position-bottom {
     margin: 10px 0; }
 
 /*CSS INICIAR CARRERA */
-.iniciar {
-  padding-left: 39%; }
+.iniciar{
+  padding-left: 36%;
 
-#contenedor {
+}
+.guardar {
+
+  margin-left: 130%;
+  margin-top: -30%;
+}
+#contenedor{
   margin: 50px auto;
   width: 340px;
   height: 95px;
-  margin-left: 42%;
-  margin-top: 1%; }
-
-.reloj {
+  /*margin-left: 33%;*/
+  margin-top: 1%;
+  justify-content:center
+}
+.reloj{
   float: left;
   font-size: 45px;
   font-family: Courier,sans-serif;
-  color: #363431; }
+  color: #363431;
+}
+.boton:active{
+  background-image: linear-gradient(#2c6f05,#3aad02);
+}
+.boton:hover{
+  box-shadow: 0px 0px 14px #3aad02;
+}
+.form-group { margin: 40px auto;
+  width: 800px;
+  height: 90px; }
 
-.boton:active {
-  background-image: linear-gradient(#2c6f05, #3aad02); }
+.table1{
 
-.boton:hover {
-  box-shadow: 0px 0px 14px #3aad02; }
-
-.table1 {
-  overflow: scroll;
-  height: 360px;
+  overflow:scroll;
+  height:360px;
   margin: 10px auto;
   width: 450px;
-  margin-left: 38%;
-  background: #fff; }
+  margin-left: 36%;
+  background: #fff;
+}
