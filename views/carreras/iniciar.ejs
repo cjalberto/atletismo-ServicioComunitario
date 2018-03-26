@@ -3,33 +3,61 @@
 
 <div >
 
-	<div class="iniciar">
-		<h1 >CARRERAS - INICIAR</h1>
-	</div>
+     <div class="iniciar">
+          <h1 >CARRERAS - INICIAR</h1>
+     </div>
 
-	<div id="contenedor">
-		<div class="reloj" id="Horas">00</div>
-		<div class="reloj" id="Minutos">:00</div>
-		<div class="reloj" id="Segundos">:00</div>
-		<div class="reloj" id="Centesimas">:00</div>
-		<input type="button" class="btn btn-secondary btn-lg text-uppercase" id="parar" value="Stop" onclick="parar();" disabled>
-		<input type="button" class="btn btn-secondary btn-lg text-uppercase" id="continuar" value="Resume" onclick="inicio();" disabled>
-		<input type="button" class="btn btn-secondary btn-lg text-uppercase" id="reinicio" value="Reset" onclick="reinicio();" disabled>
-		<h6>Presion enter para comenzar</h6>
-	</div>
 
-	<div class="table1">
-		<div class="table-title">
-			<div class="row">
-				<div class="col-sm-8"><h2><b>Tiempo de Atletas</b></h2></div>
+			<div class="form form--step3" id='oculto1'>
+				<form onsubmit="return false;" class="text-center">
+					<div class="caja1">
+					<div class="form-group row align-items-center">
+						<label for="inputNombreCompetencia" class="col-md-2 col-form-label">Nombre de Competencia:</label>
+						<div class="col-md-10">
+							<input type="text" class="form-control" id="inputNombreCompetencia" name="inputNombreCompetencia" placeholder="Nombre de Competencia">
+						</div>
+					</div>
+					</div>
+					
+
+					<button class="btn btn-secondary btn-lg btn-next " onclick="mostrar();">Siguiente</button>
+
+				</form>
 			</div>
-		</div>
-		<table class="table table-bordered table-hover" id="tab_logic">
-			<thead><tr><th class="text-center">Tiempo</th><th class="text-center">Numero</th></tr></thead>
-			<tbody><tr ></tr></tbody>
-		</table>
-	</div>
 
+			<div class="form form--step4" id='oculto' style='display:none';>
+				<form class="text-center">
+					<div class="row">
+						<div class="col infoCarrer"><span id="nombreCarrera">Carrera:</span></div>
+					</div>
+     <div id="contenedor">
+          <div class="reloj" id="Horas">00</div>
+          <div class="reloj" id="Minutos">:00</div>
+          <div class="reloj" id="Segundos">:00</div>
+          <div class="reloj" id="Centesimas">:00</div>
+          <input type="button" class="btn btn-secondary btn-lg text-uppercase" id="parar" value="Stop" onclick="parar();" disabled>
+          <input type="button" class="btn btn-secondary btn-lg text-uppercase" id="continuar" value="Resume" onclick="inicio();" disabled>
+          <input type="button" class="btn btn-secondary btn-lg text-uppercase" id="reinicio" value="Reset" onclick="reinicio();" disabled>
+          <h6>Presion enter para comenzar</h6>
+          
+          <div class=guardar> <input type="button" class="btn btn-secondary btn-lg text-uppercase" id="Guardar" value="Guardar Resultados" onclick="Guardar();"></div>
+     </div>
+
+     <div class="table1">
+          <div class="table-title">
+               <div class="row">
+                    <div class="col-sm-8"><h2><b>Tiempo de Atletas</b></h2></div>
+               </div>
+          </div>
+          <table class="table table-striped table-bordered table-fixed display" id="tab_logic">
+               <thead><tr><th class="text-center">Tiempo</th><th class="text-center">Numero</th></tr></thead>
+               <tbody><tr ></tr></tbody>
+          </table>
+     </div>
+
+
+				</form>
+			</div>
 
 </div>
 
