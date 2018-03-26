@@ -126,7 +126,7 @@ footer .position-bottom {
 .boton:hover{
   box-shadow: 0px 0px 14px #3aad02;
 }
-.form-group { margin: 40px auto;
+.caja1 .form-group { margin: 40px auto;
   width: 800px;
   height: 90px; }
 
@@ -139,3 +139,44 @@ footer .position-bottom {
   margin-left: 36%;
   background: #fff;
 }
+
+/////////////////////////competidores
+.container .form1  .form #myTable1_wrapper {
+height: auto;
+
+}
+
+.container .form1  .form #myTable1_wrapper {
+  
+height: 800px;
+margin-top: -16%;
+
+}
+#myTable1_wrapper .dataTables_filter { 
+margin-top: 40%;
+}
+.container .form1 .form #myTable1_wrapper .row {
+        padding: 0; 
+        display: flex;
+    align-items: center;
+} 
+
+.container .form1  .form #myTable1_wrapper .row .col-sm-12 {
+      padding: 10px 15px; 
+overflow-y: auto;
+    height: 250px; 
+  }
+
+.container .form1  .form #myTable1_wrapper .row .col-sm-12 {
+          padding: 0; } 
+
+.container .form1  .form #myTable1_wrapper .row .col-sm-12 {
+      padding: 0 15px; }
+
+.container .form1  .form #myTable1_wrapper .row .col-sm-12 .dataTables_info {
+        padding-top: 0; 
+    }
+
+.container .form1  .form .btn-container button {
+    margin: 10px 0; margin-top: -35%;}
+ 
