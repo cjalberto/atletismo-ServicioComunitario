@@ -97,6 +97,7 @@ footer .position-bottom {
     margin: 10px 0; }
 
 /*CSS INICIAR CARRERA */
+<<<<<<< Updated upstream
 .iniciar{
   padding-left: 36%;
 
@@ -180,3 +181,34 @@ overflow-y: auto;
 .container .form1  .form .btn-container button {
     margin: 10px 0; margin-top: -35%;}
  
+=======
+.iniciar {
+  padding-left: 39%; }
+
+#contenedor {
+  margin: 50px auto;
+  width: 340px;
+  height: 95px;
+  margin-left: 42%;
+  margin-top: 1%; }
+
+.reloj {
+  float: left;
+  font-size: 45px;
+  font-family: Courier,sans-serif;
+  color: #363431; }
+
+.boton:active {
+  background-image: linear-gradient(#2c6f05, #3aad02); }
+
+.boton:hover {
+  box-shadow: 0px 0px 14px #3aad02; }
+
+.table1 {
+  overflow: scroll;
+  height: 360px;
+  margin: 10px auto;
+  width: 450px;
+  margin-left: 38%;
+  background: #fff; }
+>>>>>>> Stashed changes
