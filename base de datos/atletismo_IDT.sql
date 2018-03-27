@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 18-03-2018 a las 22:51:00
+-- Tiempo de generación: 25-03-2018 a las 05:16:08
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.3
 
@@ -36,7 +36,8 @@ CREATE TABLE `atleta` (
   `segundo_apellido` varchar(30) NOT NULL,
   `cedula` int(11) NOT NULL,
   `fecha_nacimiento` date NOT NULL,
-  `id_club` int(11) NOT NULL
+  `id_club` int(11) NOT NULL,
+  `id_categoria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -71,21 +72,23 @@ CREATE TABLE `club` (
 
 CREATE TABLE `competencia` (
   `id` int(11) NOT NULL,
-  `nombre` int(30) NOT NULL
+  `nombre` varchar(30) NOT NULL,
+  `fecha` date NOT NULL,
+  `hora` datetime NOT NULL,
+  `lugar` varchar(255) NOT NULL,
+  `finalizado` tinyint(1) NOT NULL DEFAULT '0',
+  `id_categoria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `competencia_categoria`
+-- Estructura de tabla para la tabla `competencia_atleta`
 --
 
-CREATE TABLE `competencia_categoria` (
+CREATE TABLE `competencia_atleta` (
   `id` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `lugar` varchar(255) NOT NULL,
   `id_atleta` int(11) NOT NULL,
-  `id_categoria` int(11) NOT NULL,
   `id_competencia` int(11) NOT NULL,
   `tiempo` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -100,7 +103,8 @@ CREATE TABLE `competencia_categoria` (
 ALTER TABLE `atleta`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `cedula_unique` (`cedula`),
-  ADD KEY `foreing_id_club` (`id_club`);
+  ADD KEY `foreing_id_club` (`id_club`),
+  ADD KEY `foreing_id_categoria` (`id_categoria`);
 
 --
 -- Indices de la tabla `categoria`
@@ -120,15 +124,15 @@ ALTER TABLE `club`
 -- Indices de la tabla `competencia`
 --
 ALTER TABLE `competencia`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_categoria` (`id_categoria`);
 
 --
--- Indices de la tabla `competencia_categoria`
+-- Indices de la tabla `competencia_atleta`
 --
-ALTER TABLE `competencia_categoria`
+ALTER TABLE `competencia_atleta`
   ADD PRIMARY KEY (`id`),
   ADD KEY `foreing_id_atleta` (`id_atleta`),
-  ADD KEY `foreing_id_categoria` (`id_categoria`),
   ADD KEY `foreing_id_competencia` (`id_competencia`);
 
 --
@@ -139,30 +143,30 @@ ALTER TABLE `competencia_categoria`
 -- AUTO_INCREMENT de la tabla `atleta`
 --
 ALTER TABLE `atleta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `club`
 --
 ALTER TABLE `club`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `competencia`
 --
 ALTER TABLE `competencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `competencia_categoria`
+-- AUTO_INCREMENT de la tabla `competencia_atleta`
 --
-ALTER TABLE `competencia_categoria`
+ALTER TABLE `competencia_atleta`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -173,14 +177,20 @@ ALTER TABLE `competencia_categoria`
 -- Filtros para la tabla `atleta`
 --
 ALTER TABLE `atleta`
+  ADD CONSTRAINT `foreing_id_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `foreing_id_club` FOREIGN KEY (`id_club`) REFERENCES `club` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `competencia_categoria`
+-- Filtros para la tabla `competencia`
 --
-ALTER TABLE `competencia_categoria`
+ALTER TABLE `competencia`
+  ADD CONSTRAINT `competencia_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `competencia_atleta`
+--
+ALTER TABLE `competencia_atleta`
   ADD CONSTRAINT `foreing_id_atleta` FOREIGN KEY (`id_atleta`) REFERENCES `atleta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `foreing_id_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `foreing_id_competencia` FOREIGN KEY (`id_competencia`) REFERENCES `competencia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
