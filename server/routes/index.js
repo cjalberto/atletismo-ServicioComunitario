@@ -16,12 +16,36 @@ router
 	})
 	.get('/carreras/crear', (req, res , next) => {
 				//consulta todos los competidores
-		req.getConnection((err , conexion) => {
-			conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM  atleta at LEFT JOIN club cl ON at.id_club=cl.id' , (err , rows) =>{
-				console.log(rows)
-				res.render('carreras/crear', { datosCompetidores: rows })
+		let promesa = new Promise((resolve, reject) => {
+			req.getConnection((err , conexion) => {
+				if (err != null){
+					reject(new Error('no se pudo conectar a la base de datos'))
+				}
+				conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM  atleta at LEFT JOIN club cl ON at.id_club=cl.id' , (err , rows) =>{
+					err != null ? reject(new Error('no se pudo leer la base de datos')) : resolve(rows)
+				})
 			})
 		})
+		promesa
+			.then((rows) => {
+				return new Promise((resolve , reject) => {
+					req.getConnection((err , conexion) => {
+						if (err != null){
+							reject(new Error('no se pudo conectar a la base de datos'))
+						}
+						conexion.query('SELECT * FROM  categoria' , (err , rows2) =>{
+							console.log('consulta 2 hecha')
+							err != null ? reject(new Error('no se pudo leer la base de datos')) : resolve(rows , rows2)
+						})
+					})	
+				})
+			})
+			.then((atletas , categorias) =>{
+				res.render('carreras/crear', atletas , categorias)
+			})
+			.catch((err) => {
+				console.log(err.message)
+			})
 	})
 	.get('/carreras/modificar', (req, res , next) => {
 		res.render('carreras/modificar');
@@ -86,10 +110,10 @@ router
 
 	///crud de categorias
 	.get('/categoria/agregar', (req, res , next) => {
-		res.render('/categoria/agregar')
+		res.render('categoria/agregar')
 	})
 	.get('/categoria/modificar', (req, res , next) => {
-		res.render('/categoria/modificar')
+		res.render('categoria/modificar')
 	})
 	.get('/categoria/listar', (req, res , next) => {
 		//consulta todas las categorias
@@ -97,7 +121,7 @@ router
 			conexion.query('SELECT * FROM  categoria' , (err , rows) =>{
 				let listCategorias = rows
 				console.log(listCategorias)
-				res.render('/categoria/listar')
+				res.render('categoria/listar')
 			})
 		})
 	})
@@ -108,7 +132,7 @@ router
 				descripcion : req.body.descripcion
 			}
 			conexion.query('INSERT INTO categoria SET ?' , categoria, (err , rows) =>{
-				return (err) ? res.redirect('/categoria/crear') : res.redirect('/categoria/listar')
+				return (err) ? res.redirect('categoria/crear') : res.redirect('categoria/listar')
 			})
 		})
 	})
@@ -121,7 +145,7 @@ router
 
 				}
 				else{
-					res.redirect('/categoria/listar')
+					res.redirect('categoria/listar')
 				}
 			})
 		})
