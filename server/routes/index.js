@@ -2,50 +2,34 @@
 
 var conexion = require('../conexion'),
  	express = require('express'),
-	router = express.Router()
+	router = express.Router(),
+	carrera = {
+		
+	}
 
 
 router
 	.use(conexion)
+
+
 	.get('/', (req, res , next) => {
 		res.render('index')
 	})
-
 	.get('/carreras', (req, res , next) => {
 		res.render('carreras');
 	})
 	.get('/carreras/crear', (req, res , next) => {
-				//consulta todos los competidores
-		let promesa = new Promise((resolve, reject) => {
-			req.getConnection((err , conexion) => {
+		req.getConnection((err , conexion) => {
+			if (err != null){
+				
+			}
+			conexion.query('SELECT * FROM  categoria' , (err , categorias) =>{
 				if (err != null){
-					reject(new Error('no se pudo conectar a la base de datos'))
+				
 				}
-				conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM  atleta at LEFT JOIN club cl ON at.id_club=cl.id' , (err , rows) =>{
-					err != null ? reject(new Error('no se pudo leer la base de datos')) : resolve(rows)
-				})
+				res.render('carreras/crear',categorias)
 			})
 		})
-		promesa
-			.then((rows) => {
-				return new Promise((resolve , reject) => {
-					req.getConnection((err , conexion) => {
-						if (err != null){
-							reject(new Error('no se pudo conectar a la base de datos'))
-						}
-						conexion.query('SELECT * FROM  categoria' , (err , rows2) =>{
-							console.log('consulta 2 hecha')
-							err != null ? reject(new Error('no se pudo leer la base de datos')) : resolve(rows , rows2)
-						})
-					})	
-				})
-			})
-			.then((atletas , categorias) =>{
-				res.render('carreras/crear', atletas , categorias)
-			})
-			.catch((err) => {
-				console.log(err.message)
-			})
 	})
 	.get('/carreras/modificar', (req, res , next) => {
 		res.render('carreras/modificar');
@@ -53,6 +37,32 @@ router
 	.get('/carreras/iniciar', (req, res , next) => {
 		res.render('carreras/iniciar');
 	})
+	.post('/carreras/crear/primero' , (req, res , next) => {
+		let categoria_id = req.body.categoria_id
+		req.getConnection((err , conexion) => {
+			if (err != null){
+			}
+			conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id where at.id_categoria = ?' , categoria_id , (err , atetas) =>{
+				if (err != null){
+				}
+				res.render('carreras/crear',atetas)
+			})
+		})
+	})
+	.post('/carreras/crear/segundo' , (req, res , next) => {
+		let categoria_id = req.body.categoria_id
+		req.getConnection((err , conexion) => {
+			if (err != null){
+			}
+			conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id where at.id_categoria = ?' , categoria_id , (err , atetas) =>{
+				if (err != null){
+				}
+				res.render('carreras/crear',atetas)
+			})
+		})
+	})
+
+
 	.get('/competidores', (req, res , next) => {
 		res.render('competidores');
 	})
@@ -60,23 +70,23 @@ router
 		res.render('historial');
 	})
 
+
 	///crud de atletas
-	.get('/competidor/agregar', (req, res , next) => {
-		res.render('/competidor/agregar')
+	.get('/competidor/crear', (req, res , next) => {
+		res.render('competidor/crear')
 	})
 	.get('/competidor/modificar', (req, res , next) => {
-		res.render('/competidor/modificar')
+		res.render('competidor/modificar')
 	})
 	.get('/competidor/listar', (req, res , next) => {
 		req.getConnection((err , conexion) => {
 			conexion.query('SELECT * FROM  atleta' , (err , rows) =>{
 				let listCompetidores = rows
-				console.log(listCompetidores)
-				res.render('/competidor/listar')
+				res.render('competidor/listar')
 			})
 		})
 	})
-	.post('/agregar/competidor' , (req, res , next) => {
+	.post('/crear/competidor' , (req, res , next) => {
 		req.getConnection((err , conexion) => {
 			let competidor = {
 				primer_nombre : req.body.primer_nombre,
@@ -89,7 +99,7 @@ router
 				id_categoria : req.body.id_categoria
 			}
 			conexion.query('INSERT INTO atleta SET ?' , competidor, (err , rows) =>{
-				return (err) ? res.redirect('/competidor/crear') : res.redirect('/competidor/listar')
+				return (err) ? res.redirect('competidor/crear') : res.redirect('competidor/listar')
 			})
 		})
 	})
@@ -101,7 +111,7 @@ router
 
 				}
 				else{
-					res.redirect('/competidor/listar')
+					res.redirect('competidor/listar')
 				}
 			})
 		})
@@ -109,8 +119,8 @@ router
 
 
 	///crud de categorias
-	.get('/categoria/agregar', (req, res , next) => {
-		res.render('categoria/agregar')
+	.get('/categoria/crear', (req, res , next) => {
+		res.render('categoria/crear')
 	})
 	.get('/categoria/modificar', (req, res , next) => {
 		res.render('categoria/modificar')
@@ -125,7 +135,7 @@ router
 			})
 		})
 	})
-	.post('/agregar/categoria' , (req, res , next) => {
+	.post('/crear/categoria' , (req, res , next) => {
 		req.getConnection((err , conexion) => {
 			let categoria = {
 				nombre : req.body.nombre,
@@ -138,7 +148,6 @@ router
 	})
 	.get('/eliminar/categoria/:categoria_id', (req, res , next) => {
 		let categoria_id = req.params.categoria_id
-		console.log(categoria_id)
 		req.getConnection((err , conexion) => {
 			conexion.query('DELETE FROM categoria where id = ?' , categoria_id , (err , rows) =>{
 				if (err){
@@ -153,89 +162,42 @@ router
 
 
 	///crud de club
-	.get('/club/agregar', (req, res , next) => {
-		res.render('/club/agregar')
+	.get('/club/crear', (req, res , next) => {
+		res.render('club/crear')
 	})
 	.get('/club/modificar', (req, res , next) => {
 		///modificar de la base de datos
-		res.render('/club/modificar')
+		res.render('club/modificar')
 	})
 	.get('/club/listar', (req, res , next) => {
 		req.getConnection((err , conexion) => {
 			conexion.query('SELECT * FROM  club' , (err , rows) =>{
 				let listClubes = rows
 				console.log(listClubes)
-				res.render('/club/listar')
+				res.render('club/listar')
 			})
 		})
 	})
-	.post('/agregar/club' , (req, res , next) => {
+	.post('/crear/club' , (req, res , next) => {
 		req.getConnection((err , conexion) => {
 			let club = {
 				nombre : req.body.nombre,
 				descripcion : req.body.descripcion
 			}
 			conexion.query('INSERT INTO club SET ?' , club, (err , rows) =>{
-				return (err) ? res.redirect('/club/crear') : res.redirect('/club/listar')
+				return (err) ? res.redirect('club/crear') : res.redirect('/club/listar')
 			})
 		})
 	})
 	.get('/eliminar/club/:club_id', (req, res , next) => {
 		let club_id = req.params.club_id
-		console.log(club_id)
 		req.getConnection((err , conexion) => {
 			conexion.query('DELETE FROM club where id = ?' , club_id , (err , rows) =>{
 				if (err){
 
 				}
 				else{
-					res.redirect('/club/listar')
-				}
-			})
-		})
-	})
-
-
-	///crud de competencia
-	.get('/competencia/agregar', (req, res , next) => {
-		res.render('/competencia/agregar')
-	})
-	.get('/competencia/modificar', (req, res , next) => {
-		res.render('competencia/modificar')
-	})
-	.get('/competencia/listar', (req, res , next) => {
-		req.getConnection((err , conexion) => {
-			conexion.query('SELECT * FROM  competencia' , (err , rows) =>{
-				let listCompetencias = rows
-				console.log(listCompetencias)
-				res.render('competencia/listar')
-			})
-		})
-	})
-	.post('/agregar/competencia' , (req, res , next) => {
-		req.getConnection((err , conexion) => {
-			let competencia = {
-				nombre : req.body.nombre,
-				fecha : req.body.vecha,
-				hora : req.body.hora,
-				lugar : req.body.lugar,
-				id_categoria : req.body.id_categoria
-			}
-			conexion.query('INSERT INTO competencia SET ?' , competencia, (err , rows) =>{
-				return (err) ? res.redirect('/competencia/crear') : res.redirect('/competencia/listar')
-			})
-		})
-	})
-	.get('/eliminar/competencia/:competencia_id', (req, res , next) => {
-		let competencia_id = req.params.competencia_id
-		console.log(competencia_id)
-		req.getConnection((err , conexion) => {
-			conexion.query('DELETE FROM competencia where id = ?' , competencia_id , (err , rows) =>{
-				if (err){
-
-				}
-				else{
-					res.redirect('/competencia/listar')
+					res.redirect('club/listar')
 				}
 			})
 		})
