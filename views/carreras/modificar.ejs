@@ -9,7 +9,41 @@
 
 	<div class="container">
 
+	<div id="modificar--step1">
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered table-fixed display" style="width:100%" id="myTableCompe" cellspacing="0" width="100%">
+				
+			<thead>
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">Nombre</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<% for(var i=0; i<datosCompetencia.length; i++) {%>
+				<tr>
+					<th scope="row"><%= datosCompetencia[i]['id'] %></th>
+					<td><%= datosCompetencia[i]['nombre'] %></td>
+				</tr>
+				<% } %>
+			</tbody>
+
+
+			</table>
+		</div>
+
+		<div class="btn-container text-center">
+			<button id="btn-update" class="btn btn-secondary btn-lg">MODIFICAR</button>
+		</div>
 		
+	</div>
+	</div>
+
+	<div id="modificar--step2">
+		
+		HOLAAA
+
 	</div>
 
 </div>

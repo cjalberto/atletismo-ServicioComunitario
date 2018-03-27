@@ -1,43 +1,23 @@
 (function ($) {
 	"use strict";
 
-	$.fn.carrerasForm = function () {
+	$.fn.carreras = function () {
 		return this.each(function () {
+
+///////////////////CREAR///////////////////////////////////
 
 			var $form_wrapper = $(this),
 				$form1 = $(this).find('.form--step1 form'),
 				$form2 = $(this).find('.form--step2 form');
 
-			function init() {
-				$.validate({
-					form: $form_wrapper.find('form'),
-					errorMessageClass: "error",
-					scrollToTopOnError: false,
-					validateHiddenInputs: true,
-					onSuccess: function () {
-						$('.form-submit-error__step4 .help-block').fadeOut("fast");
-					},
-					onError: function () {
-						$('.form-submit-error__step4 .help-block').fadeIn("fast");
-					},
-				});
-			}
-
 			var table = $('#myTable').DataTable({
-				autoWidth: true,
-				scrollCollapse: true,
-				"paging": false,
-				fixedHeader: true,
-				buttons: [
-					'selectAll',
-					'selectNone'
-				],
-				"language": {
-					"zeroRecords": "No se encontraro coincidencias",
-					"search": "Buscar:",
-					"infoFiltered": "(filtrado de _MAX_ competidores)",
-					"infoEmpty": "Mostrando 0 a 0 de 0 competidores",
-					"info": "Mostrando _TOTAL_ competidores",
+				paging: false,
+				language: {
+					zeroRecords: "No se encontraron coincidencias",
+					search: "Buscar:",
+					infoFiltered: "(filtrado de _MAX_ competidores)",
+					infoEmpty: "Mostrando 0 competidores",
+					info: "Mostrando _TOTAL_ competidores",
 				}
 			});
 
@@ -67,27 +47,17 @@
 				$('.selected-count').text(countRow());
 			});
 
-
-			//init();
-
 			function dataCompetidores(){
 			var array = [];
 				var rowsBody= $("#myTable").find('tbody > tr ');
-
 				for (var i = 0; i < rowsBody.length; i++) {
-
 					if(($('#myTable tbody tr').eq(i).hasClass('selected'))){
-
 						var numComp = $('#myTable tbody tr').eq(i).children('th').text();
-						
 						array.push(numComp);
-					}
-	
+					}	
 				}
 				return array;
 			}
-
-
 
 			function dataForm() {
 				var numCompe = dataCompetidores();
@@ -98,25 +68,17 @@
 					categoria: $("#inputCategoria").val(),
 					competidores: numCompe
 				};
-
 				return formData;
 			}
 
 			function showStep1() {
 				$form_wrapper.find('.form').hide();
 				$form_wrapper.find('.form--step1').fadeIn();
-				$('body').animate({
-					scrollTop: $form_wrapper.find('.form-wrapper').offset().top
-				}, 500);
 			}
 
 			function showStep2() {
 				$form_wrapper.find('.form').hide();
 				$form_wrapper.find('.form--step2').fadeIn();
-				$('body').animate({
-					scrollTop: $form_wrapper.find('.form-wrapper').offset().top
-				}, 500);
-
 				var formData = dataForm();
 				$form_wrapper.find('#nombreCarrera').text(formData.nombre);
 				$form_wrapper.find('#fechaCarrera').text(formData.fecha);
@@ -127,42 +89,56 @@
 
 			$form1.find('.btn-next').click(function () {
 				showStep2();
-
 				// Stop the form from submitting the normal way and refreshing the page
-				event.preventDefault();
-				return false;
+				//event.preventDefault();
+				//return false;
 			});
 
 			$form2.find('.btn-save').click(function () {
-
 				var formData = dataForm();
-
 				console.log(formData);
-				//console.log(arrayComeptidores);
-
-				//alert("Carrera Guardada");
-
+				alert("Carrera Creada");
 				//location.href = "/carreras";
-				event.preventDefault();
-				return false;
+				// Stop the form from submitting the normal way and refreshing the page
+				//event.preventDefault();
+				//return false;
 			});
 
 			$form2.find('.btn-back').click(function () {
 				showStep1();
 			});
 
-			$form2.find('#select-all').click(function () {
+////////////////////////MODIFICAR
 
+			var tableCompe = $('#myTableCompe').DataTable({
+				paging: false,
+				select: true,
+				searching: false,
+				info: false,
+			});
+
+			$('#modificar--step2').hide();
+
+			$('#btn-update').click(function() {
+				console.log($('#myTableCompe tbody .selected th').text());
+				$('#modificar--step1').hide();
+				$('#modificar--step2').fadeIn();
+				location.href = "/carreras/modificar/"+$('#myTableCompe tbody .selected th').text();
 				event.preventDefault();
 				return false;
 			});
+
+			function showStep1Update() {
+				$form_wrapper.find('.formUpdate').hide();
+				$form_wrapper.find('.formUpdate--step1').fadeIn();
+			}
 
 		});
 	};
 
 	$(document).ready(function () {
 
-		$('.content-carreras').carrerasForm();
+		$('.content-carreras').carreras();
 
 	});
 

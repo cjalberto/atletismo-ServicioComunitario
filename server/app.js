@@ -16,6 +16,7 @@ app
 	.use(bodyParser.urlencoded({extended : false}))
 	.use(express.static('public'))
 	.use('/carreras',express.static('public'))
+	.use('/carreras/modificar',express.static('public'))
 	.use(routes)
 
 module.exports = app

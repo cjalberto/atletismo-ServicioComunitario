@@ -27,16 +27,28 @@ router
 		res.render('carreras');
 	})
 	.get('/carreras/crear', (req, res , next) => {
-				//consulta todos los competidores
 		req.getConnection((err , conexion) => {
-			conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM  atleta at LEFT JOIN club cl ON at.id_club=cl.id' , (err , rows) =>{
+			conexion.query('SELECT * FROM categoria' , (err , rows) =>{
 				console.log(rows)
-				res.render('carreras/crear', { datosCompetidores: rows })
+				res.render('carreras/crear', { datosCategoria: rows, datosCompetidores: "null" })
 			})
 		})
 	})
 	.get('/carreras/modificar', (req, res , next) => {
-		res.render('carreras/modificar');
+		req.getConnection((err , conexion) => {
+			conexion.query('SELECT * FROM competencia' , (err , rows) =>{
+				console.log(rows)
+				res.render('carreras/modificar', { datosCompetencia: rows })
+			})
+		})
+	})
+	.get('/carreras/modificar/(:id)', (req, res , next) => {
+		req.getConnection((err , conexion) => {
+			conexion.query('SELECT * FROM competencia WHERE id = ' + req.params.id, (err , rows) =>{
+				console.log(rows)
+				res.render('carreras/modificar', { datosCompetencia: rows })
+			})
+		})
 	})
 	.get('/carreras/iniciar', (req, res , next) => {
 		res.render('carreras/iniciar');
@@ -115,6 +127,24 @@ router
 		///modificar de la base de datos
 		res.render('competencia')
 	})
+
+	.post('/carreras/crear', (req, res , next) => {
+		console.log("hola bb")
+		console.log(req.body.inputCategoria)
+		req.getConnection((err , conexion) => {
+			conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM  atleta at LEFT JOIN club cl ON at.id_club=cl.id' , (err , rows) =>{
+				console.log(rows)
+				res.json('carreras/crear', { datosCompetidores: rows, datosCategoria: "null" })
+			})
+		})
+	})
+
+	.post('/carreras/crear/segundo', (req, res , next) => {
+		console.log("hola bb2")
+		console.log(req.body)
+		res.redirect('/carreras')
+	})
+
 
 	.post('crear/competidor' , (req, res , next) => {
 		req.getConnection((err , conexion) => {

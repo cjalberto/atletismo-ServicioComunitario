@@ -10,8 +10,8 @@
 	<div class="container">
 
 		<div class="form-wrapper">
-			<div class="form form--step1">
-				<form onsubmit="return false;" class="text-center">
+			<div class="form form--step1">,
+				<form class="text-center" action="/carreras/crear" method="post">
 
 					<div class="form-group row align-items-center">
 						<label for="inputNombreCompetencia" class="col-md-2 col-form-label">Nombre de Competencia:</label>
@@ -44,19 +44,19 @@
 						<label for="inputCategoria" class="col-md-2 col-form-label">Categoria</label>
 						<div class="col-md-10">
 							<select id="inputCategoria" name="inputCategoria" class="form-control">
-								<option value="abierta">Abierta</option>
-								<option value="masculina">Masculinaa</option>
-								<option value="feminina">Femenina</option>
+								<% for(var i=0; i<datosCategoria.length; i++) {%>
+								<option value="<%= datosCategoria[i]['nombre'] %>"><%= datosCategoria[i]['nombre'] %></option>
+								<% } %>
 							</select>
 						</div>
 					</div>
 
-					<button class="btn btn-secondary btn-lg btn-next ">Siguiente</button>
+					<button type="submit" class="btn btn-secondary btn-lg btn-next ">Siguiente</button>
 
 				</form>
 			</div>
 			<div class="form form--step2">
-				<form class="text-center">
+				<form class="text-center" action="/carreras/crear/segundo" method="post">
 
 					<div class="row">
 						<div class="col infoCarrer"><span id="nombreCarrera"></span></div>
@@ -82,7 +82,7 @@
 
 								<% for(var i=0; i<datosCompetidores.length; i++) {%>
 								<tr>
-									<th scope="row" class="idCompetidor"><%= datosCompetidores[i]['id'] %></th>
+									<th scope="row" class="idCompetidor"><%= datosCompetidores[i]['id'] %><input type="hidden" name="idCompetidor" value="<%= datosCompetidores[i]['id'] %>"/></th>
 									<td><%= datosCompetidores[i]['primer_nombre'] %></td>
 									<td><%= datosCompetidores[i]['primer_apellido'] %></td>
 									<td><%= datosCompetidores[i]['club_nombre'] %></td>
