@@ -23,21 +23,4 @@ router
 		res.render('historial');
 	})
 
-	///crud de competencia
-	.get('/competencia/agregar', (req, res , next) => {
-		res.render('/competencia/agregar')
-	})
-	.get('/competencia/modificar', (req, res , next) => {
-		res.render('competencia/modificar')
-	})
-	.get('/competencia/listar', (req, res , next) => {
-		req.getConnection((err , conexion) => {
-			conexion.query('SELECT * FROM  competencia' , (err , rows) =>{
-				let listCompetencias = rows
-				console.log(listCompetencias)
-				res.render('competencia/listar')
-			})
-		})
-	})
-
 module.exports = router

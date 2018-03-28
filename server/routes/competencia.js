@@ -15,7 +15,6 @@ router
 				if (err != null){
 				
 				}
-				console.log(categorias)
 				res.render('competencia/crear',{categorias: categorias, datosCompetidores: 'null'})
 			})
 		})
@@ -28,7 +27,7 @@ router
 			})
 		})
 	})
-	.get('/competencia/modificar/(:id)', (req, res , next) => {
+	.get('/competencia/modificar/:id', (req, res , next) => {
 		req.getConnection((err , conexion) => {
 			conexion.query('SELECT * FROM competencia WHERE id = ' + req.params.id, (err , rows) =>{
 				console.log(rows)
@@ -53,15 +52,30 @@ router
 		})
 	})
 	.post('/competencia/crear/segundo' , (req, res , next) => {
-		let categoria_id = req.body.categoria_id
 		req.getConnection((err , conexion) => {
+			let competencia = {
+				nombre : req.body.nombre,
+				fecha : req.body.fecha,
+				hora : req.body.hora,
+				lugar : req.body.lugar,
+				finalizado : 0,
+				id_categoria : req.body.id_categoria
+			}
+			conexion.query('INSERT INTO competencia SET ?' , carrera, (err , rows) =>{				if (err != null){
+				}
+				res.redirect('carreras/iniciar')
+			})
+		})
+	})
+	.post('/carreras/competencia-atleta' , (req, res , next) => {
+		let data = {
+			atleta_id : req.body.atleta_id,
+			competencia_id : req.body.competencia_id,
+			tiempo : req.body.tiempo
+		}
+		conexion.query('INSERT INTO competencia_atleta SET ?' , data, (err , rows) =>{
 			if (err != null){
 			}
-			conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id where at.id_categoria = ?' , categoria_id , (err , atetas) =>{
-				if (err != null){
-				}
-				res.render('competencia/crear',atetas)
-			})
 		})
 	})
 	.post('/agregar/competencia' , (req, res , next) => {
@@ -92,4 +106,5 @@ router
 			})
 		})
 	})
+	
 module.exports = router

@@ -11,9 +11,17 @@ router
 	//list
 	.get('/gestionar/categoria', (req, res , next) => {
 		req.getConnection((err , conexion) => {
-			conexion.query('SELECT * FROM  categoria' , (err , rows) =>{
-				res.render('gestionar/categoria/listar', {listCategorias: rows})
-			})
+			if (err != null){
+				
+			}else{
+				conexion.query('SELECT * FROM  categoria' , (err , rows) =>{
+					if (err != null){
+			
+					}else{
+						res.render('gestionar/categoria/listar', {listCategorias: rows})
+					}
+				})
+			}
 		})
 	})
 	//add
@@ -82,9 +90,17 @@ router
 	//list
 	.get('/gestionar/club', (req, res , next) => {
 		req.getConnection((err , conexion) => {
-			conexion.query('SELECT * FROM  club' , (err , rows) =>{
-				res.render('gestionar/club/listar', {listClub: rows})
+			if (err != null){
+			
+			}else{
+				conexion.query('SELECT * FROM  club' , (err , rows) =>{
+					if (err != null){
+					
+					}else{
+					res.render('gestionar/club/listar', {listClub: rows})
+				}
 			})
+			}
 		})
 	})
 	//add
