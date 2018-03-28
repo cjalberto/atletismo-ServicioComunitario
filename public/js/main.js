@@ -145,28 +145,19 @@
 }(jQuery));
 
 
-//////////Gestionar
+//////////GestionarTable
 
 var tableCompe = $('#myTableGestion').DataTable({
-  scrollY: "200px",
-  scrollCollapse: true,
-  paging: false,
-
-
-					language: {
-					zeroRecords: "No se encontraron coincidencias",
-					search: "Buscar:",
-					infoFiltered: "(filtrado de _MAX_ resultados)",
-					infoEmpty: "Mostrando 0 resultados",
-					info: "Mostrando _TOTAL_ resultados",
-					   lengthMenu:     "Mostrar _MENU_ resultados",
-					    paginate: {
-        first:    "Primero",
-        last:     "Último",
-        next:     "Siguiente",
-        previous: "Anterior"
-    },
-				}
+	scrollY: "200px",
+	scrollCollapse: true,
+	paging: false,
+	language: {
+		zeroRecords: "No se encontraron coincidencias",
+		search: "Buscar:",
+		infoFiltered: "(filtrado de _MAX_ resultados)",
+		infoEmpty: "Mostrando 0 resultados",
+		info: "Mostrando _TOTAL_ resultados",
+	}
 });
 
 
