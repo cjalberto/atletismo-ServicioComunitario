@@ -2,11 +2,7 @@
 
 var conexion = require('../conexion'),
  	express = require('express'),
-	router = express.Router(),
-	carrera = {
-		
-	}
-
+	router = express.Router()
 
 router
 	.use(conexion)
@@ -15,6 +11,8 @@ router
 	.get('/', (req, res , next) => {
 		res.render('index')
 	})
+
+	//crud de carreras
 	.get('/carreras', (req, res , next) => {
 		res.render('carreras');
 	})
@@ -31,8 +29,19 @@ router
 			})
 		})
 	})
-	.get('/carreras/modificar', (req, res , next) => {
-		res.render('carreras/modificar');
+	.get('/carreras/modificar/:carrera_id', (req, res , next) => {
+		let carrera_id = req.params.carrera_id
+		req.getConnection((err , conexion) => {
+			if (err != null){
+				
+			}
+			conexion.query('SELECT * FROM competencia where competencia.id = ?' , carrera_id , (err , carrera) =>{
+				if (err != null){
+				
+				}
+				res.render('carreras/modificar',carrera)
+			})
+		})
 	})
 	.get('/carreras/iniciar', (req, res , next) => {
 		res.render('carreras/iniciar');
@@ -45,20 +54,37 @@ router
 			conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id where at.id_categoria = ?' , categoria_id , (err , atetas) =>{
 				if (err != null){
 				}
-				res.render('carreras/crear',atetas)
+				res.redirect('carreras/crear',atetas)
 			})
 		})
 	})
 	.post('/carreras/crear/segundo' , (req, res , next) => {
-		let categoria_id = req.body.categoria_id
 		req.getConnection((err , conexion) => {
+			let carrera = {
+				nombre : req.body.nombre,
+				fecha : req.body.fecha,
+				hora : req.body.hora,
+				lugar : req.body.lugar,
+				finalizado : 0,
+				id_categoria : req.body.id_categoria
+			}
+			conexion.query('INSERT INTO competencia SET ?' , carrera, (err , rows) =>{
+				if (err != null){
+
+				}
+				res.redirect('carreras/iniciar')
+			})
+		})
+	})
+	.post('/carreras/competencia-atleta' , (req, res , next) => {
+		let data = {
+			atleta_id : req.body.atleta_id,
+			competencia_id : req.body.competencia_id,
+			tiempo : req.body.tiempo
+		}
+		conexion.query('INSERT INTO competencia_atleta SET ?' , data, (err , rows) =>{
 			if (err != null){
 			}
-			conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id where at.id_categoria = ?' , categoria_id , (err , atetas) =>{
-				if (err != null){
-				}
-				res.render('carreras/crear',atetas)
-			})
 		})
 	})
 
@@ -75,19 +101,38 @@ router
 	.get('/competidor/crear', (req, res , next) => {
 		res.render('competidor/crear')
 	})
-	.get('/competidor/modificar', (req, res , next) => {
-		res.render('competidor/modificar')
+	.get('/competidor/modificar/:competidor_id', (req, res , next) => {
+		let competidor_id = req.params.competidor_id
+		req.getConnection((err , conexion) => {
+			if (err != null){
+				
+			}
+			conexion.query('SELECT * FROM atleta where atleta.id = ?' , competidor_id , (err , carrera) =>{
+				if (err != null){
+				
+				}
+				res.render('competidor/modificar' , competidor)
+			})
+		})
 	})
 	.get('/competidor/listar', (req, res , next) => {
 		req.getConnection((err , conexion) => {
+			if (err != null){
+				
+			}
 			conexion.query('SELECT * FROM  atleta' , (err , rows) =>{
-				let listCompetidores = rows
-				res.render('competidor/listar')
+				if (err != null){
+				
+				}
+				res.render('competidor/listar' , rows)
 			})
 		})
 	})
 	.post('/crear/competidor' , (req, res , next) => {
 		req.getConnection((err , conexion) => {
+			if (err != null){
+				
+			}
 			let competidor = {
 				primer_nombre : req.body.primer_nombre,
 				segundo_nombre : req.body.segundo_nombre,
@@ -106,13 +151,14 @@ router
 	.get('/eliminar/competidor/:competidor_id', (req, res , next) => {
 		let competidor_id = req.params.competidor_id
 		req.getConnection((err , conexion) => {
-			conexion.query('DELETE FROM atleta where id = ?' , competidor_id , (err , rows) =>{
-				if (err){
-
+			if (err != null){
+				
+			}
+			conexion.query('DELETE FROM atleta where atleta.id = ?' , competidor_id , (err , rows) =>{
+				if (err != null){
+				
 				}
-				else{
-					res.redirect('competidor/listar')
-				}
+				res.redirect('competidor/listar')
 			})
 		})
 	})
@@ -122,16 +168,30 @@ router
 	.get('/categoria/crear', (req, res , next) => {
 		res.render('categoria/crear')
 	})
-	.get('/categoria/modificar', (req, res , next) => {
-		res.render('categoria/modificar')
+	.get('/categoria/modificar/:categoria_id', (req, res , next) => {
+		let categoria_id = req.params.categoria_id
+		req.getConnection((err , conexion) => {
+			if (err != null){
+				
+			}
+			conexion.query('SELECT * FROM categoria where categoria.id = ?' , categoria_id , (err , categoria) =>{
+				if (err != null){
+				
+				}
+				res.render('categoria/modificar' , categoria)
+			})
+		})
 	})
 	.get('/categoria/listar', (req, res , next) => {
-		//consulta todas las categorias
 		req.getConnection((err , conexion) => {
+			if (err != null){
+				
+				}
 			conexion.query('SELECT * FROM  categoria' , (err , rows) =>{
-				let listCategorias = rows
-				console.log(listCategorias)
-				res.render('categoria/listar')
+				if (err != null){
+				
+				}
+				res.render('categoria/listar' , rows)
 			})
 		})
 	})
@@ -165,16 +225,30 @@ router
 	.get('/club/crear', (req, res , next) => {
 		res.render('club/crear')
 	})
-	.get('/club/modificar', (req, res , next) => {
-		///modificar de la base de datos
-		res.render('club/modificar')
+	.get('/club/modificar/:club_id', (req, res , next) => {
+		let club_id = req.params.club_id
+		req.getConnection((err , conexion) => {
+			if (err != null){
+				
+			}
+			conexion.query('SELECT * FROM club where club.id = ?' , club_id , (err , club) =>{
+				if (err != null){
+				
+				}
+				res.render('club/modificar' , club)
+			})
+		})
 	})
 	.get('/club/listar', (req, res , next) => {
 		req.getConnection((err , conexion) => {
+			if (err != null){
+				
+			}
 			conexion.query('SELECT * FROM  club' , (err , rows) =>{
-				let listClubes = rows
-				console.log(listClubes)
-				res.render('club/listar')
+				if (err != null){
+				
+				}
+				res.render('club/listar' , rows)
 			})
 		})
 	})
