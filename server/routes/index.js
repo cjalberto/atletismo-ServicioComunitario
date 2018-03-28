@@ -20,7 +20,17 @@ router
 	})
 	//HISTORIAL
 	.get('/historial', (req, res , next) => {
-		res.render('historial');
+		req.getConnection((err , conexion) => {
+			if (err != null){
+
+			}
+			conexion.query('SELECT * FROM competencia WHERE finalizado = 0', (err , rows) =>{
+				if (err != null){
+
+				}
+				res.render('historial', { Competencias: rows })
+			})
+		})
 	})
 
 module.exports = router
