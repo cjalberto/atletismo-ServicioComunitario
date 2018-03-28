@@ -1,0 +1,35 @@
+<% include ../../partials/head %>
+
+<div class="section-center d-flex align-items-center justify-content-center flex-column content-categorias">
+	
+    <div class="title text-center">
+		<h1>CATEGORÍAS</h1>
+	</div>
+
+	<div class=container>
+		<form class="text-center" action="/gestionar/categoria/modificar/<%= id %>" method="post">
+
+			<div class="form-group row align-items-center">
+				<label for="nombreCategoria" class="col-md-2 col-form-label">Nombre de Categoría:</label>
+				<div class="col-md-10">
+					<input type="text" class="form-control" name="nombre" placeholder="Nombre de Categoría" value="<%= nombre %>">
+				</div>
+			</div>
+			
+			<div class="form-group row align-items-center">
+				<label for="descripcionCategoria" class="col-md-2 col-form-label">Descripción de Categoría:</label>
+				<div class="col-md-10">
+					<input type="text" class="form-control" name="descripcion" placeholder="Descripción de Categoría" value="<%= descripcion %>">
+				</div>
+			</div>
+
+			<button type="submit" class="btn btn-secondary btn-lg">EDITAR</button>
+
+		</form>
+	   
+    </div>
+
+</div>
+
+
+<% include ../../partials/foot %>

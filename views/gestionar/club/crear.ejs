@@ -1,0 +1,36 @@
+<% include ../../partials/head %>
+
+<div class="section-center d-flex align-items-center justify-content-center flex-column content-categorias">
+	
+    <div class="title text-center">
+		<h1>CLUB</h1>
+	</div>
+
+	<div class=container>
+
+		<form class="text-center" action="/gestionar/club/crear" method="post">
+
+			<div class="form-group row align-items-center">
+				<label for="nombreClub" class="col-md-2 col-form-label">Nombre del Club:</label>
+				<div class="col-md-10">
+					<input type="text" class="form-control" name="nombre" placeholder="Nombre del Club">
+				</div>
+			</div>
+			
+			<div class="form-group row align-items-center">
+				<label for="descripcionClub" class="col-md-2 col-form-label">Descripción del Club:</label>
+				<div class="col-md-10">
+					<input type="text" class="form-control" name="descripcion" placeholder="Descripción del Club">
+				</div>
+			</div>
+
+			<button type="submit" class="btn btn-secondary btn-lg">CREAR</button>
+
+		</form>
+	   
+    </div>
+
+</div>
+
+
+<% include ../../partials/foot %>
