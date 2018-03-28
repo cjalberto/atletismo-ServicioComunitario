@@ -1,6 +1,6 @@
 <% include ../../partials/head %>
 
-<div class="section-center d-flex align-items-center justify-content-center flex-column content-categorias">
+<div class="section-center d-flex align-items-center justify-content-center flex-column content-gestionar">
 	
     <div class="title text-center">
 		<h1>CLUB</h1>
@@ -9,14 +9,14 @@
 	<div class=container>
 	
 		<div class="table-responsive">
-			<table class="table table-striped table-bordered table-fixed display" style="width:100%" id="myTableCat" cellspacing="0" width="100%">
+			<table class="table table-striped table-bordered table-fixed display" style="width:100%" id="myTableGestion" cellspacing="0" width="100%">
 				
 			<thead>
 				<tr>
 					<th scope="col">ID</th>
 					<th scope="col">Nombre</th>
 					<th scope="col">Descripción</th>
-					<th scope="col">Acción</th>
+					<th scope="col" class="text-center">Acción</th>
 				</tr>
 			</thead>
 
@@ -26,7 +26,7 @@
 					<th scope="row"><%= listClub[i]['id'] %></th>
 					<td><%= listClub[i]['nombre'] %></td>
 					<td><%= listClub[i]['descripcion'] %></td>
-					<td>
+					<td class="d-flex align-items-center justify-content-center">
 	                    <a class="btn btn-secondary" href="/gestionar/club/modificar/<%= listClub[i]['id'] %>">Editar</a>           
 	                    <form method="post" action="/gestionar/club/eliminar/<%= listClub[i]['id'] %>">
 	                    	<button type="submit" class="btn btn-secondary" name="delete" onClick="return confirm('¿Quieres eliminar el Club?')">Eliminar</button>

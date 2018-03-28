@@ -6,17 +6,17 @@ header {
   background-color: white; }
   @media (min-width: 768px) {
     header {
-      height: 140px; } }
+      height: 100px; } }
   header .container {
     height: 100%; }
     header .container .row {
       height: 100%;
-      padding: 20px 0; }
+      padding: 10px 0; }
       @media (min-width: 768px) {
         header .container .row {
-          padding: 0htdocs; } }
+          padding: 0; } }
       header .container .row .col-12 img {
-        height: 120px; }
+        height: 90px; }
 
 footer .position-bottom {
   position: fixed;
@@ -46,7 +46,7 @@ footer .position-bottom {
 
 @media (min-width: 768px) {
   .section-center {
-    height: calc( 100vh - 140px); } }
+    height: calc( 100vh - 100px); } }
 
 @media (min-width: 768px) {
   .content-carreras .title {
@@ -96,119 +96,50 @@ footer .position-bottom {
   .content-carreras .container .form-wrapper .form button {
     margin: 10px 0; }
 
+.content-gestionar table tbody td a {
+  margin-right: 5px; }
+
+.content-gestionar table tbody td form {
+  margin-left: 5px; }
+
 /*CSS INICIAR CARRERA */
-<<<<<<< Updated upstream
-.iniciar{
-  padding-left: 36%;
+/*CSS INICIAR CARRERA */
+.iniciar-wrapper .iniciar {
+  padding-left: 36%; }
 
-}
-.guardar {
-
+.iniciar-wrapper .guardar {
   margin-left: 130%;
-  margin-top: -30%;
-}
-#contenedor{
+  margin-top: -30%; }
+
+.iniciar-wrapper #contenedor {
   margin: 50px auto;
   width: 340px;
   height: 95px;
   /*margin-left: 33%;*/
   margin-top: 1%;
-  justify-content:center
-}
-.reloj{
-  float: left;
-  font-size: 45px;
-  font-family: Courier,sans-serif;
-  color: #363431;
-}
-.boton:active{
-  background-image: linear-gradient(#2c6f05,#3aad02);
-}
-.boton:hover{
-  box-shadow: 0px 0px 14px #3aad02;
-}
-.caja1 .form-group { margin: 40px auto;
-  width: 800px;
-  height: 90px; }
+  justify-content: center; }
 
-.table1{
-
-  overflow:scroll;
-  height:360px;
-  margin: 10px auto;
-  width: 450px;
-  margin-left: 36%;
-  background: #fff;
-}
-
-/////////////////////////competidores
-.container .form1  .form #myTable1_wrapper {
-height: auto;
-
-}
-
-.container .form1  .form #myTable1_wrapper {
-  
-height: 800px;
-margin-top: -16%;
-
-}
-#myTable1_wrapper .dataTables_filter { 
-margin-top: 40%;
-}
-.container .form1 .form #myTable1_wrapper .row {
-        padding: 0; 
-        display: flex;
-    align-items: center;
-} 
-
-.container .form1  .form #myTable1_wrapper .row .col-sm-12 {
-      padding: 10px 15px; 
-overflow-y: auto;
-    height: 250px; 
-  }
-
-.container .form1  .form #myTable1_wrapper .row .col-sm-12 {
-          padding: 0; } 
-
-.container .form1  .form #myTable1_wrapper .row .col-sm-12 {
-      padding: 0 15px; }
-
-.container .form1  .form #myTable1_wrapper .row .col-sm-12 .dataTables_info {
-        padding-top: 0; 
-    }
-
-.container .form1  .form .btn-container button {
-    margin: 10px 0; margin-top: -35%;}
- 
-=======
-.iniciar {
-  padding-left: 39%; }
-
-#contenedor {
-  margin: 50px auto;
-  width: 340px;
-  height: 95px;
-  margin-left: 42%;
-  margin-top: 1%; }
-
-.reloj {
+.iniciar-wrapper .reloj {
   float: left;
   font-size: 45px;
   font-family: Courier,sans-serif;
   color: #363431; }
 
-.boton:active {
+.iniciar-wrapper .boton:active {
   background-image: linear-gradient(#2c6f05, #3aad02); }
 
-.boton:hover {
+.iniciar-wrapper .boton:hover {
   box-shadow: 0px 0px 14px #3aad02; }
 
-.table1 {
+.iniciar-wrapper .form-group {
+  margin: 40px auto;
+  width: 800px;
+  height: 90px; }
+
+.iniciar-wrapper .table1 {
   overflow: scroll;
   height: 360px;
   margin: 10px auto;
   width: 450px;
-  margin-left: 38%;
+  margin-left: 36%;
   background: #fff; }
->>>>>>> Stashed changes

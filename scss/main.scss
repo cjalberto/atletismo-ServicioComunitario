@@ -6,9 +6,13 @@ html, body { height: 100%; 	background-color: aliceblue; }
 @import "index.scss";
 @import "carreras.scss";
 @import "competidores.scss";
+@import "gestionar.scss";
 
 /*CSS INICIAR CARRERA */
 /*CSS INICIAR CARRERA */
+
+.iniciar-wrapper{
+
 .iniciar{
   padding-left: 36%;
 
@@ -32,6 +36,8 @@ html, body { height: 100%; 	background-color: aliceblue; }
   font-family: Courier,sans-serif;
   color: #363431;
 }
+
+
 .boton:active{
   background-image: linear-gradient(#2c6f05,#3aad02);
 }
@@ -50,4 +56,7 @@ html, body { height: 100%; 	background-color: aliceblue; }
   width: 450px;
   margin-left: 36%;
   background: #fff;
+}
+  
+
 }
