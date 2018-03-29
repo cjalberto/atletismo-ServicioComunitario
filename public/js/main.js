@@ -6,11 +6,9 @@
 
 ///////////////////CREAR///////////////////////////////////
 
-			var $form_wrapper = $(this),
-				$form1 = $(this).find('.form--step1 form'),
-				$form2 = $(this).find('.form--step2 form');
-
 			var table = $('#myTable').DataTable({
+				scrollY: "200px",
+				scrollCollapse: true,
 				paging: false,
 				language: {
 					zeroRecords: "No se encontraron coincidencias",
@@ -23,7 +21,16 @@
 
 			function countRow() {
 				var counts = table.rows('.selected').data().length + ' Competidores Seleccionados';
+				inputsCompetidores();
 				return counts;
+			}
+
+			function inputsCompetidores(){
+				$('#inputs').html('');
+				for(i=0;i<$('.selected').children('.idCompetidor').length; i++){
+					var idCompe= $('.selected').children('.idCompetidor').text()[i];
+					$('#inputs').append('<input type="hidden" name="id_atleta" value='+idCompe+'>')
+				}
 			}
 
 			$('#myTable_wrapper .row:eq(0) .col-md-6:eq(0)').html('<a id="select-all" class="btn btn-secondary">Seleccionar Todos</a><a id="deselect-all" class="btn btn-secondary">Deseleccionar Todos</a>');
@@ -34,6 +41,7 @@
 
 			$('#myTable tbody').on('click', 'tr', function () {
 				$(this).toggleClass('selected');
+				$(this).children('#idCompetidor').attr("value", "<%= datosCompetidores[i]['id'] %>");
 				$('.selected-count').text(countRow());
 			});
 
@@ -47,6 +55,7 @@
 				$('.selected-count').text(countRow());
 			});
 
+
 			function dataCompetidores(){
 			var array = [];
 				var rowsBody= $("#myTable").find('tbody > tr ');
@@ -58,55 +67,6 @@
 				}
 				return array;
 			}
-
-			function dataForm() {
-				var numCompe = dataCompetidores();
-				var formData = {
-					nombre: $("#inputNombreCompetencia").val(),
-					fecha: $("#inputFecha").val(),
-					hora: $("#inputHora").val(),
-					categoria: $("#inputCategoria").val(),
-					competidores: numCompe
-				};
-				return formData;
-			}
-
-			function showStep1() {
-				$form_wrapper.find('.form').hide();
-				$form_wrapper.find('.form--step1').fadeIn();
-			}
-
-			function showStep2() {
-				$form_wrapper.find('.form').hide();
-				$form_wrapper.find('.form--step2').fadeIn();
-				var formData = dataForm();
-				$form_wrapper.find('#nombreCarrera').text(formData.nombre);
-				$form_wrapper.find('#fechaCarrera').text(formData.fecha);
-				$form_wrapper.find('#categoriaCarrera').text(formData.categoria);
-			}
-
-			showStep1();
-
-			$form1.find('.btn-next').click(function () {
-				showStep2();
-				// Stop the form from submitting the normal way and refreshing the page
-				//event.preventDefault();
-				//return false;
-			});
-
-			$form2.find('.btn-save').click(function () {
-				var formData = dataForm();
-				console.log(formData);
-				alert("Carrera Creada");
-				//location.href = "/carreras";
-				// Stop the form from submitting the normal way and refreshing the page
-				//event.preventDefault();
-				//return false;
-			});
-
-			$form2.find('.btn-back').click(function () {
-				showStep1();
-			});
 
 ////////////////////////MODIFICAR
 

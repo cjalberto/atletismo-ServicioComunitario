@@ -56,51 +56,52 @@ footer .position-bottom {
   .content-carreras .container {
     padding: 10px 0; } }
 
-.content-carreras .container .form-wrapper .form {
-  display: none; }
-  .content-carreras .container .form-wrapper .form .infoCarrer {
-    font-weight: bold;
-    padding: 0; }
+.content-carreras .container .form-wrapper .form--step2 .info-carrera {
+  font-weight: bold;
+  padding: 0; }
+  @media (min-width: 768px) {
+    .content-carreras .container .form-wrapper .form--step2 .info-carrera {
+      padding: 10px 0; } }
+
+.content-carreras .container .form-wrapper .form--step2 #myTable_wrapper .row {
+  padding: 10px 0; }
+  @media (min-width: 768px) {
+    .content-carreras .container .form-wrapper .form--step2 #myTable_wrapper .row {
+      padding: 0; } }
+
+.content-carreras .container .form-wrapper .form--step2 #myTable_wrapper .row:nth-child(0n+1) {
+  display: flex;
+  align-items: center; }
+  .content-carreras .container .form-wrapper .form--step2 #myTable_wrapper .row:nth-child(0n+1) a {
+    color: white; }
+  .content-carreras .container .form-wrapper .form--step2 #myTable_wrapper .row:nth-child(0n+1) #select-all {
+    margin-right: 5px; }
+  .content-carreras .container .form-wrapper .form--step2 #myTable_wrapper .row:nth-child(0n+1) label {
+    margin-bottom: 0; }
+  .content-carreras .container .form-wrapper .form--step2 #myTable_wrapper .row:nth-child(0n+1) .col-sm-12 {
+    padding: 10px 15px; }
     @media (min-width: 768px) {
-      .content-carreras .container .form-wrapper .form .infoCarrer {
-        padding: 10px 0; } }
-  .content-carreras .container .form-wrapper .form #myTable_wrapper .row {
-    padding: 10px 0; }
-    @media (min-width: 768px) {
-      .content-carreras .container .form-wrapper .form #myTable_wrapper .row {
+      .content-carreras .container .form-wrapper .form--step2 #myTable_wrapper .row:nth-child(0n+1) .col-sm-12 {
         padding: 0; } }
-  .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+1) {
-    display: flex;
-    align-items: center; }
-    .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+1) a {
-      color: white; }
-    .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+1) #select-all {
-      margin-right: 5px; }
-    .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+1) label {
-      margin-bottom: 0; }
-    .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+1) .col-sm-12 {
-      padding: 10px 15px; }
-      @media (min-width: 768px) {
-        .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+1) .col-sm-12 {
-          padding: 0; } }
-  .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+2) .col-sm-12 {
-    overflow-y: auto;
-    height: 200px; }
-  .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+3) {
-    display: flex;
-    align-items: center; }
-    .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+3) .col-sm-12 {
-      padding: 0 15px; }
-      .content-carreras .container .form-wrapper .form #myTable_wrapper .row:nth-child(0n+3) .col-sm-12 .dataTables_info {
-        padding-top: 0; }
-  .content-carreras .container .form-wrapper .form button {
-    margin: 10px 0; }
+
+.content-carreras .container .form-wrapper .form--step2 #myTable_wrapper .row:nth-child(0n+3) {
+  display: flex;
+  align-items: center; }
+  .content-carreras .container .form-wrapper .form--step2 #myTable_wrapper .row:nth-child(0n+3) .col-sm-12 {
+    padding: 0 15px; }
+    .content-carreras .container .form-wrapper .form--step2 #myTable_wrapper .row:nth-child(0n+3) .col-sm-12 .dataTables_info {
+      padding-top: 0; }
+
+.content-carreras .container .form-wrapper .form--step2 .btn-container button {
+  margin: 10px 0; }
 
 .content-gestionar table tbody td a {
   margin-right: 5px; }
 
 .content-gestionar table tbody td form {
   margin-left: 5px; }
+  .content-gestionar table tbody td form button {
+    margin: 0; }
 
 /*CSS INICIAR CARRERA */
 /*CSS INICIAR CARRERA */

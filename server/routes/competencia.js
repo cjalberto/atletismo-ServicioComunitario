@@ -15,16 +15,96 @@ router
 				if (err != null){
 				
 				}
-				res.render('competencia/crear',{categorias: categorias, datosCompetidores: 'null'})
+				res.render('competencia/crear-1',{categorias: categorias})
 			})
 		})
 	})
+	.post('/competencia/crear' , (req, res , next) => {
+		let categoria_id = req.body.categoria
+		req.getConnection((err , conexion) => {
+			if (err != null){
+
+			}else{
+				if(categoria_id == '1'){
+			conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id' , (err , atletas) =>{
+				if (err != null){
+
+				}else{
+				res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body})
+				}
+			})
+
+				}else{
+			conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id where at.id_categoria = ?' , categoria_id , (err , atletas) =>{
+				if (err != null){
+
+				}else{
+				res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body})
+				}
+			})
+			}
+			}
+		})
+	})
+	.post('/competencia/crear/regresar' , (req, res , next) => {
+		res.redirect('../crear')
+	})
+	.post('/competencia/crear/finalizar' , (req, res , next) => {
+		
+		req.getConnection((err , conexion) => {
+			if (err != null){
+
+			}else{
+			let competencia = {
+				nombre : req.body.nombre,
+				fecha : req.body.fecha,
+				hora : req.body.hora,
+				lugar : req.body.lugar,
+				finalizado : 0,
+				id_categoria : req.body.id_categoria
+			}
+					conexion.query('INSERT INTO competencia SET ?' , competencia, (err , rows) =>{				
+				if (err != null){
+					console.log("error guardando competencia")
+				}else{
+					var count=0;
+					var i=0;
+
+					for(i=0; i<req.body.id_atleta.length;i++){
+
+					let competencia_atleta = {
+						id_atleta : req.body.id_atleta[i],
+						id_competencia : rows.insertId,
+					}
+						conexion.query('INSERT INTO competencia_atleta SET ?' , competencia_atleta, (err , rows) =>{				
+						if (err != null){
+							console.log("error guardando competencia_atleta")
+						}else{
+							count=count+1;
+							if(count==req.body.id_atleta.length){
+								res.redirect('../')
+							}
+						}
+					})
+					}
+				}
+			})
+			}
+		})
+	})
+
+
+
+
+
+
+
 	.get('/competencia/modificar', (req, res , next) => {
 		req.getConnection((err , conexion) => {
 			if (err != null){
 
 			}
-			conexion.query('SELECT * FROM competencia' , (err , rows) =>{
+			conexion.query('SELECT * FROM competencia where finalizado=0' , (err , rows) =>{
 				if (err != null){
 
 				}
@@ -58,42 +138,7 @@ router
 			})
 		})
 	})
-	.post('/competencia/crear/primero' , (req, res , next) => {
-		let categoria_id = req.body.inputCategoria
-		req.getConnection((err , conexion) => {
-			if (err != null){
-
-			}
-			conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id where at.id_categoria = ?' , categoria_id , (err , atletas) =>{
-				if (err != null){
-
-				}
-				res.render('competencia/crear',{datosCompetidores: atletas, categorias: 'null'})
-			})
-		})
-	})
-	.post('/competencia/crear/segundo' , (req, res , next) => {
-		req.getConnection((err , conexion) => {
-			if (err != null){
-
-			}
-			let competencia = {
-				nombre : req.body.nombre,
-				fecha : req.body.fecha,
-				hora : req.body.hora,
-				lugar : req.body.lugar,
-				finalizado : 0,
-				id_categoria : req.body.id_categoria
-			}
-			conexion.query('INSERT INTO competencia SET ?' , carrera, (err , rows) =>{				
-				if (err != null){
-
-				}
-				res.redirect('carreras/iniciar')
-			})
-		})
-	})
-	.post('/carreras/competencia-atleta' , (req, res , next) => {
+	.post('/competencia/competencia-atleta' , (req, res , next) => {
 		req.getConnection((err , conexion) => {
 			if (err != null){
 
