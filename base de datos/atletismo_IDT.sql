@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 29-03-2018 a las 18:36:39
+-- Tiempo de generación: 29-03-2018 a las 18:42:28
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.3
 
@@ -61,19 +61,20 @@ INSERT INTO `atleta` (`id`, `primer_nombre`, `segundo_nombre`, `primer_apellido`
 CREATE TABLE `categoria` (
   `id` int(11) NOT NULL,
   `nombre` varchar(30) NOT NULL,
-  `descripcion` text NOT NULL
+  `descripcion` text NOT NULL,
+  `sexo` varchar(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `categoria`
 --
 
-INSERT INTO `categoria` (`id`, `nombre`, `descripcion`) VALUES
-(1, 'reqwer', 'sdafgsa'),
-(2, 'fwqfqw', 'fwqf'),
-(3, 'fwf', 'bvcvbbvd'),
-(4, 'hghjyj', 'liul'),
-(5, 'liutlr', 'erqwrtgw');
+INSERT INTO `categoria` (`id`, `nombre`, `descripcion`, `sexo`) VALUES
+(1, 'reqwer', 'sdafgsa', 'F'),
+(2, 'fwqfqw', 'fwqf', 'F'),
+(3, 'fwf', 'bvcvbbvd', 'M'),
+(4, 'hghjyj', 'liul', 'M'),
+(5, 'liutlr', 'erqwrtgw', 'M');
 
 -- --------------------------------------------------------
 
