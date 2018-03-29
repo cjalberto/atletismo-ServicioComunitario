@@ -9,6 +9,7 @@
 			var table = $('#myTable').DataTable({
 				scrollY: "200px",
 				scrollCollapse: true,
+				scrollX: true,
 				paging: false,
 				language: {
 					zeroRecords: "No se encontraron coincidencias",
@@ -56,42 +57,23 @@
 			});
 
 
-			function dataCompetidores(){
-			var array = [];
-				var rowsBody= $("#myTable").find('tbody > tr ');
-				for (var i = 0; i < rowsBody.length; i++) {
-					if(($('#myTable tbody tr').eq(i).hasClass('selected'))){
-						var numComp = $('#myTable tbody tr').eq(i).children('th').text();
-						array.push(numComp);
-					}	
-				}
-				return array;
-			}
-
 ////////////////////////MODIFICAR
 
 			var tableCompe = $('#myTableCompe').DataTable({
+				scrollY: "200px",
+				scrollCollapse: true,
+				scrollX: true,
 				paging: false,
-				select: true,
-				searching: false,
+				searching: true,
 				info: false,
+				language: {
+					zeroRecords: "No se encontraron coincidencias",
+					search: "Buscar:",
+					infoFiltered: "(filtrado de _MAX_ resultados)",
+					infoEmpty: "Mostrando 0 resultados",
+					info: "Mostrando _TOTAL_ resultados",
+				}
 			});
-
-			$('#modificar--step2').hide();
-
-			$('#btn-update').click(function() {
-				console.log($('#myTableCompe tbody .selected th').text());
-				$('#modificar--step1').hide();
-				$('#modificar--step2').fadeIn();
-				location.href = "/carreras/modificar/"+$('#myTableCompe tbody .selected th').text();
-				event.preventDefault();
-				return false;
-			});
-
-			function showStep1Update() {
-				$form_wrapper.find('.formUpdate').hide();
-				$form_wrapper.find('.formUpdate--step1').fadeIn();
-			}
 
 		});
 	};
@@ -107,10 +89,13 @@
 
 //////////GestionarTable
 
-var tableCompe = $('#myTableGestion').DataTable({
+var tableGestion = $('#myTableGestion').DataTable({
 	scrollY: "200px",
 	scrollCollapse: true,
+	scrollX: true,
 	paging: false,
+	searching: true,
+	info: false,
 	language: {
 		zeroRecords: "No se encontraron coincidencias",
 		search: "Buscar:",

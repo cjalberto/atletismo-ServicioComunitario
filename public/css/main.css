@@ -95,6 +95,17 @@ footer .position-bottom {
 .content-carreras .container .form-wrapper .form--step2 .btn-container button {
   margin: 10px 0; }
 
+.content-carreras .container #myTableCompe tbody td a {
+  margin-right: 5px; }
+
+.content-carreras .container #myTableCompe tbody td form {
+  margin-left: 5px; }
+  .content-carreras .container #myTableCompe tbody td form button {
+    margin: 0; }
+
+.content-carreras .container .btn-container a {
+  margin: 10px 0; }
+
 .content-gestionar table tbody td a {
   margin-right: 5px; }
 
@@ -102,6 +113,9 @@ footer .position-bottom {
   margin-left: 5px; }
   .content-gestionar table tbody td form button {
     margin: 0; }
+
+.content-gestionar .btn-container {
+  margin-bottom: 15px; }
 
 /*CSS INICIAR CARRERA */
 /*CSS INICIAR CARRERA */

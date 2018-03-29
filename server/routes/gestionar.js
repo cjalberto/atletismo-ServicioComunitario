@@ -142,14 +142,12 @@ router
 	.post('/gestionar/club/eliminar/:club_id', (req, res , next) => {
 		let club_id = req.params.club_id
 		req.getConnection((err , conexion) => {
-			if (err){
-				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
-			}
-			conexion.query('DELETE FROM club where id = ?' , club_id , (err , rows) =>{
+			conexion.query('DELETE FROM club WHERE id = ?' , club_id , (err , rows) =>{
 				if (err){
 					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
+				}else{
+					res.redirect('/gestionar/club')
 				}
-				res.redirect('/gestionar/club')
 			})
 		})
 	})
