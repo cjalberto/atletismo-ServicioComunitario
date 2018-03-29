@@ -4,7 +4,7 @@
 <div class="section-center d-flex align-items-center justify-content-center flex-column content-carreras">
 
 	<div class="title text-center">
-		<h1>CARRERAS - CREAR</h1>
+		<h1>COMPETENCIA - CREAR</h1>
 	</div>
 
 	<div class="container">
@@ -56,7 +56,7 @@
 						<div class="col-md-6">
 							<select id="inputCategoria" name="categoria" class="form-control">
 								<% for(var i=0; i<categorias.length; i++) {%>
-								<option value="<%= categorias[i]['id'] %>"><%= categorias[i]['nombre'] %></option>
+								<option value="<%= categorias[i]['id'] %>|<%= categorias[i]['nombre'] %>"><%= categorias[i]['nombre'] %></option>
 								<% } %>
 							</select>
 						</div>
