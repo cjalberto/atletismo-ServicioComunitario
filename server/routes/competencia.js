@@ -8,11 +8,11 @@ router
 	.use(conexion)
 	.get('/competencia/crear', (req, res , next) => {
 		req.getConnection((err , conexion) => {
-			if (err != null){
+			if (err){
 				
 			}
 			conexion.query('SELECT * FROM  categoria' , (err , categorias) =>{
-				if (err != null){
+				if (err){
 				
 				}
 				res.render('competencia/crear-1',{categorias: categorias})
@@ -22,12 +22,12 @@ router
 	.post('/competencia/crear' , (req, res , next) => {
 		let categoria_id = req.body.categoria
 		req.getConnection((err , conexion) => {
-			if (err != null){
+			if (err){
 
 			}else{
 				if(categoria_id == '1'){
 			conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id' , (err , atletas) =>{
-				if (err != null){
+				if (err){
 
 				}else{
 				res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body})
@@ -36,7 +36,7 @@ router
 
 				}else{
 			conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id where at.id_categoria = ?' , categoria_id , (err , atletas) =>{
-				if (err != null){
+				if (err){
 
 				}else{
 				res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body})
@@ -52,7 +52,7 @@ router
 	.post('/competencia/crear/finalizar' , (req, res , next) => {
 		
 		req.getConnection((err , conexion) => {
-			if (err != null){
+			if (err){
 
 			}else{
 			let competencia = {
@@ -64,7 +64,7 @@ router
 				id_categoria : req.body.id_categoria
 			}
 					conexion.query('INSERT INTO competencia SET ?' , competencia, (err , rows) =>{				
-				if (err != null){
+				if (err){
 					console.log("error guardando competencia")
 				}else{
 					var count=0;
@@ -77,7 +77,7 @@ router
 						id_competencia : rows.insertId,
 					}
 						conexion.query('INSERT INTO competencia_atleta SET ?' , competencia_atleta, (err , rows) =>{				
-						if (err != null){
+						if (err){
 							console.log("error guardando competencia_atleta")
 						}else{
 							count=count+1;
@@ -101,11 +101,11 @@ router
 
 	.get('/competencia/modificar', (req, res , next) => {
 		req.getConnection((err , conexion) => {
-			if (err != null){
+			if (err){
 
 			}
 			conexion.query('SELECT * FROM competencia where finalizado=0' , (err , rows) =>{
-				if (err != null){
+				if (err){
 
 				}
 				res.render('competencia/modificar', { datosCompetencia: rows })
@@ -114,11 +114,11 @@ router
 	})
 	.get('/competencia/modificar/:id', (req, res , next) => {
 		req.getConnection((err , conexion) => {
-			if (err != null){
+			if (err){
 
 			}
 			conexion.query('SELECT * FROM competencia WHERE id = ' + req.params.id, (err , rows) =>{
-				if (err != null){
+				if (err){
 
 				}
 				res.render('competencia/modificar', { datosCompetencia: rows })
@@ -127,11 +127,11 @@ router
 	})
 	.get('/competencia/iniciar', (req, res , next) => {
 		req.getConnection((err , conexion) => {
-			if (err != null){
+			if (err){
 
 			}
-			conexion.query('SELECT * FROM competencia WHERE finalizado = 0', (err , rows) =>{
-				if (err != null){
+			conexion.query(`SELECT competencia.id , competencia.nombre as 'nombre' , competencia.fecha , competencia.hora , competencia.lugar , categoria.nombre as 'categoria' , categoria.sexo as 'sexo' FROM competencia LEFT JOIN categoria ON competencia.id_categoria=categoria.id WHERE finalizado = 0`, (err , rows) =>{
+				if (err){
 
 				}
 				res.render('competencia/iniciar', { datosCompetencia: rows })
@@ -140,7 +140,7 @@ router
 	})
 	.post('/competencia/competencia-atleta' , (req, res , next) => {
 		req.getConnection((err , conexion) => {
-			if (err != null){
+			if (err){
 
 			}
 			let data = {
@@ -149,7 +149,7 @@ router
 				tiempo : req.body.tiempo
 			}
 			conexion.query('INSERT INTO competencia_atleta SET ?' , data, (err , rows) =>{
-				if (err != null){
+				if (err){
 				}
 			})
 		})
