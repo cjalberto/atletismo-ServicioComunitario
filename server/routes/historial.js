@@ -33,5 +33,15 @@ router
 				})
 		})
 	})
+	.get('/historial/historial1', (req, res , next) => {
+		req.getConnection((err , conexion) => {
+			if (err != null){
+				
+			}else{
+						res.render('historial/historial1')
+				
+			}
+		})
+	})
 
 module.exports = router
