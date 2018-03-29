@@ -21,12 +21,12 @@ router
 	//HISTORIAL
 	.get('/historial', (req, res , next) => {
 		req.getConnection((err , conexion) => {
-			if (err != null){
-
+			if (err){
+				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
-			conexion.query('SELECT * FROM competencia WHERE finalizado = 0', (err , rows) =>{
-				if (err != null){
-
+			conexion.query(`SELECT competencia.id , competencia.nombre as 'nombre' , competencia.fecha , competencia.hora , competencia.lugar , categoria.nombre as 'categoria' , categoria.sexo as 'sexo' FROM competencia LEFT JOIN categoria ON competencia.id_categoria=categoria.id WHERE finalizado = 1`, (err , rows) =>{
+				if (err){
+					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
 				}
 				res.render('historial', { Competencias: rows })
 			})

@@ -2,7 +2,10 @@
 var conexion = require('../conexion'),
     express = require('express'),
     router = express.Router()
-router.use(conexion)
+
+router
+
+	.use(conexion)
     //CREAR//
     .get('/competencia/crear', (req, res, next) => {
         req.getConnection((err, conexion) => {
@@ -188,6 +191,7 @@ router.use(conexion)
 		                          		console.log("nuevo competidor "+competencia_atleta.id_atleta)
 		                          	})
 								}
+
 							}
 						}		
 					}
@@ -212,49 +216,7 @@ router.use(conexion)
 			})
 		})
 		res.redirect('../listar')
-        /*req.getConnection((err, conexion) => {
-            if (err != null) {} else {
-                let competencia = {
-                    nombre: req.body.nombre,
-                    fecha: req.body.fecha,
-                    hora: req.body.hora,
-                    lugar: req.body.lugar,
-                    finalizado: 0,
-                    id_categoria: req.body.id_categoria
-                }
-                conexion.query('INSERT INTO competencia SET ?', competencia, (err, rows) => {
-                    if (err != null) {
-                        console.log("error guardando competencia")
-                    } else {
-                        var count = 0;
-                        var i = 0;
-                        for (i = 0; i < req.body.id_atleta.length; i++) {
-                            let competencia_atleta = {
-                                id_atleta: req.body.id_atleta[i],
-                                id_competencia: rows.insertId,
-                            }
-                            conexion.query('INSERT INTO competencia_atleta SET ?', competencia_atleta, (err, rows) => {
-                                if (err != null) {
-                                    console.log("error guardando competencia_atleta")
-                                } else {
-                                    count = count + 1;
-                                    if (count == req.body.id_atleta.length) {
-                                        res.redirect('../')
-                                    }
-                                }
-                            })
-                        }
-                    }
-                })
-            }
-        })*/
     })
-
-
-
-
-
-
 
     //INICIAR//
     .get('/competencia/iniciar', (req, res, next) => {

@@ -57,18 +57,6 @@
 			});
 
 
-			function dataCompetidores(){
-			var array = [];
-				var rowsBody= $("#myTable").find('tbody > tr ');
-				for (var i = 0; i < rowsBody.length; i++) {
-					if(($('#myTable tbody tr').eq(i).hasClass('selected'))){
-						var numComp = $('#myTable tbody tr').eq(i).children('th').text();
-						array.push(numComp);
-					}	
-				}
-				return array;
-			}
-
 ////////////////////////MODIFICAR
 
 			var tableCompe = $('#myTableCompe').DataTable({
@@ -225,9 +213,12 @@ document.onkeypress = info;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	
-			var table = $('#myTable1').DataTable({
-				"language": 
-			{
+var table = $('#myTable1').DataTable({
+	scrollY: "350px",
+	scrollCollapse: true,
+
+	"language": 
+	{
     "sProcessing":     "Procesando...",
     "sLengthMenu":     "Mostrar _MENU_ registros",
     "sZeroRecords":    "No se encontraron resultados",
@@ -247,10 +238,10 @@ document.onkeypress = info;
         "sPrevious": "Anterior"
     },
     "oAria": {
-        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+        
         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
     },
-},
+	},
         
 			
 			});

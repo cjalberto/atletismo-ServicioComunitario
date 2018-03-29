@@ -22,7 +22,15 @@
 					<input type="text" class="form-control" name="descripcion" placeholder="Descripción de Categoría" value="<%= descripcion %>">
 				</div>
 			</div>
-
+			<div class="form-group row align-items-center">
+				<label for="inputCategoria" class="col-md-2 col-form-label">Genero:</label>
+						<div class="col-md-6">
+							<select id="inputCategoria" name="sexo" class="form-control">
+								<option value="F" <% if(sexo == 'F'){ %> selected="selected" <% } %> >Femenino </option>
+								<option value="M" <% if(sexo == 'M'){ %> selected="selected" <% } %> >Masculino</option>
+							</select>
+						</div>
+			</div>
 			<button type="submit" class="btn btn-secondary btn-lg">EDITAR</button>
 
 		</form>
