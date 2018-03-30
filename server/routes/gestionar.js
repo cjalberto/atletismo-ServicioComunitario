@@ -14,12 +14,11 @@ router
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
-			conexion.query('SELECT * FROM  categoria' , (err , rows) =>{
-				if (err){
-					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-				}
-				res.render('gestionar/categoria/listar', {listCategorias: rows})
-			})
+			else{
+				conexion.query('SELECT * FROM  categoria' , (err , rows) =>{
+					(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('gestionar/categoria/listar', {listCategorias: rows})
+				})
+			}
 		})
 	})
 	//add
@@ -36,12 +35,39 @@ router
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
-			conexion.query('INSERT INTO categoria SET ?' , categoria, (err , rows) =>{
-				if (err){
-					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-				}
-				res.redirect('/gestionar/categoria')
-			})
+			else{
+				let promesa = new Promise((resolve , reject) => {
+					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria.nombre}' AND categoria.sexo='${categoria.sexo}'`, (err , rows) =>{
+						console.log(rows.length)
+						if (err){
+							reject(new Error('Error al consultar la base de datos'))
+						}
+						else{
+							if(rows.length > 0){
+								reject(new Error('Categoria repetida'))
+							}
+							else{
+								resolve()
+							}
+						}
+					})
+				})
+				promesa
+					.then(() => {
+						return new Promise((resolve , reject) => {
+							conexion.query('INSERT INTO categoria SET ?' , categoria, (err , rows) =>{
+								(err) ? reject(new Error('Error al guardar la data en la base de datos')) : resolve()
+							})
+						})
+					})
+					.then(() => {
+						res.redirect('/gestionar/categoria')
+					})
+					.catch((err) =>{
+						res.status(404)
+						res.send({mensaje : err.message , code : 404})
+					})
+			}
 		})
 	})
 	//delete
@@ -51,12 +77,11 @@ router
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
-			conexion.query('DELETE FROM categoria where id = ?' , categoria_id , (err , rows) =>{
-				if (err){
-					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-				}
-				res.redirect('/gestionar/categoria')
-			})
+			else{
+				conexion.query('DELETE FROM categoria where id = ?' , categoria_id , (err , rows) =>{
+					(err) ? res.render('error', {mensaje : 'Error al eliminar registro de la base de datos' , code : 404}) : res.redirect('/gestionar/categoria')
+				})
+			}
 		})
 	})
 	//edit
@@ -66,21 +91,23 @@ router
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
-	        conexion.query('SELECT * FROM categoria WHERE id = ?' , categoria_id , (err, rows) =>{
-	        	if (err){
-					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-				}
-	            if (rows.length <= 0) {
-	                res.redirect('/gestionar/categoria')
-	            }
-	            res.render('gestionar/categoria/modificar', {
-	                title: 'Editar Categoría', 
-	                id: rows[0].id,
-	                nombre: rows[0].nombre,
-	                sexo: rows[0].sexo,
-	                descripcion: rows[0].descripcion                    
-	            })
-	        })
+			else{
+	        	conexion.query('SELECT * FROM categoria WHERE id = ?' , categoria_id , (err, rows) =>{
+	        		if (err){
+						res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
+					}
+	            	if (rows.length <= 0) {
+	               	 	res.redirect('/gestionar/categoria')
+	            	}
+	            	res.render('gestionar/categoria/modificar', {
+	                	title: 'Editar Categoría', 
+	                	id: rows[0].id,
+	                	nombre: rows[0].nombre,
+	                	sexo: rows[0].sexo,
+	                	descripcion: rows[0].descripcion                    
+	            	})
+	        	})
+			}
 	    })
 	})
 	.post('/gestionar/categoria/modificar/:categoria_id', (req, res , next) => {
@@ -94,12 +121,11 @@ router
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
-			conexion.query('UPDATE categoria SET ? WHERE id = ' + categoria_id,cat, (err, result) =>{    
-				if (err){
-					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-				}             
-				res.redirect('/gestionar/categoria')
-			})
+			else{
+				conexion.query('UPDATE categoria SET ? WHERE id = ' + categoria_id,cat, (err, result) =>{            
+					(err) ? res.render('error', {mensaje : 'Error al guardar la data en la base de datos' , code : 404}) : res.redirect('/gestionar/categoria')
+				})
+			}
 		})
 	})
 
@@ -110,12 +136,11 @@ router
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
-			conexion.query('SELECT * FROM  club' , (err , rows) =>{
-				if (err){
-					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-				}
-				res.render('gestionar/club/listar', {listClub: rows})
-			})
+			else{
+				conexion.query('SELECT * FROM  club' , (err , rows) =>{
+					(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('gestionar/club/listar', {listClub: rows})
+				})
+			}
 		})
 	})
 	//add
@@ -123,8 +148,8 @@ router
 		res.render('gestionar/club/crear')
 	})
 	.post('/gestionar/club/crear' , (req, res , next) => {
-		console.log('body: ' + JSON.stringify(req.body));
-		res.send(req.body);
+		console.log('body: ' + JSON.stringify(req.body))
+		res.send(req.body)
 		/*let club = {
 			nombre : req.body.nombre,
 			descripcion : req.body.descripcion
@@ -146,13 +171,14 @@ router
 	.post('/gestionar/club/eliminar/:club_id', (req, res , next) => {
 		let club_id = req.params.club_id
 		req.getConnection((err , conexion) => {
-			conexion.query('DELETE FROM club WHERE id = ?' , club_id , (err , rows) =>{
-				if (err){
-					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-				}else{
-					res.redirect('/gestionar/club')
-				}
-			})
+			if (err){
+				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
+			}
+			else{
+				conexion.query('DELETE FROM club WHERE id = ?' , club_id , (err , rows) =>{
+					(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.redirect('/gestionar/club')
+				})
+			}
 		})
 	})
 	//edit
@@ -162,20 +188,23 @@ router
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
-	        conexion.query('SELECT * FROM club WHERE id = ?' , club_id , (err, rows) =>{
-	            if (err){
-					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-				}
-	            if (rows.length <= 0) {
-	                res.redirect('/gestionar/club')
-	            }
-	            res.render('gestionar/club/modificar', {
-	            	title: 'Editar Club', 
-	            	id: rows[0].id,
-	            	nombre: rows[0].nombre,
-	            	descripcion: rows[0].descripcion                    
-	            })
-	        })
+			else{
+				conexion.query('SELECT * FROM club WHERE id = ?' , club_id , (err, rows) =>{
+	            	if (err){
+						res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
+					}
+	            	if (rows.length <= 0) {
+	                	res.redirect('/gestionar/club')
+	            	}
+	            	res.render('gestionar/club/modificar', {
+	            		title: 'Editar Club', 
+	            		id: rows[0].id,
+	            		nombre: rows[0].nombre,
+	            		descripcion: rows[0].descripcion                    
+	            	})
+	        	})
+			}
+	        
 	    })
 	})
 	.post('/gestionar/club/modificar/:club_id', (req, res , next) => {
@@ -188,12 +217,11 @@ router
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
-			conexion.query('UPDATE club SET ? WHERE id = ' + club_id, club, (err, result) =>{  
-				if (err){
-					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-				}               
-				res.redirect('/gestionar/club')
-			})
+			else{
+				conexion.query('UPDATE club SET ? WHERE id = ' + club_id, club, (err, result) =>{              
+					(err) ? res.render('error', {mensaje : 'Error al guardar la data en la base de datos' , code : 404}) : res.redirect('/gestionar/club')
+				})
+			}
 		})
 	})
 
@@ -213,12 +241,11 @@ router
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
-			conexion.query('SELECT * FROM  atleta' , (err , rows) =>{
-				if (err){
-					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-				}
-				res.render('competidor/listar' , rows)
-			})
+			else{
+				conexion.query('SELECT * FROM  atleta' , (err , rows) =>{
+					(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competidor/listar' , rows)
+				})
+			}
 		})
 	})
 	.post('/crear/competidor' , (req, res , next) => {
@@ -237,12 +264,11 @@ router
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
-			conexion.query('INSERT INTO atleta SET ?' , competidor, (err , rows) =>{
-				if (err){
-					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-				}
-				return (err) ? res.redirect('competidor/crear') : res.redirect('competidor/listar')
-			})
+			else{
+				conexion.query('INSERT INTO atleta SET ?' , competidor, (err , rows) =>{
+					(err) ? res.render('error', {mensaje : 'Error al guardar la data en la base de datos' , code : 404}) : res.redirect('competidor/listar')
+				})
+			}
 		})
 	})
 	.get('/eliminar/competidor/:competidor_id', (req, res , next) => {
@@ -251,14 +277,11 @@ router
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
-			conexion.query('DELETE FROM atleta where id = ?' , competidor_id , (err , rows) =>{
-				if (err){
-					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-				}
-				else{
-					res.redirect('competidor/listar')
-				}
-			})
+			else{
+				conexion.query('DELETE FROM atleta where id = ?' , competidor_id , (err , rows) =>{
+					(err) ? res.render('error', {mensaje : 'Error al eliminar registro de la base de datos' , code : 404}) : res.redirect('competidor/listar')
+				})
+			}
 		})
 	})
 
