@@ -29,13 +29,27 @@ router
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}else{
 				if(sexo == 'Mixto'){
-					conexion.query('SELECT at.*, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id' , (err , atletas) =>{
-						(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body, datosCatNombre: cat_nombre})
-					})
+					if(cat_nombre == 'libre'){
+						conexion.query('SELECT at.*, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id' , (err , atletas) =>{
+							(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body, datosCatNombre: cat_nombre})
+						})
+					}
+					else{
+						conexion.query(`SELECT at.* , cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id LEFT JOIN categoria ca ON ca.id=at.id_categoria WHERE ca.nombre=${cat_nombre} ` , (err , atletas) =>{
+							(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body, datosCatNombre: cat_nombre})
+						})
+					}
 				}else{
-					conexion.query(`SELECT at.*, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id where at.id_categoria = ?` , categoria_id , (err , atletas) =>{
-						(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body, datosCatNombre: cat_nombre})
-					})
+					if(cat_nombre == 'libre'){
+						conexion.query(`SELECT at.* , cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id LEFT JOIN categoria ca ON ca.id=at.id_categoria WHERE at.sexo=${sexo} ` , (err , atletas) =>{
+							(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body, datosCatNombre: cat_nombre})
+						})
+					}
+					else{
+						conexion.query(`SELECT at.*, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id where at.id_categoria = ?` , categoria_id , (err , atletas) =>{
+							(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body, datosCatNombre: cat_nombre})
+						})
+					}
 				}
 			}
 		})
