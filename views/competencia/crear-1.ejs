@@ -56,7 +56,7 @@
 						<div class="col-md-6">
 							<select id="inputCategoria" name="categoria" class="form-control" required>
 								<% for(var i=0; i<categorias.length; i++) {%>
-								<option value="<%= categorias[i]['id'] + '-' + categorias[i]['sexo'] %>"><%= categorias[i]['nombre'] + '-' + categorias[i]['sexo'] %></option>
+								<option value="<%= categorias[i]['id'] + '-' + categorias[i]['sexo'] + '-' + categorias[i]['nombre'] %>"><%= categorias[i]['nombre'] + '-' + categorias[i]['sexo'] %></option>
 								<% } %>
 							</select>
 						</div>

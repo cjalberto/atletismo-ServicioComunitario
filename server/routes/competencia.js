@@ -22,20 +22,19 @@ router
 	})
 	.post('/competencia/crear' , (req, res , next) => {
 		let categoria_id = req.body.categoria.split('-')[0],
-			sexo = req.body.categoria.split('-')[1]
-			console.log(categoria_id)
-			console.log(sexo)
+			sexo = req.body.categoria.split('-')[1],
+			cat_nombre = req.body.categoria.split('-')[2]
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}else{
 				if(sexo == 'Mixto'){
-					conexion.query('SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id' , (err , atletas) =>{
-						(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body})
+					conexion.query('SELECT at.*, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id' , (err , atletas) =>{
+						(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body, datosCatNombre: cat_nombre})
 					})
 				}else{
-					conexion.query(`SELECT at.id, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id where at.id_categoria = ?` , categoria_id , (err , atletas) =>{
-						(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body})
+					conexion.query(`SELECT at.*, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id where at.id_categoria = ?` , categoria_id , (err , atletas) =>{
+						(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body, datosCatNombre: cat_nombre})
 					})
 				}
 			}

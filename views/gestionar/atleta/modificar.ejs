@@ -1,0 +1,102 @@
+<div id="atletamodificar" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form class="text-center" action="/gestionar/atleta/modificar" method="post">
+          <div class="modal-header">            
+            <h4 class="modal-title">Modificar un Atleta</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body"> 
+            
+            <div class="form-group ">
+            <div class="row">
+                <label for="inputNombre1Atleta" class="col-md-2 col-form-label">PrimerNombre:</label>
+                  <input type="text" class="form-control" name="primer_nombre" >
+              </div>
+            </div>
+
+            <div class="form-group ">
+            <div class="row">
+                <label for="inputNombre2Atleta" class="col-md-2 col-form-label">SegundoNombre:</label>
+                  <input type="text" class="form-control" name="segundo_nombre" >
+              </div>
+            </div>
+            <div class="form-group ">
+            <div class="row">
+                <label for="inputApellido1Atleta" class="col-md-2 col-form-label">PrimerApellido:</label>
+                  <input type="text" class="form-control" name="primer_apellido" >
+              </div>
+            </div>
+            <div class="form-group ">
+            <div class="row">
+                <label for="inputApellido1Atleta" class="col-md-2 col-form-label">SegundoApellido:</label>
+                  <input type="text" class="form-control" name="segundo_apellido" >
+              </div>
+            </div>
+            <div class="form-group ">
+            <div class="row">
+                <label for="inputCedual" class="col-md-2 col-form-label">Cedula:</label>
+                  <input type="number" class="form-control" name="cedula" >
+              </div>
+            </div>
+            <div class="form-group ">
+            
+            <div class="row">
+                <label for="inputFecha" class="col-md-2 col-form-label">Fechadenacimiento:</label>
+                  <div class="col-md-6" style="margin-left: 20%">
+                    
+                  <input type="date" class="form-control" name="fecha_nacimiento" >
+                  </div>
+
+              </div>
+             
+            </div>
+            <div class="form-group ">
+
+            </div>
+
+            
+             <div class="form-group row align-items-center">
+               <label for="inputClub" class="col-md-2 col-form-label">Club:</label>
+              <div class="col-md-6">
+              <select id="inputClub" name="id_club" class="form-control">
+                <% for(var i=0; i<club.length; i++) {%>
+                <option value="<%= club[i]['id'] %>"><%= club[i]['nombre'] %></option>
+                <% } %>
+              </select>
+             </div>
+             </div>
+
+           <div class="form-group row align-items-center ">
+            <label for="inputCategoria" class="col-md-2 col-form-label">Categoria:</label>
+            <div class="col-md-6">
+              <select id="inputCategoria" name="id_categoria" class="form-control">
+                <% for(var i=0; i<categorias.length; i++) {%>
+                <option value="<%= categorias[i]['id'] %>"><%= categorias[i]['nombre'] %></option>
+                <% } %>
+              </select>
+            </div>
+          </div>
+
+           <div class="form-group row align-items-center">
+          <label for="inputCategoria" class="col-md-2 col-form-label">Genero:</label>
+            <div class="col-md-6">
+              <select id="inputCategoria" name="sexo" class="form-control" required>
+                <option value="Femenino">Femenino</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Mixto">Mixto</option>
+              </select>
+            </div>
+          </div>
+
+
+          </div>
+          <div class="modal-footer">
+            <input type="button" class="btn btn-secondary  text-uppercase " data-dismiss="modal" value="Cancelar">
+            <input type="submit" class="btn btn-success" value="Modificar">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
