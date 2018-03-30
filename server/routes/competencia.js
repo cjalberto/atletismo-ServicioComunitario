@@ -87,7 +87,7 @@ router
     .get('/competencia/listar', (req, res, next) => {
         req.getConnection((err, conexion) => {
             if (err != null) {}
-            conexion.query('SELECT * FROM competencia  WHERE finalizado=0', (err, rows) => {
+            conexion.query(`SELECT com.nombre as 'nombre' , com.id as 'id' , DATE_FORMAT(com.fecha,'%d/%m/%Y') as 'fecha' , TIME(com.hora) as 'hora' , com.lugar as 'lugar' , cat.nombre as 'categoria'  , cat.sexo as 'sexo' FROM competencia com LEFT JOIN categoria cat ON com.id_categoria=cat.id WHERE finalizado=0`, (err, rows) => {
                 (err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/listar', { datosCompetencia: rows })
             })
         })
@@ -117,7 +117,8 @@ router
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			else{
-				conexion.query('SELECT * FROM competencia comp WHERE comp.id = ?', competencia_id, (err, rows) => {
+				conexion.query(`SELECT com.nombre as 'nombre' , com.id as 'id' , DATE_FORMAT(com.fecha,'%m/%d/%Y') as 'fecha' , TIME(com.hora) as 'hora' , com.lugar as 'lugar' , cat.nombre as 'categoria' , cat.id as 'id_categoria'  , cat.sexo as 'sexo' FROM competencia com LEFT JOIN categoria cat ON com.id_categoria=cat.id WHERE com.id = ?`, competencia_id, (err, rows) => {
+                console.log(rows)
                 if (err){
                 	res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
                 }
@@ -230,7 +231,7 @@ router
 	        }
 	        else{
             	conexion.query('SELECT * FROM competencia WHERE finalizado = 0', (err, rows) => {
-                	(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/iniciar', { datosCompetencia: rows })
+                	(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('/competencia/iniciar', { datosCompetencia: rows })
             	})
 	        }
         })
