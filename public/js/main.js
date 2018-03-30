@@ -23,7 +23,16 @@
 			function countRow() {
 				var counts = table.rows('.selected').data().length + ' Competidores Seleccionados';
 				inputsCompetidores();
+				buttonSave(table.rows('.selected').data().length);
 				return counts;
+			}
+
+			function buttonSave(counts){
+				if(counts<2){
+					$(".btn-save").prop('disabled', true);
+				}else{
+					$(".btn-save").prop('disabled', false);
+				}	
 			}
 
 			function inputsCompetidores(){
@@ -54,6 +63,10 @@
 			$("#deselect-all").click(function () {
 				$("#myTable tbody tr").removeClass('selected');
 				$('.selected-count').text(countRow());
+			});
+
+			$('.btn-save').click(function() {		
+					alert("Competencia Guardada")	
 			});
 
 
