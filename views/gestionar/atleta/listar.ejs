@@ -42,18 +42,19 @@
                 </tr>
               </thead>
               <tbody>
-               
+              
 
-               <% for(var i=0; i<listAtleta.length; i++) {%>
+               <% for(var i=0; i<dataAtletas.length; i++) {%>
                <tr>
-                <th scope="row"><%= listAtleta[i]['id'] %></th>
-                <td><%= listAtleta[i]['cedula'] %></td>
-                <td><%= listAtleta[i]['primer_nombre'] %></td>
-                <td><%= listAtleta[i]['id_club'] %></td>
-                <td><%= listAtleta[i]['id_categoria'] %></td>
+                <th scope="row"><%= dataAtletas[i]['id'] %></th>
+                <td><%= dataAtletas[i]['cedula'] %></td>
+                <td><%= dataAtletas[i]['primer_nombre'] %></td>
+                <td><%= dataAtletas[i]['nombre'] %></td>
+                <td><%= dataAtletas[i]['id_club'] %></td>
+              
                 <td class="d-flex align-items-center justify-content-center">
                       <a class="btn btn-secondary" href="#atletamodificar" data-toggle="modal" ><i class="fa fa-plus"></i>Editar</a>           
-                      <form method="post" action="/gestionar/atleta/eliminar/<%= listAtleta[i]['id'] %>">
+                      <form method="post" action="/gestionar/atleta/eliminar/<%= dataAtletas[i]['id'] %>">
                         <button type="submit" class="btn btn-secondary" name="delete" onClick="return confirm('¿Quieres eliminar el Atleta?')">Eliminar</button>
                       </form>
               </td>
@@ -66,8 +67,7 @@
           </div>
 
           <div class="btn-container">
-            <button class="btn btn-secondary btn-lg btn-back">Regresar</button>
-            <button class="btn btn-secondary btn-lg btn-save">Guardar Cambios</button>
+            <a href="../" class="btn btn-secondary btn-lg btn-back">REGRESAR</a>
           </div>
 
 
