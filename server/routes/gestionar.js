@@ -259,7 +259,8 @@ router
       cedula : req.body.cedula,
       fecha_nacimiento : req.body.fecha_nacimiento,
       id_club : req.body.id_club,
-      id_categoria : req.body.id_categoria
+      id_categoria : req.body.id_categoria,
+      sexo : req.body.sexo
     }
     req.getConnection((err , conexion) => {
       if (err){
