@@ -1,59 +1,20 @@
 <% include ../../partials/head %>
 
-	
+  
     <div class="title text-center">
-		<h1>COMPETIDORES</h1>
-	</div>
-
-	
-
-<div id="addEmployeeModal" class="modal fade">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form>
-          <div class="modal-header">            
-            <h4 class="modal-title">Agregar un Nuevo Atleta</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          </div>
-          <div class="modal-body">          
-            <div class="form-group">
-              <label>Numero</label>
-              <input type="text" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label>Cedula</label>
-              <input  class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label>Nombre y Apellido</label>
-              <textarea class="form-control" required></textarea>
-            </div>
-            <div class="form-group">
-              <label>Categoria</label>
-              <input type="text" class="form-control" required>
-            </div>   
-            <div class="form-group">
-              <label>Club/Equipo</label>
-              <input type="text" class="form-control" required>
-            </div>         
-          </div>
-          <div class="modal-footer">
-            <input type="button" class="btn btn-secondary  text-uppercase " data-dismiss="modal" value="Cancelar">
-            <input type="submit" class="btn btn-success" value="Agregar">
-          </div>
-        </form>
-      </div>
-    </div>
+    <h1>COMPETIDORES</h1>
   </div>
 
+  
 
-
+<% include crear %>
+<% include modificar %>
     
 <div class="container">
 
 
 
-<div class="form1">
+      <div class="form1">
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-8"><h1><b>Listado De Atletas</b></h1></div>
@@ -82,152 +43,25 @@
               </thead>
               <tbody>
                
-                <tr>
-                  <th scope="row" class="idCompetidor">1</th>
-                        <td>19806925 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        <td>
-                          <button class="btn btn-secondary text-uppercase btn-edit">editar</button>
-                          <button class="btn btn-secondary text-uppercase btn-remove">eliminar</button> 
-                        </td>
-                </tr>
-                 <tr>
-                  <th scope="row" class="idCompetidor">1</th>
-                        <td>19806925 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        <td>
-                          <button class="btn btn-secondary text-uppercase btn-edit">editar</button>
-                          <button class="btn btn-secondary text-uppercase btn-remove">eliminar</button> 
-                        </td>
-                </tr>
-                
 
+               <% for(var i=0; i<listAtleta.length; i++) {%>
                <tr>
-                  <th scope="row" class="idCompetidor">1</th>
-                        <td>19806925 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        <td>
-                          <button class="btn btn-secondary text-uppercase btn-edit">editar</button>
-                          <button class="btn btn-secondary text-uppercase btn-remove">eliminar</button> 
-                        </td>
-                </tr>
-                
-                 <tr>
-                  <th scope="row" class="idCompetidor">1</th>
-                        <td>19806925 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        <td>
-                          <button class="btn btn-secondary text-uppercase btn-edit">editar</button>
-                          <button class="btn btn-secondary text-uppercase btn-remove">eliminar</button> 
-                        </td>
-                </tr>
-                 <tr>
-                  <th scope="row" class="idCompetidor">1</th>
-                        <td>19806925 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        <td>
-                          <button class="btn btn-secondary text-uppercase btn-edit">editar</button>
-                          <button class="btn btn-secondary text-uppercase btn-remove">eliminar</button> 
-                        </td>
-                </tr>
-                
-
-               <tr>
-                  <th scope="row" class="idCompetidor">1</th>
-                        <td>19806925 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        <td>
-                          <button class="btn btn-secondary text-uppercase btn-edit">editar</button>
-                          <button class="btn btn-secondary text-uppercase btn-remove">eliminar</button> 
-                        </td>
-                </tr>
-                 <tr>
-                  <th scope="row" class="idCompetidor">1</th>
-                        <td>19806925 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        <td>
-                          <button class="btn btn-secondary text-uppercase btn-edit">editar</button>
-                          <button class="btn btn-secondary text-uppercase btn-remove">eliminar</button> 
-                        </td>
-                </tr>
-                 <tr>
-                  <th scope="row" class="idCompetidor">1</th>
-                        <td>19806925 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        <td>
-                          <button class="btn btn-secondary text-uppercase btn-edit">editar</button>
-                          <button class="btn btn-secondary text-uppercase btn-remove">eliminar</button> 
-                        </td>
-                </tr>
-                
-
-               <tr>
-                  <th scope="row" class="idCompetidor">1</th>
-                        <td>19806925 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        <td>
-                          <button class="btn btn-secondary text-uppercase btn-edit">editar</button>
-                          <button class="btn btn-secondary text-uppercase btn-remove">eliminar</button> 
-                        </td>
-                </tr>
-                 <tr>
-                  <th scope="row" class="idCompetidor">1</th>
-                        <td>19806925 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        <td>
-                          <button class="btn btn-secondary text-uppercase btn-edit">editar</button>
-                          <button class="btn btn-secondary text-uppercase btn-remove">eliminar</button> 
-                        </td>
-                </tr>
-                 <tr>
-                  <th scope="row" class="idCompetidor">1</th>
-                        <td>19806925 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        <td>
-                          <button class="btn btn-secondary text-uppercase btn-edit">editar</button>
-                          <button class="btn btn-secondary text-uppercase btn-remove">eliminar</button> 
-                        </td>
-                </tr>
-                
-
-               <tr>
-                  <th scope="row" class="idCompetidor">1</th>
-                        <td>19806925 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        <td>
-                          <button class="btn btn-secondary text-uppercase btn-edit">editar</button>
-                          <button class="btn btn-secondary text-uppercase btn-remove">eliminar</button> 
-                        </td>
-                </tr>
-
-                
-
+                <th scope="row"><%= listAtleta[i]['id'] %></th>
+                <td><%= listAtleta[i]['cedula'] %></td>
+                <td><%= listAtleta[i]['primer_nombre'] %></td>
+                <td><%= listAtleta[i]['id_club'] %></td>
+                <td><%= listAtleta[i]['id_categoria'] %></td>
+                <td class="d-flex align-items-center justify-content-center">
+                      <a class="btn btn-secondary" href="#atletamodificar" data-toggle="modal" ><i class="fa fa-plus"></i>Editar</a>           
+                      <form method="post" action="/gestionar/atleta/eliminar/<%= listAtleta[i]['id'] %>">
+                        <button type="submit" class="btn btn-secondary" name="delete" onClick="return confirm('¿Quieres eliminar el Atleta?')">Eliminar</button>
+                      </form>
+              </td>
+              </tr>
+              <% } %>
                 
               </tbody>
+
             </table>
           </div>
 

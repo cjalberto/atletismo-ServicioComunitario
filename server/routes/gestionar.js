@@ -200,68 +200,97 @@ router
 
 	//CRUD ATLETAS
 	.get('/gestionar/atleta', (req, res , next) => {
-		res.render('gestionar/atleta/listar');
-	})
-	.get('/gestionar/atleta/crear', (req, res , next) => {
-		res.render('gestionar/atleta/crear')
-	})
-	.get('/competidor/modificar', (req, res , next) => {
-		res.render('competidor/modificar')
-	})
-	.get('/competidor/listar', (req, res , next) => {
-		req.getConnection((err , conexion) => {
+   req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			conexion.query('SELECT * FROM  atleta' , (err , rows) =>{
 				if (err){
 					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-				}
-				res.render('competidor/listar' , rows)
+				}else{
+         			  conexion.query('SELECT * FROM  club' , (err , club) =>{
+        			if (err != null){
+        
+        			}else{
+         		 conexion.query('SELECT * FROM  categoria' , (err , categorias) =>{
+        			if (err != null){
+        
+       			}
+        			res.render('gestionar/atleta/listar',{categorias: categorias, club: club,listAtleta: rows})
+     			})}
+     				 })}
 			})
 		})
+  })
+
+
+ .get('/gestionar/atleta', (req, res , next) => {
+    req.getConnection((err , conexion) => {
+      if (err != null){
+        
+      }
+      conexion.query('SELECT * FROM  club' , (err , club) =>{
+        if (err != null){
+        
+        }else{
+          conexion.query('SELECT * FROM  categoria' , (err , categorias) =>{
+        if (err != null){
+        
+        }
+        res.render('gestionar/atleta/listar',{categorias: categorias, club: club})
+      })}
+      })
+
+    })
+  })
+
+
+
+	.get('/gestionar/atleta/crear', (req, res , next) => {
+		res.render('gestionar/atleta/crear')
 	})
-	.post('/crear/competidor' , (req, res , next) => {
-		let competidor = {
-			primer_nombre : req.body.primer_nombre,
-			segundo_nombre : req.body.segundo_nombre,
-			primer_apellido : req.body.primer_apellido,
-			segundo_apellido : req.body.segundo_apellido,
-			cedula : req.body.cedula,
-			fecha_nacimiento : req.body.fecha_nacimiento,
-			sexo : req.body.sexo,
-			id_club : req.body.id_club,
-			id_categoria : req.body.id_categoria
-		}
+
+	.post('/gestionar/atleta/crear' , (req, res , next) => {
+    let atleta = {
+      primer_nombre : req.body.primer_nombre,
+      segundo_nombre : req.body.segundo_nombre,
+      primer_apellido : req.body.primer_apellido,
+      segundo_apellido : req.body.segundo_apellido,
+      cedula : req.body.cedula,
+      fecha_nacimiento : req.body.fecha_nacimiento,
+      id_club : req.body.id_club,
+      id_categoria : req.body.id_categoria
+    }
+    req.getConnection((err , conexion) => {
+      if (err){
+        res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
+      }
+      conexion.query('INSERT INTO atleta SET ?' , atleta, (err , rows) =>{
+        if (err){
+          res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
+        }
+        res.redirect('/gestionar/atleta')
+      })
+    })
+  })
+	.post('/gestionar/atleta/eliminar/:atleta_id', (req, res , next) => {
+		let atleta_id = req.params.atleta_id
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
-			conexion.query('INSERT INTO atleta SET ?' , competidor, (err , rows) =>{
+			conexion.query('DELETE FROM atleta where id = ?' , atleta_id , (err , rows) =>{
 				if (err){
 					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
 				}
-				return (err) ? res.redirect('competidor/crear') : res.redirect('competidor/listar')
-			})
-		})
-	})
-	.get('/eliminar/competidor/:competidor_id', (req, res , next) => {
-		let competidor_id = req.params.competidor_id
-		req.getConnection((err , conexion) => {
-			if (err){
-				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
-			}
-			conexion.query('DELETE FROM atleta where id = ?' , competidor_id , (err , rows) =>{
-				if (err){
-					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-				}
-				else{
-					res.redirect('competidor/listar')
-				}
+					res.redirect('gestionar/atleta')
 			})
 		})
 	})
 
+.get('/gestionar/atleta/modificar/:atleta_id', (req, res , next) => {
+		res.render('gestionar/atleta/modificar')
+	})
 
 
 module.exports = router
