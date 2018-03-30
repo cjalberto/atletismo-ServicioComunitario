@@ -87,13 +87,14 @@ router
 		let categoria_id = req.params.categoria_id
 		let cat = {
 			nombre : req.body.nombre,
-			descripcion : req.body.descripcion			
+			descripcion : req.body.descripcion,
+			sexo : 	req.body.sexo	
 		}
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
-			conexion.query('UPDATE categoria SET ? WHERE id = ' + categoria_id, cat, (err, result) =>{    
+			conexion.query('UPDATE categoria SET ? WHERE id = ' + categoria_id,cat, (err, result) =>{    
 				if (err){
 					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
 				}             
