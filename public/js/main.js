@@ -118,6 +118,36 @@ var tableGestion = $('#myTableGestion').DataTable({
 	}
 });
 
+//POST ADD CAT
+
+// Attach a submit handler to the form
+$( "#crearCategoria" ).submit(function( event ) {
+ 
+  // Stop form from submitting normally
+  event.preventDefault();
+  console.log('crearCat link clicked');
+ 
+  // Get some values from elements on the page:
+  var $form = $( this ),
+  data = {}
+	data.nombre = $form.find( "input[name='nombre']" ).val(),
+	data.descripcion = $form.find( "input[name='descripcion']" ).val(),
+	urlpost = $form.attr( "action" );
+ 
+	$.ajax({
+		type: 'POST',
+		data: JSON.stringify(data),
+	    contentType: 'application/json',
+	    url: urlpost,						
+	    success: function(data) {
+	        console.log('success');
+	        console.log(JSON.stringify(data));
+	        $( "#result" ).empty().append( JSON.stringify(data) );
+	    }
+	});
+
+});
+
 
 
 

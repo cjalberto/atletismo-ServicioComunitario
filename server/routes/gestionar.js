@@ -123,7 +123,9 @@ router
 		res.render('gestionar/club/crear')
 	})
 	.post('/gestionar/club/crear' , (req, res , next) => {
-		let club = {
+		console.log('body: ' + JSON.stringify(req.body));
+		res.send(req.body);
+		/*let club = {
 			nombre : req.body.nombre,
 			descripcion : req.body.descripcion
 		}
@@ -135,9 +137,10 @@ router
 				if (err){
 					res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
 				}
-				res.redirect('/gestionar/club')
+				res.send(rows)
+				//res.redirect('/gestionar/club')
 			})
-		})
+		})*/
 	})
 	//delete
 	.post('/gestionar/club/eliminar/:club_id', (req, res , next) => {
