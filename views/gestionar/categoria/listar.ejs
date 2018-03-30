@@ -26,7 +26,7 @@
 				<tr>
 					<th scope="row"><%= listCategorias[i]['id'] %></th>
 					<td><%= listCategorias[i]['nombre'] %></td>
-					<td><%= listCategorias[i]['sexo'] == 'M' ? 'Masculino' : 'Femenino' %></td>
+					<td><%= listCategorias[i]['sexo'] %></td>
 					<td><%= listCategorias[i]['descripcion'] %></td>
 					<td class="d-flex align-items-center justify-content-center">
 	                    <a class="btn btn-secondary" href="/gestionar/categoria/modificar/<%= listCategorias[i]['id'] %>">Editar</a>           
