@@ -38,7 +38,6 @@ router
 			else{
 				let promesa = new Promise((resolve , reject) => {
 					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria.nombre}' AND categoria.sexo='${categoria.sexo}'`, (err , rows) =>{
-						console.log(rows.length)
 						if (err){
 							reject(new Error('Error al consultar la base de datos'))
 						}
