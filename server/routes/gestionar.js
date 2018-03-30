@@ -331,19 +331,20 @@ router
 				promesa
 					.then((dataCategorias) => {
 						return new Promise((resolve , reject) => {
-							conexion.query('SELECT * FROM club', (err, rows) =>{ 
-								(err) ? reject(new Error('Error al consultar la base de datos')) : resolve(dataCategorias , rows)           
+							conexion.query('SELECT * FROM club', (err, rows) =>{
+								(err) ? reject(new Error('Error al consultar la base de datos')) : resolve({dataCategorias : dataCategorias , dataClubs : rows})           
 							})
 						})
 					})
-					.then((dataCategorias , dataClubs) => {
+					.then((data) => {
 						return new Promise((resolve , reject) => {
 							conexion.query('SELECT * FROM atleta', (err, rows) =>{ 
-								(err) ? reject(new Error('Error al consultar la base de datos')) : resolve(dataCategorias , dataClubs , rows)           
+								(err) ? reject(new Error('Error al consultar la base de datos')) : resolve({dataCategorias : data.dataCategorias , dataClubs : data.dataClubs , dataAtletas : rows})           
 							})
 						})
 					})
-					.then((dataCategorias , dataClubs , dataAtletas) => {
+					.then((data) => {
+						console.log(data)
 						res.render('gestionar/atleta/listar' , {dataCategorias : dataCategorias , dataClubs : dataClubs , dataAtletas : dataAtletas})
 					})
 					.catch((err) =>{
