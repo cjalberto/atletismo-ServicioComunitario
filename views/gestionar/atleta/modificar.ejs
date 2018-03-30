@@ -60,8 +60,8 @@
                <label for="inputClub" class="col-md-2 col-form-label">Club:</label>
               <div class="col-md-6">
               <select id="inputClub" name="id_club" class="form-control">
-                <% for(var i=0; i<club.length; i++) {%>
-                <option value="<%= club[i]['id'] %>"><%= club[i]['nombre'] %></option>
+                <% for(var i=0; i<dataClubs.length; i++) {%>
+                <option value="<%= dataClubs[i]['id'] %>"><%= dataClubs[i]['nombre'] %></option>
                 <% } %>
               </select>
              </div>
@@ -71,8 +71,8 @@
             <label for="inputCategoria" class="col-md-2 col-form-label">Categoria:</label>
             <div class="col-md-6">
               <select id="inputCategoria" name="id_categoria" class="form-control">
-                <% for(var i=0; i<categorias.length; i++) {%>
-                <option value="<%= categorias[i]['id'] %>"><%= categorias[i]['nombre'] %></option>
+                <% for(var i=0; i<dataCategorias.length; i++) {%>
+                <option value="<%= dataCategorias[i]['id'] %>"><%= dataCategorias[i]['nombre'] %></option>
                 <% } %>
               </select>
             </div>
