@@ -373,7 +373,7 @@ router
         			if (err){
           				res.render('error', {mensaje : 'Error al guardar la data en la base de datos' , code : 404})
         			}
-        			res.redirect('/gestionar/atleta/listar')
+        			res.redirect('/gestionar/atleta')
       			})
       		}
     	})
