@@ -102,8 +102,7 @@ document.onkeypress = info;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	
-var table = $('#myTable1').DataTable({
-	scrollY: "350px",
+var table = $('#Tablecompe').DataTable({
 	scrollCollapse: true,
 
 	"language": 
@@ -131,6 +130,8 @@ var table = $('#myTable1').DataTable({
         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
     },
 	},
-        
+     "bPaginate": false,
+      "bInfo": false  
 			
-			});
+});
+
