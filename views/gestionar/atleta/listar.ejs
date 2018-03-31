@@ -1,18 +1,16 @@
 <% include ../../partials/head %>
 
   
-    <div class="title text-center">
+<div class="title text-center">
     <h1>COMPETIDORES</h1>
-  </div>
+</div>
 
-  
+
 
 <% include crear %>
 <% include modificar %>
     
 <div class="container">
-
-
 
       <div class="form1">
             <div class="table-title">
@@ -48,12 +46,15 @@
                <tr>
                 <th scope="row"><%= dataAtletas[i]['id'] %></th>
                 <td><%= dataAtletas[i]['cedula'] %></td>
-                <td><%= dataAtletas[i]['primer_nombre'] %></td>
-                <td><%= dataAtletas[i]['nombre'] %></td>
-                <td><%= dataAtletas[i]['id_club'] %></td>
+                <td><%= dataAtletas[i]['primer_nombre'] +" "+ dataAtletas[i]['primer_apellido'] %></td>
+                <%var pos= dataAtletas[i]['id_club'] %>
+                <%var pos1= dataAtletas[i]['id_categoria'] %>
+                <td><%= dataCategorias[pos1]['nombre'] %></td>
+                <td><%=dataClubs[pos-1]['nombre'] %></td>
+
               
                 <td class="d-flex align-items-center justify-content-center">
-                      <a class="btn btn-secondary" href="#atletamodificar" data-toggle="modal" ><i class="fa fa-plus"></i>Editar</a>           
+                      <a class="btn btn-secondary" href="/gestionar/atleta/modificar/<%= dataAtletas[i]['id'] %>">Editar</a>           
                       <form method="post" action="/gestionar/atleta/eliminar/<%= dataAtletas[i]['id'] %>">
                         <button type="submit" class="btn btn-secondary" name="delete" onClick="return confirm('¿Quieres eliminar el Atleta?')">Eliminar</button>
                       </form>

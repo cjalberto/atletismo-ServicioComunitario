@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 30-03-2018 a las 21:46:00
+-- Tiempo de generación: 31-03-2018 a las 17:20:03
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.3
 
@@ -37,18 +37,8 @@ CREATE TABLE `atleta` (
   `cedula` int(11) NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `id_club` int(11) NOT NULL,
-  `id_categoria` int(11) NOT NULL,
   `sexo` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `atleta`
---
-
-INSERT INTO `atleta` (`id`, `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `cedula`, `fecha_nacimiento`, `id_club`, `id_categoria`, `sexo`) VALUES
-(1, 'rbnfgn', 'fsfg', 'gsga', 'gdsg', 21312, '2018-03-14', 1, 1, 'Masculino'),
-(3, 'faweas', 'sfad', 'ghhdgh', 'dfasg', 35432, '2018-03-01', 3, 3, 'Femenino'),
-(4, 'gerh', '5yuhjfn', 'nfncvzdfb', 'asgasg', 6362, '2018-03-13', 4, 4, 'Masculino');
 
 -- --------------------------------------------------------
 
@@ -60,22 +50,10 @@ CREATE TABLE `categoria` (
   `id` int(11) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `descripcion` text NOT NULL,
-  `sexo` varchar(10) NOT NULL
+  `sexo` varchar(10) NOT NULL,
+  `edad_min` int(11) NOT NULL,
+  `edad_max` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `categoria`
---
-
-INSERT INTO `categoria` (`id`, `nombre`, `descripcion`, `sexo`) VALUES
-(1, 'libre', 'sdafgsa', 'Mixto'),
-(3, 'fwf', 'bvcvbbvd', 'Femenino'),
-(4, 'hghjyj', 'liul', 'Masculino'),
-(5, 'liutlr', 'erqwrtgw', 'Femenino'),
-(6, 'fds', 'gsgs', 'Masculino'),
-(8, 'gdg', 'gdsg', 'Mixto'),
-(13, 'librewfwe', 'sdfas', 'Mixto'),
-(17, 'libre', 'fwqefwq', 'Masculino');
 
 -- --------------------------------------------------------
 
@@ -88,16 +66,6 @@ CREATE TABLE `club` (
   `nombre` varchar(50) NOT NULL,
   `descripcion` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `club`
---
-
-INSERT INTO `club` (`id`, `nombre`, `descripcion`) VALUES
-(1, 'sfa', 'fsfasf'),
-(2, 'fsdaf', 'qerwq'),
-(3, 'fw', 'rwqr'),
-(4, 'trtg', 'rwq');
 
 -- --------------------------------------------------------
 
@@ -115,14 +83,6 @@ CREATE TABLE `competencia` (
   `id_categoria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `competencia`
---
-
-INSERT INTO `competencia` (`id`, `nombre`, `fecha`, `hora`, `lugar`, `finalizado`, `id_categoria`) VALUES
-(1, 'fsgg', '2018-03-15', '03:10:00', 'twtgsgas', 1, 1),
-(3, 'vvvvvvvvvvvvv', '2018-03-28', '01:00:00', 'vvvvvvvvvvvv', 0, 5);
-
 -- --------------------------------------------------------
 
 --
@@ -138,15 +98,6 @@ CREATE TABLE `competencia_atleta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `competencia_atleta`
---
-
-INSERT INTO `competencia_atleta` (`id`, `id_atleta`, `id_competencia`, `tiempo`, `numero_atleta`) VALUES
-(1, 1, 1, 300, 20),
-(5, 3, 1, 52742, 2872),
-(7, 4, 1, 2727, 222);
-
---
 -- Índices para tablas volcadas
 --
 
@@ -156,8 +107,7 @@ INSERT INTO `competencia_atleta` (`id`, `id_atleta`, `id_competencia`, `tiempo`,
 ALTER TABLE `atleta`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `cedula_unique` (`cedula`),
-  ADD KEY `foreing_id_club` (`id_club`),
-  ADD KEY `foreing_id_categoria` (`id_categoria`);
+  ADD KEY `foreing_id_club` (`id_club`);
 
 --
 -- Indices de la tabla `categoria`
@@ -195,31 +145,31 @@ ALTER TABLE `competencia_atleta`
 -- AUTO_INCREMENT de la tabla `atleta`
 --
 ALTER TABLE `atleta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `club`
 --
 ALTER TABLE `club`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `competencia`
 --
 ALTER TABLE `competencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `competencia_atleta`
 --
 ALTER TABLE `competencia_atleta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -229,7 +179,6 @@ ALTER TABLE `competencia_atleta`
 -- Filtros para la tabla `atleta`
 --
 ALTER TABLE `atleta`
-  ADD CONSTRAINT `foreing_id_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `foreing_id_club` FOREIGN KEY (`id_club`) REFERENCES `club` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

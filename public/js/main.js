@@ -264,22 +264,24 @@ $( "#editCat" ).submit(function( event ) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////INICIAR CARRERAS/////////////////////////////////////////////////////////////////////
 
+
 var centesimas = 0;
 var segundos = 0;
 var minutos = 0;
 var horas = 0;
-function inicio () {
+function inicio(){
 	control = setInterval(cronometro,10);
-	document.getElementById("parar").disabled = false;
+	document.getElementById("parar1").disabled = false;
 	document.getElementById("continuar").disabled = true;
-	document.getElementById("reinicio").disabled = false;
+	document.getElementById("reinicio1").disabled = false;
 }
-function parar () {
+function parar(){
+	console.log("entro");
 	clearInterval(control);
-	document.getElementById("parar").disabled = true;
+	document.getElementById("parar1").disabled = true;
 	document.getElementById("continuar").disabled = false;
 }
-function reinicio () {
+function reinicio(){
 	clearInterval(control);
 	centesimas = 0;
 	segundos = 0;
@@ -289,9 +291,9 @@ function reinicio () {
 	Segundos.innerHTML = ":00";
 	Minutos.innerHTML = ":00";
 	Horas.innerHTML = "00";
-	document.getElementById("parar").disabled = true;
+	document.getElementById("parar1").disabled = true;
 	document.getElementById("continuar").disabled = true;
-	document.getElementById("reinicio").disabled = true;
+	document.getElementById("reinicio1").disabled = true;
 }
 function cronometro () {
 	if (centesimas < 99) {
@@ -325,16 +327,18 @@ function cronometro () {
 	}
 }
 var i=0;
+var ban=0;
            function mostrar() {
 				document.getElementById('oculto').style.display = 'block';
 				document.getElementById('oculto1').style.display = 'none';
 				
-				
+				ban=1;
 			}
-			
+
+		
 function info(elEvento) {
          var evento = elEvento || window.event // definir objeto event
-         if (evento.type ==  "keypress" && evento.keyCode==13 ) { //el número de caracter sólo está en el evento keypress
+         if (evento.type ==  "keypress" && evento.keyCode==13 && ban==1) { //el número de caracter sólo está en el evento keypress
          	if(i==0){inicio();}
             $('#addr'+i).html("</td><td class='text-center' id='campo"+i+"'>"+horas+':'+minutos+':'+segundos+':'+centesimas+"</td><td ><input  id='num"+i+"'  placeholder='Numero' ></td></td>");
 			$('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
@@ -344,9 +348,9 @@ function info(elEvento) {
 
              if (evento.type ==  "keypress" && evento.keyCode==115 ) {
               if(i>1){
-			   $("#addr"+(i-1)).html('');
-				i--;
-			   }
+				 $("#addr"+(i-1)).html('');
+				 i--;
+				 }
              }
 
 } 
@@ -361,6 +365,50 @@ console.log(document.getElementById(campo2).innerText); console.log(document.get
 window.onload = function() { //acceso a los eventos.
 document.onkeypress = info;
 }
+
+
+
+
+//POST ADD ATLETA//
+
+// Attach a submit handler to the form
+$( "#crearAtleta" ).submit(function( event ) {
+ 
+  // Stop form from submitting normally
+  event.preventDefault();
+  // Get some values from elements on the page:
+  var $form = $( this ),
+  datos = {}
+	datos.primer_nombre = $form.find( "input[name='primer_nombre']" ).val(),
+	datos.segundo_nombre = $form.find( "input[name='segundo_nombre']" ).val(),
+	datos.primer_apellido = $form.find( "input[name='primer_apellido']" ).val(),
+	datos.segundo_apellido = $form.find( "input[name='segundo_apellido']" ).val(),
+	datos.cedula = $form.find( "input[name='cedula']" ).val(),
+	datos.fecha_nacimiento = $form.find( "select[name='fecha_nacimiento']" ).val(),
+	datos.id_club = $form.find( "select[name='id_club']" ).val(),
+	datos.id_categoria = $form.find( "select[name='id_categoria']" ).val(),
+	datos.sexo = $form.find( "select[name='sexo']" ).val(),
+	urlpost = $form.attr( "action" );
+ 
+	$.ajax({
+		type: 'POST',
+		data: JSON.stringify(datos),
+	    contentType: 'application/json',
+	    url: urlpost,						
+	    success: function(data) {
+	        console.log(JSON.stringify(data));
+	        if(data.mensaje=='acept'){
+	        	alert("El Atleta "+datos.primer_nombre+" Creado");
+	        	location.href = "/gestionar/atleta";
+	        }else{
+	        	alert("ERROR");
+	        }
+	    }
+
+	});
+
+});
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
