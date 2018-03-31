@@ -8,8 +8,8 @@
     "start": "nodemon ./server/server.js",
     "build-css": "node-sass --include-path scss scss/main.scss public/css/main.css",
     "watch-css": "nodemon -e scss -x \"npm run build-css\"",
-    "build-js": "browserify js/compe.js js/gestion.js js/iniciar.js js/posts.js -o public/js/bundle.js",
-    "watch-js": "watchify js/compe.js js/gestion.js js/iniciar.js js/posts.js -o public/js/bundle.js -v"
+    "build-js": "browserify js/compe.js js/gestion.js js/posts.js -o public/js/bundle.js",
+    "watch-js": "watchify js/compe.js js/gestion.js js/posts.js -o public/js/bundle.js -v"
   },
   "repository": {
     "type": "git",

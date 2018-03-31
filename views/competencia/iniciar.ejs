@@ -6,30 +6,12 @@
      <div class="iniciar">
           <h1 >COMPETENCIA - INICIAR</h1>
      </div>
-
-
-               <div class="form form--step3" id='oculto1'>
-                    <form onsubmit="return false;" class="text-center">
-                         <div class="caja1">
-                         <div class="form-group row align-items-center">
-                              <label for="inputNombreCompetencia" class="col-md-2 col-form-label">Nombre de Competencia:</label>
-                              <div class="col-md-10">
-                                   <input type="text" class="form-control" id="inputNombreCompetencia" name="inputNombreCompetencia" placeholder="Nombre de Competencia">
-                              </div>
-                         </div>
-                         </div>
-                         
-
-                         <button class="btn btn-secondary btn-lg btn-next " onclick="mostrar();" >Siguiente</button>
-
-                    </form>
-               </div>
-
-               <div class="form form--step4" id='oculto' style="display: none">
-                    <form class="text-center">
-                         <div class="row">
-                              <div class="col infoCarrer"><span id="nombreCarrera">Carrera:</span></div>
-                         </div>
+<% include inicia-0 %>
+     <div class="form form--step4" >
+     <form class="text-center">
+     <div class="row">
+     <div class="col infoCarrer"><span id="nombreCarrera">Carrera:</span></div>
+     </div>
      <div id="contenedor">
           <div class="reloj" id="Horas">00</div>
           <div class="reloj" id="Minutos">:00</div>
@@ -40,8 +22,15 @@
           <input type="button" class="btn btn-secondary btn-lg text-uppercase" id="reinicio1" value="Reset" onclick="reinicio();" disabled>
           <h6>Presion enter para comenzar</h6>
           
-          <div class=guardar> <input type="button" class="btn btn-secondary btn-lg text-uppercase" id="Guardar1" value="Guardar Resultados" onclick="Guardar();"></div>
+          <div class=guardar> 
+               <input type="button" class="btn btn-secondary btn-lg text-uppercase" id="Guardar1" value="Guardar Resultados" onclick="Guardar();">              
+          </div>
+          <div class="d-flex align-items-center justify-content-center" style="  margin-left: 165%; margin-top: 5%; ">
+                <button href="#iniciarcompe" data-toggle="modal" type="button" class="btn btn-secondary btn-lg text-uppercase add-new"><i class="fa fa-plus"></i> Competencia</button>
+          </div>
+              
      </div>
+
 
      <div class="table1">
           <div class="table-title">
@@ -54,11 +43,20 @@
                <tbody><tr ></tr></tbody>
           </table>
      </div>
+      <div class="btn-container">
+          <a href="../competencia" class="btn btn-secondary btn-lg btn-back">REGRESAR</a>
+     </div>
 
 
-                    </form>
-               </div>
+     </form>
+    
+
+     </div>
+     
 
 </div>
 
-<% include ../partials/foot %>
+<% include ../partials/foot-iniciar %>
+
+
+

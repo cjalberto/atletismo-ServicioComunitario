@@ -1,32 +1,40 @@
 
-<div id="iniciarcompe" class="modal fade">
-    <div class="modal-dialog">
+<div id="iniciarcompe" class="modal fade bd-example-modal-lg">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
-        <form class="text-center" action="/gestionar/atleta/modificar" method="post">
+        <form class="text-center" action="/competencia/iniciar" method="post">
           <div class="modal-header">            
             <h4 class="modal-title">Elije una copetencia para Empezar</h4>
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           </div>
           <div class="modal-body"> 
             
-          <table class="table table-striped table-bordered table-fixed display"  id="Table" >
+          <table class="table table-striped table-bordered table-fixed display"  id="Tablecompe" >
               <thead>
                 <tr>
                   <th scope="col">Nombre</th><th scope="col">Lugar</th><th scope="col">Fecha</th><th scope="col">HORA</th>
                 </tr>
               </thead>
               <tbody>
-              <tr><th>MALTIN POLAR</th><th>POLIDEPORTIVO</th><td>04:04:2018</td><td>02:00PM</td></tr>
+
+                <% for(var i=0; i<datosCompetencia.length; i++) {%>
+               <tr>
+                <th scope="row"><%= datosCompetencia[i]['nombre'] %></th>
+                <td><%= datosCompetencia[i]['lugar'] %></td>
+                <td><%= datosCompetencia[i]['fecha'] %></td>
+                <td><%= datosCompetencia[i]['hora'] %></td>
+              </tr>
+              <% } %>
+             
               </tbody>
             </table>
 
           </div>
           <div class="modal-footer">
             <input type="button" class="btn btn-secondary  text-uppercase " data-dismiss="modal" value="Cancelar">
-            <input type="submit" class="btn btn-success" value="Empezar">
+            <input type="submit" class="btn btn-success" value="Empezar" onclick="mostrar();">
           </div>
         </form>
       </div>
     </div>
   </div>
-
