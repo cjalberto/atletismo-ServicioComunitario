@@ -60,7 +60,9 @@ router
 						})
 					})
 					.then(() => {
-						res.redirect('/gestionar/categoria')
+						res.status(200)
+						res.send({mensaje : 'acept' , code : 200})
+						//res.redirect('/gestionar/categoria')
 					})
 					.catch((err) =>{
 						if (err.flag){
@@ -147,7 +149,9 @@ router
 						})
 					})
 					.then(() => {
-						res.redirect('/gestionar/categoria')
+						res.status(200)
+						res.send({mensaje : 'acept' , code : 200})
+						//res.redirect('/gestionar/categoria')
 					})
 					.catch((err) =>{
 						if (err.flag){
@@ -214,11 +218,12 @@ router
 						})
 					})
 					.then(() => {
-						res.redirect('/gestionar/club')
+						res.status(200)
+						res.send({mensaje : 'acept' , code : 200})
+						//res.redirect('/gestionar/club')
 					})
 					.catch((err) =>{
 						if (err.flag){
-						console.log(err.flag)
 							res.status(404)
 							res.send({mensaje : err.err.message , code : 404})
 						}
@@ -301,7 +306,9 @@ router
 						})
 					})
 					.then(() => {
-						res.redirect('/gestionar/club')
+						res.status(200)
+						res.send({mensaje : 'acept' , code : 200})
+						//res.redirect('/gestionar/club')
 					})
 					.catch((err) =>{
 						if (err.flag){
@@ -353,6 +360,64 @@ router
 			}
 		})
 	})
+	.post('/gestionar/atleta/modificar/:atleta_id', (req, res , next) => {
+		let atleta_id = req.params.atleta_id
+		let atleta = {
+      		primer_nombre : req.body.primer_nombre,
+      		segundo_nombre : req.body.segundo_nombre,
+      		primer_apellido : req.body.primer_apellido,
+      		segundo_apellido : req.body.segundo_apellido,
+      		cedula : req.body.cedula,
+      		fecha_nacimiento : req.body.fecha_nacimiento,
+      		id_club : req.body.id_club,
+      		id_categoria : req.body.id_categoria,
+      		sexo : req.body.sexo
+    	}
+		req.getConnection((err , conexion) => {
+			if (err){
+				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
+			}
+			else{
+				let promesa = new Promise((resolve , reject) => {
+					conexion.query(`SELECT * FROM atleta WHERE atleta.cedula='${atleta.cedula}'`, (err , rows) =>{
+						if (err){
+							reject({err : new Error('Error al consultar la base de datos') , flag : false})
+						}
+						else{
+							if(rows.length > 0){
+								reject({err : new Error('atleta con cedula repetida') , flag : true})
+							}
+							else{
+								resolve()
+							}
+						}
+					})
+				})
+				promesa
+					.then(() => {
+						return new Promise((resolve , reject) => {
+							conexion.query('UPDATE atleta SET ? WHERE id = ' + atleta_id, atleta, (err, result) =>{              
+								(err) ? reject({err : new Error('Error al guardar la data en la base de datos') , flag : false}) : resolve() 
+							})
+						})
+					})
+					.then(() => {
+						res.status(200)
+						res.send({mensaje : 'acept' , code : 200})
+						//res.redirect('/gestionar/club')
+					})
+					.catch((err) =>{
+						if (err.flag){
+							res.status(404)
+							res.send({mensaje : err.err.message , code : 404})
+						}
+						else{
+							res.render('error', {mensaje : err.err.message , code : 404})
+						}
+					})
+			}
+		})
+	})
 	.post('/gestionar/atleta/crear' , (req, res , next) => {
     	let atleta = {
       		primer_nombre : req.body.primer_nombre,
@@ -364,20 +429,49 @@ router
       		id_club : req.body.id_club,
       		id_categoria : req.body.id_categoria,
       		sexo : req.body.sexo
-    	}
+    	}			
     	req.getConnection((err , conexion) => {
       		if (err){
         		res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
       		}
       		else{
-      			conexion.query('INSERT INTO atleta SET ?' , atleta, (err , rows) =>{
-        			if (err){
-          				res.render('error', {mensaje : 'Error al guardar la data en la base de datos' , code : 404})
-        			}
-        			else{
-        				res.redirect('/gestionar/atleta')
-        			}
-      			})
+      			let promesa = new Promise((resolve , reject) => {
+					conexion.query(`SELECT * FROM atleta WHERE atleta.cedula='${atleta.cedula}'`, (err , rows) =>{
+						if (err){
+							reject({err : new Error('Error al consultar la base de datos') , flag : false})
+						}
+						else{
+							if(rows.length > 0){
+								reject({err : new Error('atleta con cedula repetida') , flag : true})
+							}
+							else{
+								resolve()
+							}
+						}
+					})
+				})
+				promesa
+					.then(() => {
+						return new Promise((resolve , reject) => {
+							conexion.query('INSERT INTO atleta SET ?' , atleta, (err, result) =>{              
+								(err) ? reject({err : new Error('Error al guardar la data en la base de datos') , flag : false}) : resolve() 
+							})
+						})
+					})
+					.then(() => {
+						res.status(200)
+						res.send({mensaje : 'acept' , code : 200})
+						//res.redirect('/gestionar/atleta')
+					})
+					.catch((err) =>{
+						if (err.flag){
+							res.status(404)
+							res.send({mensaje : err.err.message , code : 404})
+						}
+						else{
+							res.render('error', {mensaje : err.err.message , code : 404})
+						}
+					})
       		}
     	})
   	})
@@ -388,8 +482,8 @@ router
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			else{
-				conexion.query('DELETE FROM atleta where id = ?' , competidor_id , (err , rows) =>{
-					(err) ? res.render('error', {mensaje : 'Error al eliminar registro de la base de datos' , code : 404}) : res.redirect('gestionar/atleta/listar')
+				conexion.query('DELETE FROM atleta where id = ?' , atleta_id , (err , rows) =>{
+					(err) ? res.render('error', {mensaje : 'Error al eliminar registro de la base de datos' , code : 404}) : res.redirect('/gestionar/atleta')
 				})
 			}
 		})
