@@ -62,7 +62,7 @@ router
 					.then(() => {
 						res.status(200)
 						res.send({mensaje : 'acept' , code : 200})
-						//res.redirect('/gestionar/categoria')
+						//res.redirect('back')
 					})
 					.catch((err) =>{
 						if (err.flag){
@@ -151,7 +151,7 @@ router
 					.then(() => {
 						res.status(200)
 						res.send({mensaje : 'acept' , code : 200})
-						//res.redirect('/gestionar/categoria')
+						//res.redirect('back')
 					})
 					.catch((err) =>{
 						if (err.flag){
@@ -220,7 +220,7 @@ router
 					.then(() => {
 						res.status(200)
 						res.send({mensaje : 'acept' , code : 200})
-						//res.redirect('/gestionar/club')
+						//res.redirect('back')
 					})
 					.catch((err) =>{
 						if (err.flag){
@@ -308,7 +308,7 @@ router
 					.then(() => {
 						res.status(200)
 						res.send({mensaje : 'acept' , code : 200})
-						//res.redirect('/gestionar/club')
+						//res.redirect('back')
 					})
 					.catch((err) =>{
 						if (err.flag){
@@ -404,7 +404,7 @@ router
 					.then(() => {
 						res.status(200)
 						res.send({mensaje : 'acept' , code : 200})
-						//res.redirect('/gestionar/club')
+						//res.redirect('back')
 					})
 					.catch((err) =>{
 						if (err.flag){
@@ -461,7 +461,7 @@ router
 					.then(() => {
 						res.status(200)
 						res.send({mensaje : 'acept' , code : 200})
-						//res.redirect('/gestionar/atleta')
+						//res.redirect('back')
 					})
 					.catch((err) =>{
 						if (err.flag){
