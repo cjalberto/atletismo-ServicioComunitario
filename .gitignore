@@ -3,6 +3,7 @@ node_modules/
 yarn.lock
 public/bower_components/
 public/css/main.css
+public/js/bundle.js
 npm
 start
 .sass-cache
