@@ -118,57 +118,170 @@ var tableGestion = $('#myTableGestion').DataTable({
 	}
 });
 
-//POST ADD CAT
+//POST ADD CLUB//
 
 // Attach a submit handler to the form
 $( "#crearClub" ).submit(function( event ) {
  
   // Stop form from submitting normally
   event.preventDefault();
-  console.log('crearClub link clicked');
+  console.log('crearClub Click');
  
   // Get some values from elements on the page:
   var $form = $( this ),
-  data = {}
-	data.nombre = $form.find( "input[name='nombre']" ).val(),
-	data.descripcion = $form.find( "input[name='descripcion']" ).val(),
+  datos = {}
+	datos.nombre = $form.find( "input[name='nombre']" ).val(),
+	datos.descripcion = $form.find( "input[name='descripcion']" ).val(),
 	urlpost = $form.attr( "action" );
  
 	$.ajax({
 		type: 'POST',
-		data: JSON.stringify(data),
+		data: JSON.stringify(datos),
 	    contentType: 'application/json',
 	    url: urlpost,						
 	    success: function(data) {
-	        console.log('success');
 	        console.log(JSON.stringify(data));
+	        if(data.mensaje=='acept'){
+	        	alert("Club "+datos.nombre+" Creado");
+	        	location.href = "/gestionar/club";
+	        }else{
+	        	alert("ERROR");
+	        }
 	    }
+
+	});
+
+});
+
+//POST EDIT CLUB//
+
+// Attach a submit handler to the form
+$( "#editClub" ).submit(function( event ) {
+ 
+  // Stop form from submitting normally
+  event.preventDefault();
+  console.log('editClub Click');
+ 
+  // Get some values from elements on the page:
+  var $form = $( this ),
+  datos = {}
+	datos.nombre = $form.find( "input[name='nombre']" ).val(),
+	datos.descripcion = $form.find( "input[name='descripcion']" ).val(),
+	urlpost = $form.attr( "action" );
+ 
+	$.ajax({
+		type: 'POST',
+		data: JSON.stringify(datos),
+	    contentType: 'application/json',
+	    url: urlpost,						
+	    success: function(data) {
+	        console.log(JSON.stringify(data));
+	        if(data.mensaje=='acept'){
+	        	alert("Club "+datos.nombre+" Modificado");
+	        	location.href = "/gestionar/club";
+	        }else{
+	        	alert("ERROR");
+	        }
+	    }
+
+	});
+
+});
+
+//POST ADD CATEGORIA//
+
+// Attach a submit handler to the form
+$( "#crearCat" ).submit(function( event ) {
+ 
+  // Stop form from submitting normally
+  event.preventDefault();
+  console.log('crearCat Click');
+ 
+  // Get some values from elements on the page:
+  var $form = $( this ),
+  datos = {}
+	datos.nombre = $form.find( "input[name='nombre']" ).val(),
+	datos.descripcion = $form.find( "input[name='descripcion']" ).val(),
+	datos.sexo = $form.find( "select[name='sexo']" ).val(),
+	urlpost = $form.attr( "action" );
+ 
+	$.ajax({
+		type: 'POST',
+		data: JSON.stringify(datos),
+	    contentType: 'application/json',
+	    url: urlpost,						
+	    success: function(data) {
+	        console.log(JSON.stringify(data));
+	        if(data.mensaje=='acept'){
+	        	alert("Categoría "+datos.nombre+" Creada");
+	        	location.href = "/gestionar/categoria";
+	        }else{
+	        	alert("ERROR");
+	        }
+	    }
+
+	});
+
+});
+
+//POST EDIT CATEGORIA//
+
+// Attach a submit handler to the form
+$( "#editCat" ).submit(function( event ) {
+ 
+  // Stop form from submitting normally
+  event.preventDefault();
+  console.log('editCat Click');
+ 
+  // Get some values from elements on the page:
+  var $form = $( this ),
+  datos = {}
+	datos.nombre = $form.find( "input[name='nombre']" ).val(),
+	datos.descripcion = $form.find( "input[name='descripcion']" ).val(),
+	datos.sexo = $form.find( "select[name='sexo']" ).val(),
+	urlpost = $form.attr( "action" );
+ 
+	$.ajax({
+		type: 'POST',
+		data: JSON.stringify(datos),
+	    contentType: 'application/json',
+	    url: urlpost,						
+	    success: function(data) {
+	        console.log(JSON.stringify(data));
+	        if(data.mensaje=='acept'){
+	        	alert("Categoría "+datos.nombre+" Modificada");
+	        	location.href = "/gestionar/categoria";
+	        }else{
+	        	alert("ERROR");
+	        }
+	    }
+
 	});
 
 });
 
 
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////INICIAR CARRERAS/////////////////////////////////////////////////////////////////////
+
 
 var centesimas = 0;
 var segundos = 0;
 var minutos = 0;
 var horas = 0;
-function inicio () {
+function inicio(){
 	control = setInterval(cronometro,10);
-	document.getElementById("parar").disabled = false;
+	document.getElementById("parar1").disabled = false;
 	document.getElementById("continuar").disabled = true;
-	document.getElementById("reinicio").disabled = false;
+	document.getElementById("reinicio1").disabled = false;
 }
-function parar () {
+function parar(){
+	console.log("entro");
 	clearInterval(control);
-	document.getElementById("parar").disabled = true;
+	document.getElementById("parar1").disabled = true;
 	document.getElementById("continuar").disabled = false;
 }
-function reinicio () {
+function reinicio(){
 	clearInterval(control);
 	centesimas = 0;
 	segundos = 0;
@@ -178,9 +291,9 @@ function reinicio () {
 	Segundos.innerHTML = ":00";
 	Minutos.innerHTML = ":00";
 	Horas.innerHTML = "00";
-	document.getElementById("parar").disabled = true;
+	document.getElementById("parar1").disabled = true;
 	document.getElementById("continuar").disabled = true;
-	document.getElementById("reinicio").disabled = true;
+	document.getElementById("reinicio1").disabled = true;
 }
 function cronometro () {
 	if (centesimas < 99) {
@@ -214,16 +327,18 @@ function cronometro () {
 	}
 }
 var i=0;
+var ban=0;
            function mostrar() {
 				document.getElementById('oculto').style.display = 'block';
 				document.getElementById('oculto1').style.display = 'none';
 				
-				
+				ban=1;
 			}
-			
+
+		
 function info(elEvento) {
          var evento = elEvento || window.event // definir objeto event
-         if (evento.type ==  "keypress" && evento.keyCode==13 ) { //el número de caracter sólo está en el evento keypress
+         if (evento.type ==  "keypress" && evento.keyCode==13 && ban==1) { //el número de caracter sólo está en el evento keypress
          	if(i==0){inicio();}
             $('#addr'+i).html("</td><td class='text-center' id='campo"+i+"'>"+horas+':'+minutos+':'+segundos+':'+centesimas+"</td><td ><input  id='num"+i+"'  placeholder='Numero' ></td></td>");
 			$('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
@@ -233,9 +348,9 @@ function info(elEvento) {
 
              if (evento.type ==  "keypress" && evento.keyCode==115 ) {
               if(i>1){
-			   $("#addr"+(i-1)).html('');
-				i--;
-			   }
+				 $("#addr"+(i-1)).html('');
+				 i--;
+				 }
              }
 
 } 
