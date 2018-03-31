@@ -39,11 +39,11 @@ router
 				let promesa = new Promise((resolve , reject) => {
 					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria.nombre}' AND categoria.sexo='${categoria.sexo}'`, (err , rows) =>{
 						if (err){
-							reject(new Error('Error al consultar la base de datos') , false)
+							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
 						else{
 							if(rows.length > 0){
-								reject(new Error('Categoria repetida') , true)
+								reject({err : new Error('Categoria repetida') ,flag : true})
 							}
 							else{
 								resolve()
@@ -55,20 +55,20 @@ router
 					.then(() => {
 						return new Promise((resolve , reject) => {
 							conexion.query('INSERT INTO categoria SET ?' , categoria, (err , rows) =>{
-								(err) ? reject(new Error('Error al guardar la data en la base de datos') , false) : resolve()
+								(err) ? reject({err : new Error('Error al guardar la data en la base de datos') , flag : false}) : resolve()
 							})
 						})
 					})
 					.then(() => {
 						res.redirect('/gestionar/categoria')
 					})
-					.catch((err , flag) =>{
-						if (flag){
+					.catch((err) =>{
+						if (err.flag){
 							res.status(404)
-							res.send({mensaje : err.message , code : 404})
+							res.send({mensaje : err.err.message , code : 404})
 						}
 						else{
-							res.render('error', {mensaje : err.message , code : 404})
+							res.render('error', {mensaje : err.err.message , code : 404})
 						}
 					})
 			}
@@ -126,11 +126,11 @@ router
 				let promesa = new Promise((resolve , reject) => {
 					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria.nombre}' AND categoria.sexo='${categoria.sexo}'`, (err , rows) =>{
 						if (err){
-							reject(new Error('Error al consultar la base de datos') , false)
+							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
 						else{
 							if(rows.length > 0){
-								reject(new Error('Categoria repetida') , true)
+								reject({err : new Error('Categoria repetida') ,flag : true})
 							}
 							else{
 								resolve()
@@ -142,20 +142,20 @@ router
 					.then(() => {
 						return new Promise((resolve , reject) => {
 							conexion.query('UPDATE categoria SET ? WHERE id = ' + categoria_id,cat, (err, result) =>{ 
-								(err) ? reject(new Error('Error al guardar la data en la base de datos'), false) : resolve()           
+								(err) ? reject({err : new Error('Error al guardar la data en la base de datos') , flag : false}) : resolve()           
 							})
 						})
 					})
 					.then(() => {
 						res.redirect('/gestionar/categoria')
 					})
-					.catch((err, flag) =>{
-						if (flag){
+					.catch((err) =>{
+						if (err.flag){
 							res.status(404)
-							res.send({mensaje : err.message , code : 404})
+							res.send({mensaje : err.err.message , code : 404})
 						}
 						else{
-							res.render('error', {mensaje : err.message , code : 404})
+							res.render('error', {mensaje : err.err.message , code : 404})
 						}
 					})
 			}
@@ -187,17 +187,17 @@ router
 		}
 		req.getConnection((err , conexion) => {
 			if (err){
-				res.redirect('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
+				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			else{
 				let promesa = new Promise((resolve , reject) => {
 					conexion.query(`SELECT * FROM club WHERE club.nombre='${club.nombre}'`, (err , rows) =>{
 						if (err){
-							reject(new Error('Error al consultar la base de datos') , false)
+							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
 						else{
 							if(rows.length > 0){
-								reject(new Error('Club repetido') , true)
+								reject({err : new Error('Club repetido') , flag : true})
 							}
 							else{
 								resolve()
@@ -209,20 +209,21 @@ router
 					.then(() => {
 						return new Promise((resolve , reject) => {
 							conexion.query('INSERT INTO club SET ?' , club, (err, result) =>{              
-								(err) ? reject(new Error('Error al guardar la data en la base de datos'), false) : resolve() 
+								(err) ? reject({err : new Error('Error al guardar la data en la base de datos') , flag : false}) : resolve() 
 							})
 						})
 					})
 					.then(() => {
 						res.redirect('/gestionar/club')
 					})
-					.catch((err , flag) =>{
-						if (flag){
+					.catch((err) =>{
+						if (err.flag){
+						console.log(err.flag)
 							res.status(404)
-							res.send({mensaje : err.message , code : 404})
+							res.send({mensaje : err.err.message , code : 404})
 						}
 						else{
-							res.render('error', {mensaje : err.message , code : 404})
+							res.render('error', {mensaje : err.err.message , code : 404})
 						}
 					})
 			}
@@ -279,11 +280,11 @@ router
 				let promesa = new Promise((resolve , reject) => {
 					conexion.query(`SELECT * FROM club WHERE club.nombre='${club.nombre}'`, (err , rows) =>{
 						if (err){
-							reject(new Error('Error al consultar la base de datos') , false)
+							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
 						else{
 							if(rows.length > 0){
-								reject(new Error('Club repetido') , true)
+								reject({err : new Error('Club repetido') , flag : true})
 							}
 							else{
 								resolve()
@@ -295,23 +296,22 @@ router
 					.then(() => {
 						return new Promise((resolve , reject) => {
 							conexion.query('UPDATE club SET ? WHERE id = ' + club_id, club, (err, result) =>{              
-								(err) ? reject(new Error('Error al guardar la data en la base de datos'), false) : resolve() 
+								(err) ? reject({err : new Error('Error al guardar la data en la base de datos') , flag : false}) : resolve() 
 							})
 						})
 					})
 					.then(() => {
 						res.redirect('/gestionar/club')
 					})
-					.catch((err , flag) =>{
-						if (flag){
+					.catch((err) =>{
+						if (err.flag){
 							res.status(404)
-							res.send({mensaje : err.message , code : 404})
+							res.send({mensaje : err.err.message , code : 404})
 						}
 						else{
-							res.render('error', {mensaje : err.message , code : 404})
+							res.render('error', {mensaje : err.err.message , code : 404})
 						}
 					})
-
 			}
 		})
 	})
@@ -374,7 +374,9 @@ router
         			if (err){
           				res.render('error', {mensaje : 'Error al guardar la data en la base de datos' , code : 404})
         			}
-        			res.redirect('/gestionar/atleta')
+        			else{
+        				res.redirect('/gestionar/atleta')
+        			}
       			})
       		}
     	})
