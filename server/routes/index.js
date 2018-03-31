@@ -2,10 +2,12 @@
 
 var conexion = require('../conexion'),
  	express = require('express'),
+ 	breadcrumb = require('express-url-breadcrumb'),
 	router = express.Router()
 
 router
 	.use(conexion)
+	.use(breadcrumb())
 	//INDEX
 	.get('/', (req, res , next) => {
 		res.render('index')

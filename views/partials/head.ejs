@@ -24,3 +24,32 @@
 				</div>
 
 		</header>
+
+			<nav style="background-color: #e9ecef;">
+				<ul class="breadcrumb container">
+				<% for(var i=0; i<breadcrumb.length; i++){
+				if(i==breadcrumb.length-1){ %>
+				<li class="breadcrumb-item active">
+					<a class="text-uppercase">
+						<% if(i==0){ %>
+						Inicio
+						<% }else{ %>
+						<%= breadcrumb[i].label %>
+						<% } %>	
+						</a>
+				</li>
+			
+				<%}else{%>
+
+				<li class="breadcrumb-item">
+					<a class="text-uppercase" href="<%= breadcrumb[i].url %>">
+						<% if(i==0){ %>
+						Inicio
+						<% }else{ %>
+						<%= breadcrumb[i].label %>
+						<% } %>	
+						</a>
+				</li>
+			<%} }%>
+			</ul>
+		</nav>
