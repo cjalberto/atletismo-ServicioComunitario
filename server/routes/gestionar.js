@@ -311,6 +311,7 @@ router
 							res.render('error', {mensaje : err.message , code : 404})
 						}
 					})
+
 			}
 		})
 	})
@@ -344,8 +345,7 @@ router
 						})
 					})
 					.then((data) => {
-						console.log(data)
-						res.render('gestionar/atleta/listar' , {dataCategorias : dataCategorias , dataClubs : dataClubs , dataAtletas : dataAtletas})
+						res.render('gestionar/atleta/listar' , {dataCategorias : data.dataCategorias , dataClubs : data.dataClubs , dataAtletas : data.dataAtletas})
 					})
 					.catch((err) =>{
 						res.render('error', {mensaje : err.message , code : 404})

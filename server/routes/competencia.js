@@ -30,23 +30,23 @@ router
 			}else{
 				if(sexo == 'Mixto'){
 					if(cat_nombre == 'libre'){
-						conexion.query('SELECT at.*, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id' , (err , atletas) =>{
+						conexion.query(`SELECT at.*, cl.nombre club_nombre , CONCAT(ca.nombre , '-' , ca.sexo) as 'categoria' FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id LEFT JOIN categoria ca ON ca.id=at.id_categoria ` , (err , atletas) =>{
 							(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body, datosCatNombre: cat_nombre})
 						})
 					}
 					else{
-						conexion.query(`SELECT at.* , cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id LEFT JOIN categoria ca ON ca.id=at.id_categoria WHERE ca.nombre=${cat_nombre} ` , (err , atletas) =>{
+						conexion.query(`SELECT at.* , cl.nombre club_nombre , CONCAT(ca.nombre , '-' , ca.sexo) as 'categoria' FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id LEFT JOIN categoria ca ON ca.id=at.id_categoria WHERE ca.nombre=${cat_nombre} ` , (err , atletas) =>{
 							(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body, datosCatNombre: cat_nombre})
 						})
 					}
 				}else{
 					if(cat_nombre == 'libre'){
-						conexion.query(`SELECT at.* , cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id LEFT JOIN categoria ca ON ca.id=at.id_categoria WHERE at.sexo=${sexo} ` , (err , atletas) =>{
+						conexion.query(`SELECT at.* , cl.nombre club_nombre , CONCAT(ca.nombre , '-' , ca.sexo) as 'categoria' FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id LEFT JOIN categoria ca ON ca.id=at.id_categoria WHERE at.sexo=${sexo} ` , (err , atletas) =>{
 							(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body, datosCatNombre: cat_nombre})
 						})
 					}
 					else{
-						conexion.query(`SELECT at.*, cl.nombre club_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id where at.id_categoria = ?` , categoria_id , (err , atletas) =>{
+						conexion.query(`SELECT at.*, cl.nombre club_nombre , CONCAT(ca.nombre , '-' , ca.sexo) as 'categoria' FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id where at.id_categoria = ?` , categoria_id , (err , atletas) =>{
 							(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body, datosCatNombre: cat_nombre})
 						})
 					}
@@ -138,6 +138,7 @@ router
                 if (rows.length <= 0) {
                     res.redirect('/competencia/listar')
                 } else {
+
 	                if (rows[0].id_categoria == '1') {
 	                    conexion.query('SELECT at.id, at.cedula, at.primer_nombre, at.primer_apellido, cl.nombre club_nombre, cat.nombre categoria_nombre FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id LEFT JOIN categoria cat ON at.id_categoria=cat.id', (err, atletas) => {
 							conexion.query('SELECT * FROM competencia_atleta WHERE id_competencia = ?', competencia_id, (err, compe_atleta) => {
@@ -186,53 +187,59 @@ router
             finalizado: 0,
             id_categoria: req.body.id_categoria
         }
-		conexion.query('UPDATE competencia SET ? WHERE id = ' + competencia_id, competencia, (err, result) =>{                 
-			conexion.query('SELECT * FROM competencia_atleta WHERE id_competencia = ?', competencia_id, (err, compe_atleta) =>{ 
-				if (err){
-	                res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-	            }         
-	            else{
-	            	var i,j,count=0
+        req.getConnection((err, conexion) => {
+        	if (err){
+				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
+			}
+            conexion.query('UPDATE competencia SET ? WHERE id = ' + competencia_id, competencia, (err, result) =>{                 
+				conexion.query('SELECT * FROM competencia_atleta WHERE id_competencia = ?', competencia_id, (err, compe_atleta) =>{ 
+					if (err){
+	        	        res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
+	        	    }         
+	        	    else{
+	        	    	var i,j,count=0
 				
-					for(i=0;i<req.body.id_atleta.length;i++){
-						for(j=0;j<compe_atleta.length;j++){
-							if(req.body.id_atleta[i]==compe_atleta[j].id_atleta){
-								console.log("atleta nuevo "+ req.body.id_atleta[i]+" ya existe en DB "+compe_atleta[j].id_atleta)
-								j=compe_atleta.length-1
-							}else{
-								count = j + 1
+						for(i=0;i<req.body.id_atleta.length;i++){
+							for(j=0;j<compe_atleta.length;j++){
+								if(req.body.id_atleta[i]==compe_atleta[j].id_atleta){
+									console.log("atleta nuevo "+ req.body.id_atleta[i]+" ya existe en DB "+compe_atleta[j].id_atleta)
+									j=compe_atleta.length-1
+								}else{
+									count = j + 1
 								if(count==compe_atleta.length){
-									let competencia_atleta = {
+										let competencia_atleta = {
 	                                	id_atleta: req.body.id_atleta[i],
-	                                	id_competencia: competencia_id
-	                            	}
-	                        		conexion.query('INSERT INTO competencia_atleta SET ?', competencia_atleta, (err, rows) => {
-	                          			console.log("nuevo competidor "+competencia_atleta.id_atleta)
-	                          		})
+	                                		id_competencia: competencia_id
+	                            		}
+	                        			conexion.query('INSERT INTO competencia_atleta SET ?', competencia_atleta, (err, rows) => {
+	                          				console.log("nuevo competidor "+competencia_atleta.id_atleta)
+	                          			})
+									}
 								}
-							}
-						}		
-					}
-
-					for(i=0;i<compe_atleta.length;i++){
-						for(j=0;j<req.body.id_atleta.length;j++){
-							if(compe_atleta[i].id_atleta==req.body.id_atleta[j]){
-							console.log("atleta de la DB "+ compe_atleta[i].id_atleta+" ya es atleta nuevo "+req.body.id_atleta[j])
-								j=req.body.id_atleta.length-1
-							}else{
-								count = j + 1
-								if(count=req.body.id_atleta.length){
-									console.log("eliminado competidor "+compe_atleta[i].id_atleta+ " de competencia "+competencia_id)
-	                        		conexion.query('DELETE FROM competencia_atleta WHERE id_atleta = '+compe_atleta[i].id_atleta+' AND id_competencia = '+competencia_id, (err, rows) => {
-	                          		
-	                          		})
-								}
-							}			
+							}		
 						}
-					}
-	            }       	
+
+						for(i=0;i<compe_atleta.length;i++){
+							for(j=0;j<req.body.id_atleta.length;j++){
+								if(compe_atleta[i].id_atleta==req.body.id_atleta[j]){
+								console.log("atleta de la DB "+ compe_atleta[i].id_atleta+" ya es atleta nuevo "+req.body.id_atleta[j])
+									j=req.body.id_atleta.length-1
+								}else{
+									count = j + 1
+									if(count=req.body.id_atleta.length){
+										console.log("eliminado competidor "+compe_atleta[i].id_atleta+ " de competencia "+competencia_id)
+	                        			conexion.query('DELETE FROM competencia_atleta WHERE id_atleta = '+compe_atleta[i].id_atleta+' AND id_competencia = '+competencia_id, (err, rows) => {
+	                          		
+	                          			})
+									}
+								}			
+							}
+						}
+	            	}       	
+				})
 			})
-		})
+        })
+		
 		res.redirect('../listar')
     })
 
@@ -244,7 +251,7 @@ router
 	        }
 	        else{
             	conexion.query('SELECT * FROM competencia WHERE finalizado = 0', (err, rows) => {
-                	(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('/competencia/iniciar', { datosCompetencia: rows })
+                	(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/iniciar', { datosCompetencia: rows })
             	})
 	        }
         })
