@@ -32,7 +32,7 @@
 					<td><%= datosCompetencia[i]['lugar'] %></td>
 					<td><%= datosCompetencia[i]['fecha'] %></td>
 					<td><%= datosCompetencia[i]['hora'] %></td>
-					<td><%= datosCompetencia[i]['id_categoria'] %></td>
+					<td><%= datosCompetencia[i]['categoria']+'-'+datosCompetencia[i]['sexo'] %></td>
 					<td class="d-flex align-items-center justify-content-center">
 	                    <a class="btn btn-secondary" href="/competencia/modificar/<%= datosCompetencia[i]['id'] %>">Editar</a>           
 	                    <form method="post" action="/competencia/eliminar/<%= datosCompetencia[i]['id'] %>">

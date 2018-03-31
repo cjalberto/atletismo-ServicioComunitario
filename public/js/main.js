@@ -121,11 +121,11 @@ var tableGestion = $('#myTableGestion').DataTable({
 //POST ADD CAT
 
 // Attach a submit handler to the form
-$( "#crearCategoria" ).submit(function( event ) {
+$( "#crearClub" ).submit(function( event ) {
  
   // Stop form from submitting normally
   event.preventDefault();
-  console.log('crearCat link clicked');
+  console.log('crearClub link clicked');
  
   // Get some values from elements on the page:
   var $form = $( this ),
@@ -142,7 +142,6 @@ $( "#crearCategoria" ).submit(function( event ) {
 	    success: function(data) {
 	        console.log('success');
 	        console.log(JSON.stringify(data));
-	        $( "#result" ).empty().append( JSON.stringify(data) );
 	    }
 	});
 
