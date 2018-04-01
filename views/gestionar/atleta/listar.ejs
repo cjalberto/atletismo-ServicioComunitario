@@ -31,10 +31,10 @@
 
               <thead>
                 <tr>
-                  <th scope="col"># Numero</th>
+                  <th scope="col">ID</th>
                   <th scope="col">Cedula</th>
-                  <th scope="col">Nombre y Apellido</th>
-                  <th scope="col">Categorita</th>
+                  <th scope="col">Nombre </th>
+                  <th scope="col">Apellido</th>
                   <th scope="col">Club/Equipo</th>
                   <th>Accion</th>
                 </tr>
@@ -46,10 +46,9 @@
                <tr>
                  <th scope="row" class="idAtleta"><%= dataAtletas[i]['id'] %></th> 
                 <td><%= dataAtletas[i]['cedula'] %></td>
-                <td><%= dataAtletas[i]['primer_nombre'] +" "+ dataAtletas[i]['primer_apellido'] %></td>
+                <td><%= dataAtletas[i]['primer_nombre'] %></td>
                 <%var pos= dataAtletas[i]['id_club'] %>
-                <%var pos1= dataAtletas[i]['id_categoria'] %>
-                <td><%= dataCategorias[pos1]['nombre'] %></td>
+                <td><%= dataAtletas[i]['primer_apellido'] %></td>
                 <td><%=dataClubs[pos-1]['nombre'] %></td>
 
               
