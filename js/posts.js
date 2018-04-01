@@ -168,7 +168,6 @@ $( "#crearAtleta" ).submit(function( event ) {
 	datos.cedula = $form.find( "input[name='cedula']" ).val(),
 	datos.fecha_nacimiento = $form.find( "input[name='fecha_nacimiento']" ).val(),
 	datos.id_club = $form.find( "select[name='id_club']" ).val(),
-	datos.id_categoria = $form.find( "select[name='id_categoria']" ).val(),
 	datos.sexo = $form.find( "select[name='sexo']" ).val(),
 	urlpost = $form.attr( "action" );
  
@@ -207,7 +206,6 @@ $( "#modificarAtle" ).submit(function( event ) {
  datos.cedula = $form.find( "input[name='cedula']" ).val(),
  datos.fecha_nacimiento = $form.find( "input[name='fecha_nacimiento']" ).val(),
  datos.id_club = $form.find( "select[name='id_club']" ).val(),
- datos.id_categoria = $form.find( "select[name='id_categoria']" ).val(),
  datos.sexo = $form.find( "select[name='sexo']" ).val(),
  urlpost = $form.attr( "action" );
  
