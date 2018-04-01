@@ -21,6 +21,9 @@ router
 			}
 		})
 	})
+	.get('/gestionar/categoria/modificar', (req, res , next) => {
+		res.redirect('/gestionar/categoria')
+	})
 	//add
 	.get('/gestionar/categoria/crear', (req, res , next) => {
 		res.render('gestionar/categoria/crear')
@@ -106,8 +109,9 @@ router
 	                	title: 'Editar Categoría', 
 	                	id: rows[0].id,
 	                	nombre: rows[0].nombre,
-	                	sexo: rows[0].sexo,
-	                	descripcion: rows[0].descripcion                    
+	                	descripcion: rows[0].descripcion,
+	                	edad_min: rows[0].edad_min,
+	                	edad_max: rows[0].edad_max                   
 	            	})
 	        	})
 			}

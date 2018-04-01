@@ -56,14 +56,16 @@ $( "#editClub" ).submit(function( event ) {
 		data: JSON.stringify(datos),
 	    contentType: 'application/json',
 	    url: urlpost,						
-	    success: function(data) {
-	        console.log(JSON.stringify(data));
-	        if(data.mensaje=='acept'){
+	    success: function(msg) {
+	        if(msg.mensaje=='acept'){
 	        	alert("Club "+datos.nombre+" Modificado");
 	        	location.href = "/gestionar/club";
 	        }else{
-	        	alert("ERROR");
+	        	alert("Error Conectarse con la Base de Datos");
 	        }
+	    },
+	    error: function(xhr, textStatus, errorThrown){
+	    	alert(xhr.responseJSON.mensaje)
 	    }
 
 	});
@@ -84,7 +86,8 @@ $( "#crearCat" ).submit(function( event ) {
   datos = {}
 	datos.nombre = $form.find( "input[name='nombre']" ).val(),
 	datos.descripcion = $form.find( "input[name='descripcion']" ).val(),
-	datos.sexo = $form.find( "select[name='sexo']" ).val(),
+	datos.edad_min = $form.find( "input[name='edad_min']" ).val(),
+	datos.edad_max = $form.find( "input[name='edad_max']" ).val(),
 	urlpost = $form.attr( "action" );
  
 	$.ajax({
@@ -92,14 +95,16 @@ $( "#crearCat" ).submit(function( event ) {
 		data: JSON.stringify(datos),
 	    contentType: 'application/json',
 	    url: urlpost,						
-	    success: function(data) {
-	        console.log(JSON.stringify(data));
-	        if(data.mensaje=='acept'){
-	        	alert("Categoría "+datos.nombre+" Creada");
+	    success: function(msg) {
+	        if(msg.mensaje=='acept'){
+	        	alert("Categoria "+datos.nombre+" Creada");
 	        	location.href = "/gestionar/categoria";
 	        }else{
-	        	alert("ERROR");
+	        	alert("Error Conectarse con la Base de Datos");
 	        }
+	    },
+	    error: function(xhr, textStatus, errorThrown){
+	    	alert(xhr.responseJSON.mensaje)
 	    }
 
 	});
@@ -120,7 +125,8 @@ $( "#editCat" ).submit(function( event ) {
   datos = {}
 	datos.nombre = $form.find( "input[name='nombre']" ).val(),
 	datos.descripcion = $form.find( "input[name='descripcion']" ).val(),
-	datos.sexo = $form.find( "select[name='sexo']" ).val(),
+	datos.edad_min = $form.find( "input[name='edad_min']" ).val(),
+	datos.edad_max = $form.find( "input[name='edad_max']" ).val(),
 	urlpost = $form.attr( "action" );
  
 	$.ajax({
@@ -128,14 +134,16 @@ $( "#editCat" ).submit(function( event ) {
 		data: JSON.stringify(datos),
 	    contentType: 'application/json',
 	    url: urlpost,						
-	    success: function(data) {
-	        console.log(JSON.stringify(data));
-	        if(data.mensaje=='acept'){
-	        	alert("Categoría "+datos.nombre+" Modificada");
+	    success: function(msg) {
+	        if(msg.mensaje=='acept'){
+	        	alert("Categoria "+datos.nombre+" Modificada");
 	        	location.href = "/gestionar/categoria";
 	        }else{
-	        	alert("ERROR");
+	        	alert("Error Conectarse con la Base de Datos");
 	        }
+	    },
+	    error: function(xhr, textStatus, errorThrown){
+	    	alert(xhr.responseJSON.mensaje)
 	    }
 
 	});

@@ -17,6 +17,8 @@
 					<th scope="col">Nombre</th>
 					<th scope="col">Genero</th>
 					<th scope="col">Descripción</th>
+					<th scope="col">Edad Minima</th>
+					<th scope="col">Edad Maxima</th>
 					<th scope="col" class="text-center">Acción</th>
 				</tr>
 			</thead>
@@ -28,6 +30,8 @@
 					<td><%= listCategorias[i]['nombre'] %></td>
 					<td><%= listCategorias[i]['sexo'] %></td>
 					<td><%= listCategorias[i]['descripcion'] %></td>
+					<td><%= listCategorias[i]['edad_min'] %></td>
+					<td><%= listCategorias[i]['edad_max'] %></td>
 					<td class="d-flex align-items-center justify-content-center">
 	                    <a class="btn btn-secondary" href="/gestionar/categoria/modificar/<%= listCategorias[i]['id'] %>">Editar</a>           
 	                    <form method="post" action="/gestionar/categoria/eliminar/<%= listCategorias[i]['id'] %>">
