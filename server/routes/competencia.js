@@ -100,10 +100,13 @@ router
     //LISTAR//
     .get('/competencia/listar', (req, res, next) => {
         req.getConnection((err, conexion) => {
-            if (err != null) {}
-            conexion.query(`SELECT com.nombre as 'nombre' , com.id as 'id' , DATE_FORMAT(com.fecha,'%d/%m/%Y') as 'fecha' , TIME(com.hora) as 'hora' , com.lugar as 'lugar' , cat.nombre as 'categoria'  , cat.sexo as 'sexo' FROM competencia com LEFT JOIN categoria cat ON com.id_categoria=cat.id WHERE finalizado=0`, (err, rows) => {
-                (err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/listar', { datosCompetencia: rows })
-            })
+            if (err != null) {
+            	res.render('error', {mensaje : 'Error al conextarse a la base de datos' , code : 404})
+            }else{
+	            conexion.query(`SELECT com.nombre as 'nombre' , com.id as 'id' , DATE_FORMAT(com.fecha,'%d/%m/%Y') as 'fecha' , TIME(com.hora) as 'hora' , com.lugar as 'lugar' , cat.nombre as 'categoria'  , cat.sexo as 'sexo' FROM competencia com LEFT JOIN categoria cat ON com.id_categoria=cat.id WHERE finalizado=0`, (err, rows) => {
+	                (err) ? res.render('error', {error: err, mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/listar', { datosCompetencia: rows })
+	            })          	
+            }
         })
     })
 

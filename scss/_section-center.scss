@@ -1,6 +1,9 @@
 .section-center{ 
 	.title{
 		padding: 20px 0;
+		h1{
+			margin-bottom: 0;
+		}
 	}
 	.container{
 		@media (min-width: 768px) {

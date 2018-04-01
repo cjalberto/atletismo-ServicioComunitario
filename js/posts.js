@@ -19,14 +19,16 @@ $( "#crearClub" ).submit(function( event ) {
 		data: JSON.stringify(datos),
 	    contentType: 'application/json',
 	    url: urlpost,						
-	    success: function(data) {
-	        console.log(JSON.stringify(data));
-	        if(data.mensaje=='acept'){
+	    success: function(msg) {
+	        if(msg.mensaje=='acept'){
 	        	alert("Club "+datos.nombre+" Creado");
 	        	location.href = "/gestionar/club";
 	        }else{
-	        	alert("ERROR");
+	        	alert("Error Conectarse con la Base de Datos");
 	        }
+	    },
+	    error: function(xhr, textStatus, errorThrown){
+	    	alert(xhr.responseJSON.mensaje)
 	    }
 
 	});
