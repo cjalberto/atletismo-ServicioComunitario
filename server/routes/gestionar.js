@@ -24,23 +24,26 @@ router
 	.get('/gestionar/categoria/modificar', (req, res , next) => {
 		res.redirect('/gestionar/categoria')
 	})
-	//add
+	/*//add
 	.get('/gestionar/categoria/crear', (req, res , next) => {
 		res.render('gestionar/categoria/crear')
-	})
+	})*/
 	.post('/gestionar/categoria/crear' , (req, res , next) => {
 		let categoria = {
 				nombre : req.body.nombre,
 				sexo : req.body.sexo,
-				descripcion : req.body.descripcion
+				descripcion : req.body.descripcion,
+				edad_min : req.body.edad_min,
+				edad_max : req.body.edad_max
 			}
+			console.log(categoria)
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			else{
 				let promesa = new Promise((resolve , reject) => {
-					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria.nombre}' AND categoria.sexo='${categoria.sexo}'`, (err , rows) =>{
+					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria.nombre}'`, (err , rows) =>{
 						if (err){
 							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
@@ -122,7 +125,8 @@ router
 		let categoria = {
 			nombre : req.body.nombre,
 			descripcion : req.body.descripcion,
-			sexo : 	req.body.sexo	
+	        edad_min: req.body.edad_min,
+	        edad_max: req.body.edad_max 
 		}
 		req.getConnection((err , conexion) => {
 			if (err){
@@ -339,27 +343,21 @@ router
 			}
 			else{
 				let promesa = new Promise((resolve , reject) => {
-					conexion.query('SELECT * FROM categoria', (err , rows) =>{
-						(err) ? reject(new Error('Error al consultar la base de datos')) : resolve(rows)
+					conexion.query('SELECT * FROM club', (err , rows) =>{
+						(err) ? reject(new Error('Error al consultar la base de datos')) : resolve({dataClubs : rows})
 					})
 				})
 				promesa
-					.then((dataCategorias) => {
-						return new Promise((resolve , reject) => {
-							conexion.query('SELECT * FROM club', (err, rows) =>{
-								(err) ? reject(new Error('Error al consultar la base de datos')) : resolve({dataCategorias : dataCategorias , dataClubs : rows})           
-							})
-						})
-					})
 					.then((data) => {
 						return new Promise((resolve , reject) => {
 							conexion.query('SELECT * FROM atleta', (err, rows) =>{ 
-								(err) ? reject(new Error('Error al consultar la base de datos')) : resolve({dataCategorias : data.dataCategorias , dataClubs : data.dataClubs , dataAtletas : rows})           
+								(err) ? reject(new Error('Error al consultar la base de datos')) : resolve({dataClubs : data.dataClubs , dataAtletas : rows})           
 							})
 						})
 					})
 					.then((data) => {
-						res.render('gestionar/atleta/listar' , {dataCategorias : data.dataCategorias , dataClubs : data.dataClubs , dataAtletas : data.dataAtletas})
+						console.log(data)
+						res.render('gestionar/atleta/listar' , data)
 					})
 					.catch((err) =>{
 						res.render('error', {mensaje : err.message , code : 404})
@@ -377,7 +375,6 @@ router
       		cedula : req.body.cedula,
       		fecha_nacimiento : req.body.fecha_nacimiento,
       		id_club : req.body.id_club,
-      		id_categoria : req.body.id_categoria,
       		sexo : req.body.sexo
     	}
 		req.getConnection((err , conexion) => {
@@ -434,9 +431,9 @@ router
       		cedula : req.body.cedula,
       		fecha_nacimiento : req.body.fecha_nacimiento,
       		id_club : req.body.id_club,
-      		id_categoria : req.body.id_categoria,
       		sexo : req.body.sexo
-    	}			
+    	}	
+    	console.log(atleta)		
     	req.getConnection((err , conexion) => {
       		if (err){
         		res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
