@@ -1,42 +1,42 @@
-<div id="atletamodificar" class="modal fade">
+<div id="atletamodificar" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" >
     <div class="modal-dialog">
       <div class="modal-content">
           <form class="text-center" action="/gestionar/atleta/modificar" method="post" id="modificarAtle"> 
           <div class="modal-header">            
             <h4 class="modal-title">Modificar un Atleta</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn-can" >&times;</button>
           </div>
           <div class="modal-body"> 
             
             <div class="form-group ">
             <div class="row">
                 <label for="inputNombre1Atleta" class="col-md-2 col-form-label">PrimerNombre:</label>
-                  <input type="text" class="form-control" name="primer_nombre" >
+                  <input type="text" class="form-control" name="primer_nombre" id="Pnombre" >
               </div>
             </div>
 
             <div class="form-group ">
             <div class="row">
                 <label for="inputNombre2Atleta" class="col-md-2 col-form-label">SegundoNombre:</label>
-                  <input type="text" class="form-control" name="segundo_nombre" >
+                  <input type="text" class="form-control" name="segundo_nombre" id="Snombre">
               </div>
             </div>
             <div class="form-group ">
             <div class="row">
                 <label for="inputApellido1Atleta" class="col-md-2 col-form-label">PrimerApellido:</label>
-                  <input type="text" class="form-control" name="primer_apellido" >
+                  <input type="text" class="form-control" name="primer_apellido" id="Papellido">
               </div>
             </div>
             <div class="form-group ">
             <div class="row">
                 <label for="inputApellido1Atleta" class="col-md-2 col-form-label">SegundoApellido:</label>
-                  <input type="text" class="form-control" name="segundo_apellido" >
+                  <input type="text" class="form-control" name="segundo_apellido" id="Sapellido" >
               </div>
             </div>
             <div class="form-group ">
             <div class="row">
                 <label for="inputCedual" class="col-md-2 col-form-label">Cedula:</label>
-                  <input type="number" class="form-control" name="cedula" >
+                  <input type="number" class="form-control" name="cedula" id="Cedu" value="<%= dataAtletas[1]['cedula'] %>">
               </div>
             </div>
             <div class="form-group ">
@@ -80,7 +80,7 @@
 
           </div>
           <div class="modal-footer">
-            <input type="button" class="btn btn-secondary  text-uppercase " data-dismiss="modal" value="Cancelar">
+            <input type="button" class="btn btn-secondary  text-uppercase " data-dismiss="modal" value="Cancelar" id="btn-can1">
             <input type="submit" class="btn btn-success" value="Modificar" id="btn-mod" > 
           </div>
         </form>

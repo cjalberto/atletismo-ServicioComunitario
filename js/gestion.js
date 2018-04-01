@@ -50,17 +50,25 @@ var table = $('#myTable1').DataTable({
 	},
         
 			
-			});
+});
 
 var idCompe;
-$('#editarS').click(function(){
 $('#myTable1 tbody').on('click', 'tr', function () {
      $(this).toggleClass('selected');
-   idCompe= $('.selected').children('.idAtleta').text();
-});});
+     idCompe= $('.selected').children('.idAtleta').text();
+});
  
 $('#btn-mod').click(function(){
    $('#modificarAtle').attr("action", "/gestionar/atleta/modificar/"+idCompe);
    $("#myTable1 tbody tr").removeClass('selected');
 });
- 
+$('#btn-can').click(function(){
+   $("#myTable1 tbody tr").removeClass('selected');
+});
+$('#btn-can1').click(function(){
+   $("#myTable1 tbody tr").removeClass('selected');
+});
+$('#editarS').click(function(){
+   $('#modificarAtle1').attr("action", "/gestionar/atleta/modificar/"+idCompe);
+});
+

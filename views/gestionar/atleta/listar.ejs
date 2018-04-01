@@ -37,6 +37,7 @@
                   <th scope="col">Apellido</th>
                   <th scope="col">Club/Equipo</th>
                   <th>Accion</th>
+                  <th>i</th>
                 </tr>
               </thead>
               <tbody>
@@ -53,16 +54,17 @@
 
               
                 <td class="d-flex align-items-center justify-content-center">
+                  
                       <a class="btn btn-secondary" href="#atletamodificar" data-toggle="modal" id="editarS">Editar</a>          
                       <form method="post" action="/gestionar/atleta/eliminar/<%= dataAtletas[i]['id'] %>">
                         <button type="submit" class="btn btn-secondary" name="delete" onClick="return confirm('¿Quieres eliminar el Atleta?')">Eliminar</button>
                       </form>
               </td>
+                <th scope="row" class="idAtleta2"><%= i %></th> 
               </tr>
               <% } %>
                 
               </tbody>
-
             </table>
           </div>
 
