@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 31-03-2018 a las 17:20:03
+-- Tiempo de generación: 01-04-2018 a las 21:03:09
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.3
 
@@ -40,6 +40,17 @@ CREATE TABLE `atleta` (
   `sexo` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `atleta`
+--
+
+INSERT INTO `atleta` (`id`, `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `cedula`, `fecha_nacimiento`, `id_club`, `sexo`) VALUES
+(1, 'afsho', 'ohafoihfda', 'ohfaoishf', 'oihfaoihfle', 156541, '1996-03-14', 1, 'Femenino'),
+(2, 'asfonjhoi', 'ohfaoishf', 'ohlfsahflh', 'hlashfoia', 4684, '1980-11-21', 2, 'Femenino'),
+(3, 'fwqhpi', 'nlksahnviosnnwoh23r', 'ncoano', 'afas', 733465, '1975-12-02', 3, 'Masculino'),
+(4, 'ofdshoi', 'pfpahsfgp', 'phfasihfp', 'phfpiasn', 54123, '1985-10-20', 4, 'Masculino'),
+(5, 'asojpi', 'cashjnp', 'opvnpio', 'mcijqaip', 123465, '1977-03-01', 1, 'Femenino');
+
 -- --------------------------------------------------------
 
 --
@@ -55,6 +66,18 @@ CREATE TABLE `categoria` (
   `edad_max` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `categoria`
+--
+
+INSERT INTO `categoria` (`id`, `nombre`, `descripcion`, `sexo`, `edad_min`, `edad_max`) VALUES
+(1, 'afs', 'sadf', 'Femenino', 25, 30),
+(2, 'afs', 'fsda', 'Masculino', 25, 30),
+(3, 'aaa', 'aaa', 'Femenino', 31, 36),
+(4, 'aaa', 'aaa', 'Masculino', 31, 36),
+(5, 'bbb', 'bbb', 'Femenino', 37, 42),
+(6, 'bbb', 'bbb', 'Masculino', 37, 42);
+
 -- --------------------------------------------------------
 
 --
@@ -66,6 +89,16 @@ CREATE TABLE `club` (
   `nombre` varchar(50) NOT NULL,
   `descripcion` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `club`
+--
+
+INSERT INTO `club` (`id`, `nombre`, `descripcion`) VALUES
+(1, 'wqerwq', 'safas'),
+(2, 'jtyjr', 'jtrrt'),
+(3, 'asfohjo', 'ihaspi'),
+(4, 'gvxik', 'nasllfg');
 
 -- --------------------------------------------------------
 
@@ -79,8 +112,7 @@ CREATE TABLE `competencia` (
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
   `lugar` varchar(255) NOT NULL,
-  `finalizado` tinyint(1) NOT NULL DEFAULT '0',
-  `id_categoria` int(11) NOT NULL
+  `finalizado` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -126,8 +158,7 @@ ALTER TABLE `club`
 -- Indices de la tabla `competencia`
 --
 ALTER TABLE `competencia`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_categoria` (`id_categoria`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `competencia_atleta`
@@ -145,19 +176,19 @@ ALTER TABLE `competencia_atleta`
 -- AUTO_INCREMENT de la tabla `atleta`
 --
 ALTER TABLE `atleta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `club`
 --
 ALTER TABLE `club`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `competencia`
@@ -180,12 +211,6 @@ ALTER TABLE `competencia_atleta`
 --
 ALTER TABLE `atleta`
   ADD CONSTRAINT `foreing_id_club` FOREIGN KEY (`id_club`) REFERENCES `club` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `competencia`
---
-ALTER TABLE `competencia`
-  ADD CONSTRAINT `competencia_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `competencia_atleta`
