@@ -1,7 +1,7 @@
 <div id="atletamodificar" class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form class="text-center" action="/gestionar/atleta/modificar" method="post">
+          <form class="text-center" action="/gestionar/atleta/modificar" method="post" id="modificarAtle"> 
           <div class="modal-header">            
             <h4 class="modal-title">Modificar un Atleta</h4>
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -67,24 +67,12 @@
              </div>
              </div>
 
-           <div class="form-group row align-items-center ">
-            <label for="inputCategoria" class="col-md-2 col-form-label">Categoria:</label>
-            <div class="col-md-6">
-              <select id="inputCategoria" name="id_categoria" class="form-control">
-                <% for(var i=0; i<dataCategorias.length; i++) {%>
-                <option value="<%= dataCategorias[i]['id'] %>"><%= dataCategorias[i]['nombre'] %></option>
-                <% } %>
-              </select>
-            </div>
-          </div>
-
            <div class="form-group row align-items-center">
           <label for="inputCategoria" class="col-md-2 col-form-label">Genero:</label>
             <div class="col-md-6">
               <select id="inputCategoria" name="sexo" class="form-control" required>
                 <option value="Femenino">Femenino</option>
                 <option value="Masculino">Masculino</option>
-                <option value="Mixto">Mixto</option>
               </select>
             </div>
           </div>
@@ -93,7 +81,7 @@
           </div>
           <div class="modal-footer">
             <input type="button" class="btn btn-secondary  text-uppercase " data-dismiss="modal" value="Cancelar">
-            <input type="submit" class="btn btn-success" value="Modificar">
+            <input type="submit" class="btn btn-success" value="Modificar" id="btn-mod" > 
           </div>
         </form>
       </div>
