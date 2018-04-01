@@ -33,7 +33,7 @@
 					<td><%= listCategorias[i]['edad_min'] %></td>
 					<td><%= listCategorias[i]['edad_max'] %></td>
 					<td class="d-flex align-items-center justify-content-center">
-	                    <a class="btn btn-secondary" href="/gestionar/categoria/modificar/<%= listCategorias[i]['nombre'] %>">Editar</a>           
+	                    <a class="btn btn-secondary" href="/gestionar/categoria/modificar/<%= listCategorias[i]['id'] %>-<%= listCategorias[i]['nombre'] %>">Editar</a>           
 	                    <form method="post" action="/gestionar/categoria/eliminar/<%= listCategorias[i]['nombre'] %>">
 	                    	<button type="submit" class="btn btn-secondary" name="delete" onClick="return confirm('¿Quieres eliminar la Categoría?')">Eliminar</button>
 	                    </form>
