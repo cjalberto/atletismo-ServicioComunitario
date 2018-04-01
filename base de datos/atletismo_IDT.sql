@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 01-04-2018 a las 21:03:09
+-- Tiempo de generación: 02-04-2018 a las 00:12:42
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.3
 
@@ -98,7 +98,8 @@ INSERT INTO `club` (`id`, `nombre`, `descripcion`) VALUES
 (1, 'wqerwq', 'safas'),
 (2, 'jtyjr', 'jtrrt'),
 (3, 'asfohjo', 'ihaspi'),
-(4, 'gvxik', 'nasllfg');
+(4, 'gvxik', 'nasllfg'),
+(5, 'rwqer', 'rewqrqw');
 
 -- --------------------------------------------------------
 
@@ -115,6 +116,14 @@ CREATE TABLE `competencia` (
   `finalizado` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `competencia`
+--
+
+INSERT INTO `competencia` (`id`, `nombre`, `fecha`, `hora`, `lugar`, `finalizado`) VALUES
+(1, 'dfas', '2018-05-03', '01:01:00', 'rrwqe', 0),
+(2, 'dfas', '2018-05-03', '01:01:00', 'rrwqe', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -126,7 +135,8 @@ CREATE TABLE `competencia_atleta` (
   `id_atleta` int(11) NOT NULL,
   `id_competencia` int(11) NOT NULL,
   `tiempo` double NOT NULL,
-  `numero_atleta` int(11) NOT NULL
+  `numero_atleta` int(11) NOT NULL,
+  `id_categoria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -166,7 +176,8 @@ ALTER TABLE `competencia`
 ALTER TABLE `competencia_atleta`
   ADD PRIMARY KEY (`id`),
   ADD KEY `foreing_id_atleta` (`id_atleta`),
-  ADD KEY `foreing_id_competencia` (`id_competencia`);
+  ADD KEY `foreing_id_competencia` (`id_competencia`),
+  ADD KEY `foreing_id_categoria` (`id_categoria`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -176,7 +187,7 @@ ALTER TABLE `competencia_atleta`
 -- AUTO_INCREMENT de la tabla `atleta`
 --
 ALTER TABLE `atleta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria`
@@ -188,13 +199,13 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `club`
 --
 ALTER TABLE `club`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `competencia`
 --
 ALTER TABLE `competencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `competencia_atleta`
@@ -217,6 +228,7 @@ ALTER TABLE `atleta`
 --
 ALTER TABLE `competencia_atleta`
   ADD CONSTRAINT `foreing_id_atleta` FOREIGN KEY (`id_atleta`) REFERENCES `atleta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `foreing_id_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`),
   ADD CONSTRAINT `foreing_id_competencia` FOREIGN KEY (`id_competencia`) REFERENCES `competencia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
