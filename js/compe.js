@@ -1,9 +1,3 @@
-(function ($) {
-	"use strict";
-
-	$.fn.carreras = function () {
-		return this.each(function () {
-
 ///////////////////CREAR///////////////////////////////////
 
 			var table = $('#myTable').DataTable({
@@ -86,16 +80,4 @@
 					info: "Mostrando _TOTAL_ resultados",
 				}
 			});
-
-		});
-	};
-
-	$(document).ready(function () {
-
-		$('.content-carreras').carreras();
-
-	});
-
-}(jQuery));
-
 

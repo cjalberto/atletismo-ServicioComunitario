@@ -180,6 +180,9 @@ router
 			}
 		})
 	})
+	.get('/gestionar/club/modificar', (req, res , next) => {
+		res.redirect('/gestionar/club')
+	})
 	//add
 	.get('/gestionar/club/crear', (req, res , next) => {
 		res.render('gestionar/club/crear')
