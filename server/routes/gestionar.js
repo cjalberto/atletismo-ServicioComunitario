@@ -415,7 +415,7 @@ router
 				promesa
 					.then((data) => {
 						return new Promise((resolve , reject) => {
-							conexion.query('SELECT * FROM atleta', (err, rows) =>{ 
+							conexion.query('SELECT * FROM atleta LEFT JOIN club ON atleta.id_club=club.id', (err, rows) =>{ 
 								(err) ? reject(new Error('Error al consultar la base de datos')) : resolve({dataClubs : data.dataClubs , dataAtletas : rows})           
 							})
 						})
