@@ -15,7 +15,7 @@ router
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			else{
-				conexion.query('SELECT * FROM  categoria' , (err , rows) =>{
+				conexion.query('SELECT DISTINCT categoria.nombre , categoria.descripcion , categoria.edad_min , categoria.edad_max FROM categoria' , (err , rows) =>{
 					(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('gestionar/categoria/listar', {listCategorias: rows})
 				})
 			}
@@ -126,14 +126,14 @@ router
 		})
 	})
 	//edit
-	.get('/gestionar/categoria/modificar/:categoria_id', (req, res , next) => {
-		let categoria_id = req.params.categoria_id
+	.get('/gestionar/categoria/modificar/:categoria_nombre', (req, res , next) => {
+		let categoria_nombre = req.params.categoria_nombre
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			else{
-	        	conexion.query('SELECT * FROM categoria WHERE id = ?' , categoria_id , (err, rows) =>{
+	        	conexion.query('SELECT * FROM categoria WHERE nombre = ?' , categoria_nombre , (err, rows) =>{
 	        		if (err){
 						res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
 					}
@@ -150,15 +150,17 @@ router
 	    })
 	})
 	.post('/gestionar/categoria/modificar/:categoria_nombre', (req, res , next) => {
-		let categoria_nombre = req.params.categoria_nombre
-		let categoria1 = {
+
+		let categoria_id = req.params.categoria_nombre.split('-')[0],
+			categoria_nombre = req.params.categoria_nombre.split('-')[1],
+		 	categoria1 = {
 			nombre : req.body.nombre,
 			descripcion : req.body.descripcion,
 			edad_min : req.body.edad_min,
 			edad_max : req.body.edad_max,
 			sexo : 'Femenino'
-		}
-		let categoria2 = {
+		},
+			categoria2 = {
 			nombre : req.body.nombre,
 			descripcion : req.body.descripcion,
 			edad_min : req.body.edad_min,
@@ -172,11 +174,12 @@ router
 			else{
 				let promesa = new Promise((resolve , reject) => {
 					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria1.nombre}'`, (err , rows) =>{
+						console.log(rows)
 						if (err){
 							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
 						else{
-							if(rows.length > 0){
+							if(rows.length > 2){
 								reject({err : new Error('Categoria repetida') ,flag : true})
 							}
 							else{
@@ -434,7 +437,7 @@ router
 			}
 			else{
 				let promesa = new Promise((resolve , reject) => {
-					conexion.query(`SELECT * FROM atleta WHERE atleta.cedula='${atleta.cedula}'`, (err , rows) =>{
+					conexion.query(`SELECT * FROM atleta WHERE atleta.cedula=${atleta.cedula} AND atleta.id != ${atleta_id}`, (err , rows) =>{
 						if (err){
 							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
