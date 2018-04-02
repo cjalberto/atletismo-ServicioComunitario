@@ -43,6 +43,10 @@ router
 			edad_max : req.body.edad_max,
 			sexo : 'Masculino'
 		}
+		if (req.body.edad_min > req.body.edad_max){
+			res.status(404)
+			res.send({mensaje : 'los rangos son invalidos' , code : 404})
+		}
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
@@ -163,6 +167,10 @@ router
 			edad_min : req.body.edad_min,
 			edad_max : req.body.edad_max,
 			sexo : 'Masculino'
+		}
+		if (req.body.edad_min > req.body.edad_max){
+			res.status(404)
+			res.send({mensaje : 'los rangos son invalidos' , code : 404})
 		}
 		req.getConnection((err , conexion) => {
 			if (err){
