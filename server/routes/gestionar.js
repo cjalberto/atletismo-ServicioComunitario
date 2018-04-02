@@ -421,7 +421,7 @@ router
 						})
 					})
 					.then((data) => {
-						console.log(data)
+						//console.log(data)
 						res.render('gestionar/atleta/listar' , data)
 					})
 					.catch((err) =>{
@@ -497,7 +497,7 @@ router
       		id_club : req.body.id_club,
       		sexo : req.body.sexo
     	}	
-    	console.log(atleta)		
+    	//console.log(atleta)		
     	req.getConnection((err , conexion) => {
       		if (err){
         		res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
@@ -544,6 +544,7 @@ router
   	})
 	.post('/gestionar/atleta/eliminar/:atleta_cedula', (req, res , next) => {
 		let atleta_cedula = req.params.atleta_cedula
+		console.log(atleta_cedula);
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})

@@ -118,14 +118,22 @@ var table = $('#Tablecompe').DataTable({
       "bInfo": false  
    
 });
- 
-   $('#Tablecompe tbody').on('click', 'tr', function () {
-   	var counts = table.rows('.selected').data().length;
-   	
+ var Nom,lug,fec,hor;
+ $('#Tablecompe tbody').on('click', 'tr', function () {
       $(this).toggleClass('selected');  
-      var nomCompe= $('.selected').children('.nombreCompetencia').text();
-   
-   
+      Nom= $('.selected').children('.nombreCompetencia').text();
+      lug= $('.selected').children('.lugarCompetencia').text();
+      fec= $('.selected').children('.fechaCompetencia').text();
+      hor= $('.selected').children('.horaCompetencia').text();
+      $('#nom1').attr("value", Nom);
+      $('#lugar').attr("value", lug);
+      $('#fecha').attr("value", fec);
+      $('#hora').attr("value", hor);
  
-   });
+ });
    
+$('#btn-ini').click(function(){
+   $("#Tablecompe tbody tr").removeClass('selected');
+   document.getElementById("compe").disabled = true;
+});
+

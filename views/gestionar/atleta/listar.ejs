@@ -31,7 +31,7 @@
 
               <thead>
                 <tr>
-                  <th scope="col">ID</th>
+                 
                   <th scope="col">Cedula</th>
                   <th scope="col">Nombre </th>
                   <th scope="col">Apellido</th>
@@ -45,18 +45,17 @@
 
                <% for(var i=0; i<dataAtletas.length; i++) {%>
                <tr>
-                 <th scope="row" class="idAtleta"><%= dataAtletas[i]['id'] %></th> 
-                <td><%= dataAtletas[i]['cedula'] %></td>
+                
+                <td class="idAtleta"><%= dataAtletas[i]['cedula'] %></td>
                 <td><%= dataAtletas[i]['primer_nombre'] %></td>
-                <%var pos= dataAtletas[i]['id_club'] %>
                 <td><%= dataAtletas[i]['primer_apellido'] %></td>
-                <td><%=dataClubs[pos-1]['nombre'] %></td>
+                <td><%=dataAtletas[i]['nombre'] %></td>
 
               
                 <td class="d-flex align-items-center justify-content-center">
 
                       <a class="btn btn-secondary" href="#atletamodificar" data-toggle="modal" id="editarS">Editar</a>          
-                      <form method="post" action="/gestionar/atleta/eliminar/<%= dataAtletas[i]['id'] %>">
+                      <form method="post" action="/gestionar/atleta/eliminar/<%= dataAtletas[i]['cedula'] %>" >
                         <button type="submit" class="btn btn-secondary" name="delete" onClick="return confirm('¿Quieres eliminar el Atleta?')">Eliminar</button>
                       </form>
               </td>
