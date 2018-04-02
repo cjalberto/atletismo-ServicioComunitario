@@ -150,10 +150,7 @@ router
 	    })
 	})
 	.post('/gestionar/categoria/modificar/:categoria_nombre', (req, res , next) => {
-
-		let categoria_id = req.params.categoria_nombre.split('-')[0],
-			categoria_nombre = req.params.categoria_nombre.split('-')[1],
-		 	categoria1 = {
+		let categoria1 = {
 			nombre : req.body.nombre,
 			descripcion : req.body.descripcion,
 			edad_min : req.body.edad_min,
@@ -173,13 +170,12 @@ router
 			}
 			else{
 				let promesa = new Promise((resolve , reject) => {
-					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria1.nombre}'`, (err , rows) =>{
-						console.log(rows)
+					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria1.nombre}' AND categoria.nombre != '${req.params.categoria_nombre}'`, (err , rows) =>{
 						if (err){
 							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
 						else{
-							if(rows.length > 2){
+							if(rows.length > 0){
 								reject({err : new Error('Categoria repetida') ,flag : true})
 							}
 							else{
@@ -191,7 +187,7 @@ router
 				promesa
 					.then(() => {
 						return new Promise((resolve , reject) => {
-							conexion.query(`SELECT categoria.nombre FROM categoria WHERE (${categoria1.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max) OR (${categoria1.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max)`, (err , rows) =>{
+							conexion.query(`SELECT categoria.nombre FROM categoria WHERE ((${categoria1.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max) OR (${categoria1.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max)) AND categoria.nombre != '${req.params.categoria_nombre}'`, (err , rows) =>{
 								if (err){
 									reject({err : new Error('Error al consultar la base de datos') , flag : false})
 								}
@@ -208,8 +204,15 @@ router
 					})
 					.then(() => {
 						return new Promise((resolve , reject) => {
-							conexion.query('UPDATE categoria SET ? WHERE nombre = ' + categoria_nombre,cat, (err, result) =>{ 
-								(err) ? reject({err : new Error('Error al guardar la data en la base de datos') , flag : false}) : resolve()           
+							conexion.query(`UPDATE categoria SET ? WHERE nombre = '${req.params.categoria_nombre}' AND sexo = 'Femenino'`,categoria1, (err, result) =>{ 
+								if (err){
+									reject({err : new Error('Error al consultar la base de datos') , flag : false})
+								}
+								else{ 
+									conexion.query(`UPDATE categoria SET ? WHERE nombre = '${req.params.categoria_nombre}' AND sexo = 'Masculino'`,categoria2, (err2, result2) =>{ 
+										(err2) ? reject({err : new Error('Error al guardar la data en la base de datos') , flag : false}) : resolve()           
+									})
+								}         
 							})
 						})
 					})
