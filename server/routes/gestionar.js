@@ -542,14 +542,14 @@ router
       		}
     	})
   	})
-	.post('/gestionar/atleta/eliminar/:atleta_id', (req, res , next) => {
-		let atleta_id = req.params.atleta_id
+	.post('/gestionar/atleta/eliminar/:atleta_cedula', (req, res , next) => {
+		let atleta_cedula = req.params.atleta_cedula
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			else{
-				conexion.query('DELETE FROM atleta where id = ?' , atleta_id , (err , rows) =>{
+				conexion.query('DELETE FROM atleta where cedula = ?' , atleta_cedula , (err , rows) =>{
 					(err) ? res.render('error', {mensaje : 'Error al eliminar registro de la base de datos' , code : 404}) : res.redirect('/gestionar/atleta')
 				})
 			}
