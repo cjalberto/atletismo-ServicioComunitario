@@ -19,7 +19,6 @@
 					<th scope="col">Lugar</th>
 					<th scope="col">Fecha</th>
 					<th scope="col">Hora</th>
-					<th scope="col">Categoría</th>
 					<th scope="col" class="text-center">Acción</th>
 				</tr>
 			</thead>
@@ -32,7 +31,6 @@
 					<td><%= datosCompetencia[i]['lugar'] %></td>
 					<td><%= datosCompetencia[i]['fecha'] %></td>
 					<td><%= datosCompetencia[i]['hora'] %></td>
-					<td><%= datosCompetencia[i]['categoria']+'-'+datosCompetencia[i]['sexo'] %></td>
 					<td class="d-flex align-items-center justify-content-center">
 	                    <a class="btn btn-secondary" href="/competencia/modificar/<%= datosCompetencia[i]['id'] %>">Editar</a>           
 	                    <form method="post" action="/competencia/eliminar/<%= datosCompetencia[i]['id'] %>">

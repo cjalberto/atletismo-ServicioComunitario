@@ -51,17 +51,6 @@
 						</div>
 					</div>
 
-					<div class="form-group row align-items-center justify-content-center">
-						<label for="inputCategoria" class="col-md-2 col-form-label">Categoria:</label>
-						<div class="col-md-6">
-							<select id="inputCategoria" name="categoria" class="form-control" required>
-								<% for(var i=0; i<categorias.length; i++) {%>
-								<option value="<%= categorias[i]['id'] + '-' + categorias[i]['sexo'] + '-' + categorias[i]['nombre'] %>"><%= categorias[i]['nombre'] + '-' + categorias[i]['sexo'] %></option>
-								<% } %>
-							</select>
-						</div>
-					</div>
-
 					<button type="submit" class="btn btn-secondary btn-lg btn-next ">Siguiente</button>
 
 				</form>
