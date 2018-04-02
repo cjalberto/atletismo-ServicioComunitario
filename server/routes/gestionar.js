@@ -550,7 +550,13 @@ router
 			}
 			else{
 				conexion.query('DELETE FROM atleta where cedula = ?' , atleta_cedula , (err , rows) =>{
-					(err) ? res.render('error', {mensaje : 'Error al eliminar registro de la base de datos' , code : 404}) : res.redirect('/gestionar/atleta')
+					if (err){
+						res.render('error', {mensaje : 'Error al eliminar registro de la base de datos' , code : 404})
+					} 
+					else{
+						res.status(200)
+						res.send({mensaje : 'acept' , code : 200})
+					}
 				})
 			}
 		})
