@@ -15,7 +15,7 @@ router
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			else{
-				conexion.query('SELECT * FROM  categoria' , (err , rows) =>{
+				conexion.query('SELECT DISTINCT categoria.nombre , categoria.descripcion , categoria.edad_min , categoria.edad_max FROM categoria' , (err , rows) =>{
 					(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('gestionar/categoria/listar', {listCategorias: rows})
 				})
 			}
@@ -24,26 +24,32 @@ router
 	.get('/gestionar/categoria/modificar', (req, res , next) => {
 		res.redirect('/gestionar/categoria')
 	})
-	/*//add
+	//add
 	.get('/gestionar/categoria/crear', (req, res , next) => {
 		res.render('gestionar/categoria/crear')
-	})*/
+	})
 	.post('/gestionar/categoria/crear' , (req, res , next) => {
-		let categoria = {
-				nombre : req.body.nombre,
-				sexo : req.body.sexo,
-				descripcion : req.body.descripcion,
-				edad_min : req.body.edad_min,
-				edad_max : req.body.edad_max
-			}
-			console.log(categoria)
+		let categoria1 = {
+			nombre : req.body.nombre,
+			descripcion : req.body.descripcion,
+			edad_min : req.body.edad_min,
+			edad_max : req.body.edad_max,
+			sexo : 'Femenino'
+		}
+		let categoria2 = {
+			nombre : req.body.nombre,
+			descripcion : req.body.descripcion,
+			edad_min : req.body.edad_min,
+			edad_max : req.body.edad_max,
+			sexo : 'Masculino'
+		}
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			else{
 				let promesa = new Promise((resolve , reject) => {
-					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria.nombre}'`, (err , rows) =>{
+					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria1.nombre}'`, (err , rows) =>{
 						if (err){
 							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
@@ -60,15 +66,38 @@ router
 				promesa
 					.then(() => {
 						return new Promise((resolve , reject) => {
-							conexion.query('INSERT INTO categoria SET ?' , categoria, (err , rows) =>{
-								(err) ? reject({err : new Error('Error al guardar la data en la base de datos') , flag : false}) : resolve()
+							conexion.query(`SELECT categoria.nombre FROM categoria WHERE (${categoria1.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max) OR (${categoria1.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max)`, (err , rows) =>{
+								if (err){
+									reject({err : new Error('Error al consultar la base de datos') , flag : false})
+								}
+								else{
+									if(rows.length > 0){
+										reject({err : new Error('El rango de edades ya pertenece a otra categoria') ,flag : true})
+									}
+									else{
+										resolve()
+									}
+								}
+							})
+						})
+					})
+					.then(() => {
+						return new Promise((resolve , reject) => {
+							conexion.query('INSERT INTO categoria SET ?' , categoria1, (err , rows) =>{
+								if (err) {
+									reject({err : new Error('Error al guardar la data en la base de datos') , flag : false})
+								}
+								else{
+									conexion.query('INSERT INTO categoria SET ?' , categoria2, (err , rows) =>{
+										(err) ? reject({err : new Error('Error al guardar la data en la base de datos') , flag : false}) : resolve()
+									})
+								}
 							})
 						})
 					})
 					.then(() => {
 						res.status(200)
 						res.send({mensaje : 'acept' , code : 200})
-						//res.redirect('back')
 					})
 					.catch((err) =>{
 						if (err.flag){
@@ -83,28 +112,28 @@ router
 		})
 	})
 	//delete
-	.post('/gestionar/categoria/eliminar/:categoria_id', (req, res , next) => {
-		let categoria_id = req.params.categoria_id
+	.post('/gestionar/categoria/eliminar/:categoria_nombre', (req, res , next) => {
+		let categoria_nombre = req.params.categoria_nombre
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			else{
-				conexion.query('DELETE FROM categoria where id = ?' , categoria_id , (err , rows) =>{
+				conexion.query('DELETE FROM categoria where nombre = ?' , categoria_nombre , (err , rows) =>{
 					(err) ? res.render('error', {mensaje : 'Error al eliminar registro de la base de datos' , code : 404}) : res.redirect('/gestionar/categoria')
 				})
 			}
 		})
 	})
 	//edit
-	.get('/gestionar/categoria/modificar/:categoria_id', (req, res , next) => {
-		let categoria_id = req.params.categoria_id
+	.get('/gestionar/categoria/modificar/:categoria_nombre', (req, res , next) => {
+		let categoria_nombre = req.params.categoria_nombre
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			else{
-	        	conexion.query('SELECT * FROM categoria WHERE id = ?' , categoria_id , (err, rows) =>{
+	        	conexion.query('SELECT * FROM categoria WHERE nombre = ?' , categoria_nombre , (err, rows) =>{
 	        		if (err){
 						res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
 					}
@@ -120,13 +149,23 @@ router
 			}
 	    })
 	})
-	.post('/gestionar/categoria/modificar/:categoria_id', (req, res , next) => {
-		let categoria_id = req.params.categoria_id
-		let categoria = {
+	.post('/gestionar/categoria/modificar/:categoria_nombre', (req, res , next) => {
+
+		let categoria_id = req.params.categoria_nombre.split('-')[0],
+			categoria_nombre = req.params.categoria_nombre.split('-')[1],
+		 	categoria1 = {
 			nombre : req.body.nombre,
 			descripcion : req.body.descripcion,
-	        edad_min: req.body.edad_min,
-	        edad_max: req.body.edad_max 
+			edad_min : req.body.edad_min,
+			edad_max : req.body.edad_max,
+			sexo : 'Femenino'
+		},
+			categoria2 = {
+			nombre : req.body.nombre,
+			descripcion : req.body.descripcion,
+			edad_min : req.body.edad_min,
+			edad_max : req.body.edad_max,
+			sexo : 'Masculino'
 		}
 		req.getConnection((err , conexion) => {
 			if (err){
@@ -134,12 +173,13 @@ router
 			}
 			else{
 				let promesa = new Promise((resolve , reject) => {
-					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria.nombre}' AND categoria.sexo='${categoria.sexo}'`, (err , rows) =>{
+					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria1.nombre}'`, (err , rows) =>{
+						console.log(rows)
 						if (err){
 							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
 						else{
-							if(rows.length > 0){
+							if(rows.length > 2){
 								reject({err : new Error('Categoria repetida') ,flag : true})
 							}
 							else{
@@ -151,7 +191,24 @@ router
 				promesa
 					.then(() => {
 						return new Promise((resolve , reject) => {
-							conexion.query('UPDATE categoria SET ? WHERE id = ' + categoria_id,cat, (err, result) =>{ 
+							conexion.query(`SELECT categoria.nombre FROM categoria WHERE (${categoria1.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max) OR (${categoria1.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max)`, (err , rows) =>{
+								if (err){
+									reject({err : new Error('Error al consultar la base de datos') , flag : false})
+								}
+								else{
+									if(rows.length > 0){
+										reject({err : new Error('El rango de edades ya pertenece a otra categoria') ,flag : true})
+									}
+									else{
+										resolve()
+									}
+								}
+							})
+						})
+					})
+					.then(() => {
+						return new Promise((resolve , reject) => {
+							conexion.query('UPDATE categoria SET ? WHERE nombre = ' + categoria_nombre,cat, (err, result) =>{ 
 								(err) ? reject({err : new Error('Error al guardar la data en la base de datos') , flag : false}) : resolve()           
 							})
 						})
@@ -159,7 +216,6 @@ router
 					.then(() => {
 						res.status(200)
 						res.send({mensaje : 'acept' , code : 200})
-						//res.redirect('back')
 					})
 					.catch((err) =>{
 						if (err.flag){
@@ -231,7 +287,6 @@ router
 					.then(() => {
 						res.status(200)
 						res.send({mensaje : 'acept' , code : 200})
-						//res.redirect('back')
 					})
 					.catch((err) =>{
 						if (err.flag){
@@ -294,7 +349,7 @@ router
 			}
 			else{
 				let promesa = new Promise((resolve , reject) => {
-					conexion.query(`SELECT * FROM club WHERE club.nombre='${club.nombre}'`, (err , rows) =>{
+					conexion.query(`SELECT * FROM club WHERE club.nombre='${club.nombre}' AND id !=${club_id}`, (err , rows) =>{
 						if (err){
 							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
@@ -319,7 +374,6 @@ router
 					.then(() => {
 						res.status(200)
 						res.send({mensaje : 'acept' , code : 200})
-						//res.redirect('back')
 					})
 					.catch((err) =>{
 						if (err.flag){
@@ -383,7 +437,7 @@ router
 			}
 			else{
 				let promesa = new Promise((resolve , reject) => {
-					conexion.query(`SELECT * FROM atleta WHERE atleta.cedula='${atleta.cedula}'`, (err , rows) =>{
+					conexion.query(`SELECT * FROM atleta WHERE atleta.cedula=${atleta.cedula} AND atleta.id != ${atleta_id}`, (err , rows) =>{
 						if (err){
 							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
@@ -408,7 +462,6 @@ router
 					.then(() => {
 						res.status(200)
 						res.send({mensaje : 'acept' , code : 200})
-						//res.redirect('back')
 					})
 					.catch((err) =>{
 						if (err.flag){
@@ -465,7 +518,6 @@ router
 					.then(() => {
 						res.status(200)
 						res.send({mensaje : 'acept' , code : 200})
-						//res.redirect('back')
 					})
 					.catch((err) =>{
 						if (err.flag){
