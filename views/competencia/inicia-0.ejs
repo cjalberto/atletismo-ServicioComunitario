@@ -2,7 +2,7 @@
 <div id="iniciarcompe" class="modal fade bd-example-modal-lg">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
-        <form class="text-center" action="/competencia/iniciar" method="post">
+        <form class="text-center" >
           <div class="modal-header">            
             <h4 class="modal-title">Elije una competencia para Empezar</h4>
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -20,9 +20,9 @@
                 <% for(var i=0; i<datosCompetencia.length; i++) {%>
                <tr>
                 <th scope="row" class="nombreCompetencia"><%= datosCompetencia[i]['nombre'] %></th>
-                <td><%= datosCompetencia[i]['lugar'] %></td>
-                <td><%= datosCompetencia[i]['fecha'] %></td>
-                <td><%= datosCompetencia[i]['hora'] %></td>
+                <td class="lugarCompetencia"><%= datosCompetencia[i]['lugar'] %></td>
+                <td class="fechaCompetencia"><%= datosCompetencia[i]['fecha'] %></td>
+                <td class="horaCompetencia"><%= datosCompetencia[i]['hora'] %></td>
               </tr>
               <% } %>
              
@@ -32,7 +32,7 @@
           </div>
           <div class="modal-footer">
             <input type="button" class="btn btn-secondary  text-uppercase " data-dismiss="modal" value="Cancelar">
-            <input type="submit" class="btn btn-success" value="Empezar" onclick="mostrar();">
+            <input type="button" class="btn btn-success" data-dismiss="modal" value="Empezar" id="btn-ini" onclick="mostrar();">
           </div>
         </form>
       </div>
