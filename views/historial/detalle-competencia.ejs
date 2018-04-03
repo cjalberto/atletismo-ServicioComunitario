@@ -80,12 +80,12 @@
 		</thead>
 		<tbody>   
 
-			<% for(var i=0; i<dataCompetidores.length; i++) {%>
+			<% for(var i=0; i<dataDetalle.dataCompetidores.length; i++) {%>
 			<tr>
 				<td><%= i+1 %> </td>
-				<th scope="row" class="idCompetidor"><%= dataCompetidores[i].numero%></th>
-				<td><%= dataCompetidores[i].tiempo%></td>
-				<td><%= dataCompetidores[i].competidor%></td>
+				<th scope="row" class="idCompetidor"><%= dataDetalle.dataCompetidores[i].numero%></th>
+				<td><%= dataDetalle.dataCompetidores[i].tiempo%></td>
+				<td><%= dataDetalle.dataCompetidores[i].competidor%></td>
 
 			</tr>
 			<% } %>
