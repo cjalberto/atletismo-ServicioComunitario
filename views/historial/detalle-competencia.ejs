@@ -1,7 +1,7 @@
 <% include ../partials/head %>
 
 <div class="title text-center" >
-	<h1>HISTORIAL</h1>
+	<h1>HISTORIAL - <%= dataDetalle.dataCompetencia.nombreCompetencia %></h1>
 </div>
 
 <div id="addEmployeeModal" class="modal fade bd-example-modal-lg">
@@ -9,25 +9,30 @@
 		<div class="modal-content">
 			<form>
 				<div class="modal-header" >            
-					<h3  class="modal-title" >Premiacion</h3>
+					<h3  class="modal-title" >Premiacion  - <%= dataDetalle.dataCompetencia.nombreCompetencia %></h3>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">          
-					<div class="form-group">
 						<label><b>Ganador Absoluto Masculino</b></label>
 						<table class="table table-striped table-bordered table-fixed display"  id="Table" >
 							<thead>
 								<tr>
-									<th scope="col">Pos</th><th scope="col"># Numero</th><th scope="col">Nombre y Apellido</th><th scope="col">Edad</th>
-									<th scope="col">Club/Equipo</th>
-									<th scope="col">Tiempo</th>
+									<th scope="col">Pos</th><th scope="col"># Numero</th>
+									<th scope="col">Tiempo</th><th scope="col">Nombre y Apellido</th>
+
 								</tr>
 							</thead>
 							<tbody>
-								<tr><th>1</th><th>25</th><td>David Ortega </td><td>27</td><td>Ingenieros</td><td>00:00:25:12</td></tr>
+								<tr>
+									<th scope="row">1</th>
+									<td><%= dataDetalle.dataCompetidores[0].numero%></td>
+									<td><%= dataDetalle.dataCompetidores[0].tiempo%></td>
+									<td><%= dataDetalle.dataCompetidores[0].competidor%></td>
+
+								</tr>
 							</tbody>
 						</table>
-					</div>
+				
 					<div class="form-group">
 						<label><b>Libre Masculino</b></label>
 					</div>
@@ -59,15 +64,15 @@
 
 	<div class="table-title">
 
-		<div class="row">
-			<div class="col-sm-8"><h2>Lista de llegada de Atletas</h2></div>
+		<div class="row text-center">
+			<div class="col-md-8"><h2>Lista de llegada de Atletas</h2></div>
 			<div class="col-12 col-md-4">
 				<button href="#addEmployeeModal" data-toggle="modal" type="button" class="btn btn-success btn-lg text-uppercase add-new"><i class="fa fa-plus"></i> Premiacion</button>
 			</div>
 		</div>
 	</div>
 
-	<table class="table table-striped table-bordered table-fixed display" style="width:100%" id="myTableHistoria" cellspacing="0" width="100%">
+	<table class="table table-striped table-bordered table-fixed display" style="width:100%" id="myTableHistoriaDetalle" cellspacing="0" width="100%">
 
 		<thead>
 			<tr>
@@ -82,8 +87,8 @@
 
 			<% for(var i=0; i<dataDetalle.dataCompetidores.length; i++) {%>
 			<tr>
-				<td><%= i+1 %> </td>
-				<th scope="row" class="idCompetidor"><%= dataDetalle.dataCompetidores[i].numero%></th>
+				<th scope="row"><%= i+1 %> </th>
+				<td><%= dataDetalle.dataCompetidores[i].numero%></td>
 				<td><%= dataDetalle.dataCompetidores[i].tiempo%></td>
 				<td><%= dataDetalle.dataCompetidores[i].competidor%></td>
 
@@ -94,7 +99,7 @@
 	</table>
 
 	<div class="btn-container text-center">
-		<a class="btn btn-secondary btn-lg btn-back" href="/historial">Buscar Otra Competenciaaaa</a>
+		<a class="btn btn-secondary btn-lg btn-back-h" href="/historial">Buscar Otra Competenciaaaa</a>
 	</div>
 
 </div>

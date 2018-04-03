@@ -1,7 +1,7 @@
 ///////////////////CREAR///////////////////////////////////
 
 var table = $('#myTable').DataTable({
-	scrollY: "200px",
+	scrollY: "372px",
 	scrollCollapse: true,
 	scrollX: true,
 	paging: false,
@@ -76,7 +76,7 @@ $("#deselect-all").click(function () {
 ////////////////////////MODIFICAR-COMETENCIA
 
 var tableCompe = $('#myTableCompe').DataTable({
-	scrollY: "200px",
+	scrollY: "372px",
 	scrollCollapse: true,
 	scrollX: true,
 	paging: false,
