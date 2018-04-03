@@ -40,7 +40,7 @@ router
 						req.body.id_atleta.forEach( function(element, index) {
 							let competencia_atleta = {
 	                        	id_atleta: req.body.id_atleta[index],
-	                        	id_competencia: rows.insertId
+	                        	id_competencia: rows.insertId,
 	                        	numero_atleta : req.body.num_atleta[index]
 	                        }
 	                       	conexion.query('INSERT INTO competencia_atleta SET ?', competencia_atleta, (err, rows) => {
@@ -179,7 +179,7 @@ router
 							req.body.id_atleta.forEach( function(element, index) {
 								let competencia_atleta = {
 	                        		id_atleta: element,
-	                        		id_competencia: competencia_id
+	                        		id_competencia: competencia_id,
 	                        		numero_atleta : req.body.num_atleta[index]
 	                            }
 	                        	conexion.query('INSERT INTO competencia_atleta SET ?', competencia_atleta, (err, rows) => {
