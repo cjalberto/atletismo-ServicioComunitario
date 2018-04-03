@@ -15,7 +15,7 @@ router
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			else{
-				conexion.query('SELECT DISTINCT categoria.nombre , categoria.descripcion , categoria.edad_min , categoria.edad_max FROM categoria' , (err , rows) =>{
+				conexion.query('SELECT categoria.nombre , categoria.descripcion , categoria.edad_min , categoria.edad_max FROM categoria' , (err , rows) =>{
 					(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('gestionar/categoria/listar', {listCategorias: rows})
 				})
 			}
@@ -29,19 +29,11 @@ router
 		res.render('gestionar/categoria/crear')
 	})
 	.post('/gestionar/categoria/crear' , (req, res , next) => {
-		let categoria1 = {
+		let categoria = {
 			nombre : req.body.nombre,
 			descripcion : req.body.descripcion,
 			edad_min : req.body.edad_min,
-			edad_max : req.body.edad_max,
-			sexo : 'Femenino'
-		}
-		let categoria2 = {
-			nombre : req.body.nombre,
-			descripcion : req.body.descripcion,
-			edad_min : req.body.edad_min,
-			edad_max : req.body.edad_max,
-			sexo : 'Masculino'
+			edad_max : req.body.edad_max
 		}
 		if (req.body.edad_min > req.body.edad_max){
 			res.status(404)
@@ -53,7 +45,7 @@ router
 			}
 			else{
 				let promesa = new Promise((resolve , reject) => {
-					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria1.nombre}'`, (err , rows) =>{
+					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria.nombre}'`, (err , rows) =>{
 						if (err){
 							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
@@ -70,7 +62,7 @@ router
 				promesa
 					.then(() => {
 						return new Promise((resolve , reject) => {
-							conexion.query(`SELECT categoria.nombre FROM categoria WHERE (${categoria1.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max) OR (${categoria1.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max)`, (err , rows) =>{
+							conexion.query(`SELECT categoria.nombre FROM categoria WHERE (${categoria.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max) OR (${categoria.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max)`, (err , rows) =>{
 								if (err){
 									reject({err : new Error('Error al consultar la base de datos') , flag : false})
 								}
@@ -87,15 +79,8 @@ router
 					})
 					.then(() => {
 						return new Promise((resolve , reject) => {
-							conexion.query('INSERT INTO categoria SET ?' , categoria1, (err , rows) =>{
-								if (err) {
-									reject({err : new Error('Error al guardar la data en la base de datos') , flag : false})
-								}
-								else{
-									conexion.query('INSERT INTO categoria SET ?' , categoria2, (err , rows) =>{
-										(err) ? reject({err : new Error('Error al guardar la data en la base de datos') , flag : false}) : resolve()
-									})
-								}
+							conexion.query('INSERT INTO categoria SET ?' , categoria, (err , rows) =>{
+								(err) ? reject({err : new Error('Error al guardar la data en la base de datos') , flag : false}) : resolve()
 							})
 						})
 					})
@@ -154,19 +139,11 @@ router
 	    })
 	})
 	.post('/gestionar/categoria/modificar/:categoria_nombre', (req, res , next) => {
-		let categoria1 = {
+		let categoria = {
 			nombre : req.body.nombre,
 			descripcion : req.body.descripcion,
 			edad_min : req.body.edad_min,
-			edad_max : req.body.edad_max,
-			sexo : 'Femenino'
-		},
-			categoria2 = {
-			nombre : req.body.nombre,
-			descripcion : req.body.descripcion,
-			edad_min : req.body.edad_min,
-			edad_max : req.body.edad_max,
-			sexo : 'Masculino'
+			edad_max : req.body.edad_max
 		}
 		if (req.body.edad_min > req.body.edad_max){
 			res.status(404)
@@ -178,7 +155,7 @@ router
 			}
 			else{
 				let promesa = new Promise((resolve , reject) => {
-					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria1.nombre}' AND categoria.nombre != '${req.params.categoria_nombre}'`, (err , rows) =>{
+					conexion.query(`SELECT * FROM categoria WHERE categoria.nombre='${categoria.nombre}' AND categoria.nombre != '${req.params.categoria_nombre}'`, (err , rows) =>{
 						if (err){
 							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
@@ -195,7 +172,7 @@ router
 				promesa
 					.then(() => {
 						return new Promise((resolve , reject) => {
-							conexion.query(`SELECT categoria.nombre FROM categoria WHERE ((${categoria1.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max) OR (${categoria1.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max)) AND categoria.nombre != '${req.params.categoria_nombre}'`, (err , rows) =>{
+							conexion.query(`SELECT categoria.nombre FROM categoria WHERE ((${categoria.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max) OR (${categoria.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max)) AND categoria.nombre != '${req.params.categoria_nombre}'`, (err , rows) =>{
 								if (err){
 									reject({err : new Error('Error al consultar la base de datos') , flag : false})
 								}
@@ -212,15 +189,8 @@ router
 					})
 					.then(() => {
 						return new Promise((resolve , reject) => {
-							conexion.query(`UPDATE categoria SET ? WHERE nombre = '${req.params.categoria_nombre}' AND sexo = 'Femenino'`,categoria1, (err, result) =>{ 
-								if (err){
-									reject({err : new Error('Error al consultar la base de datos') , flag : false})
-								}
-								else{ 
-									conexion.query(`UPDATE categoria SET ? WHERE nombre = '${req.params.categoria_nombre}' AND sexo = 'Masculino'`,categoria2, (err2, result2) =>{ 
-										(err2) ? reject({err : new Error('Error al guardar la data en la base de datos') , flag : false}) : resolve()           
-									})
-								}         
+							conexion.query(`UPDATE categoria SET ? WHERE nombre = '${req.params.categoria_nombre}'`,categoria, (err2, result2) =>{ 
+								(err2) ? reject({err : new Error('Error al guardar la data en la base de datos') , flag : false}) : resolve()           
 							})
 						})
 					})
@@ -240,6 +210,9 @@ router
 			}
 		})
 	})
+
+
+
 
 	///crud de club
 	//list
@@ -415,13 +388,12 @@ router
 				promesa
 					.then((data) => {
 						return new Promise((resolve , reject) => {
-							conexion.query('SELECT * FROM atleta LEFT JOIN club ON atleta.id_club=club.id', (err, rows) =>{ 
+							conexion.query('SELECT atleta.* , club.nombre nombre_club FROM atleta LEFT JOIN club ON atleta.id_club=club.id', (err, rows) =>{ 
 								(err) ? reject(new Error('Error al consultar la base de datos')) : resolve({dataClubs : data.dataClubs , dataAtletas : rows})           
 							})
 						})
 					})
 					.then((data) => {
-						//console.log(data)
 						res.render('gestionar/atleta/listar' , data)
 					})
 					.catch((err) =>{
@@ -496,8 +468,7 @@ router
       		fecha_nacimiento : req.body.fecha_nacimiento,
       		id_club : req.body.id_club,
       		sexo : req.body.sexo
-    	}	
-    	//console.log(atleta)		
+    	}		
     	req.getConnection((err , conexion) => {
       		if (err){
         		res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
@@ -544,7 +515,6 @@ router
   	})
 	.post('/gestionar/atleta/eliminar/:atleta_cedula', (req, res , next) => {
 		let atleta_cedula = req.params.atleta_cedula
-		console.log(atleta_cedula);
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})

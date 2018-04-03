@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 02-04-2018 a las 00:12:42
+-- Tiempo de generación: 03-04-2018 a las 02:22:22
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.3
 
@@ -61,7 +61,6 @@ CREATE TABLE `categoria` (
   `id` int(11) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `descripcion` text NOT NULL,
-  `sexo` varchar(10) NOT NULL,
   `edad_min` int(11) NOT NULL,
   `edad_max` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -70,13 +69,12 @@ CREATE TABLE `categoria` (
 -- Volcado de datos para la tabla `categoria`
 --
 
-INSERT INTO `categoria` (`id`, `nombre`, `descripcion`, `sexo`, `edad_min`, `edad_max`) VALUES
-(1, 'afs', 'sadf', 'Femenino', 25, 30),
-(2, 'afs', 'fsda', 'Masculino', 25, 30),
-(3, 'aaa', 'aaa', 'Femenino', 31, 36),
-(4, 'aaa', 'aaa', 'Masculino', 31, 36),
-(5, 'bbb', 'bbb', 'Femenino', 37, 42),
-(6, 'bbb', 'bbb', 'Masculino', 37, 42);
+INSERT INTO `categoria` (`id`, `nombre`, `descripcion`, `edad_min`, `edad_max`) VALUES
+(3, 'hhh', 'aaaaa', 31, 36),
+(7, 'we', 'sdfaf', 90, 91),
+(13, 'bbb', 'fasfas', 10, 15),
+(15, 'gdfg', 'gsdggdfgdf', 2, 5),
+(17, 'dfgdsg', 'rwqrwe', 7, 8);
 
 -- --------------------------------------------------------
 
@@ -95,9 +93,9 @@ CREATE TABLE `club` (
 --
 
 INSERT INTO `club` (`id`, `nombre`, `descripcion`) VALUES
-(1, 'wqerwq', 'safas'),
+(1, 'jt', 'safas23hgfhf'),
 (2, 'jtyjr', 'jtrrt'),
-(3, 'asfohjo', 'ihaspi'),
+(3, 'asfohjo', 'ihaspifdfd'),
 (4, 'gvxik', 'nasllfg'),
 (5, 'rwqer', 'rewqrqw');
 
@@ -122,7 +120,12 @@ CREATE TABLE `competencia` (
 
 INSERT INTO `competencia` (`id`, `nombre`, `fecha`, `hora`, `lugar`, `finalizado`) VALUES
 (1, 'dfas', '2018-05-03', '01:01:00', 'rrwqe', 0),
-(2, 'dfas', '2018-05-03', '01:01:00', 'rrwqe', 0);
+(2, 'dfas', '2018-05-03', '01:01:00', 'rrwqe', 0),
+(4, 'fdas', '2018-04-18', '01:01:00', 'fdasfa', 0),
+(13, 'dsfa', '2018-04-12', '01:01:00', 'a', 0),
+(14, 'hnfgh', '2018-04-26', '01:01:00', 'gagf', 0),
+(16, 'utyurt', '2018-04-10', '01:01:00', 'erwtwer', 0),
+(17, 'bbbbbbbb', '2018-05-04', '01:01:00', 'beytrtewtwe', 0);
 
 -- --------------------------------------------------------
 
@@ -135,9 +138,25 @@ CREATE TABLE `competencia_atleta` (
   `id_atleta` int(11) NOT NULL,
   `id_competencia` int(11) NOT NULL,
   `tiempo` double NOT NULL,
-  `numero_atleta` int(11) NOT NULL,
-  `id_categoria` int(11) NOT NULL
+  `numero_atleta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `competencia_atleta`
+--
+
+INSERT INTO `competencia_atleta` (`id`, `id_atleta`, `id_competencia`, `tiempo`, `numero_atleta`) VALUES
+(13, 1, 13, 0, 83),
+(14, 2, 13, 0, 54),
+(15, 4, 13, 0, 500),
+(16, 1, 14, 0, 71),
+(17, 2, 14, 0, 272),
+(18, 3, 14, 0, 11),
+(22, 3, 16, 0, 477),
+(23, 4, 16, 0, 400),
+(32, 2, 17, 0, 259),
+(33, 3, 17, 0, 364),
+(34, 4, 17, 0, 494);
 
 --
 -- Índices para tablas volcadas
@@ -176,8 +195,7 @@ ALTER TABLE `competencia`
 ALTER TABLE `competencia_atleta`
   ADD PRIMARY KEY (`id`),
   ADD KEY `foreing_id_atleta` (`id_atleta`),
-  ADD KEY `foreing_id_competencia` (`id_competencia`),
-  ADD KEY `foreing_id_categoria` (`id_categoria`);
+  ADD KEY `foreing_id_competencia` (`id_competencia`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -193,7 +211,7 @@ ALTER TABLE `atleta`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `club`
@@ -205,13 +223,13 @@ ALTER TABLE `club`
 -- AUTO_INCREMENT de la tabla `competencia`
 --
 ALTER TABLE `competencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `competencia_atleta`
 --
 ALTER TABLE `competencia_atleta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- Restricciones para tablas volcadas
@@ -228,7 +246,6 @@ ALTER TABLE `atleta`
 --
 ALTER TABLE `competencia_atleta`
   ADD CONSTRAINT `foreing_id_atleta` FOREIGN KEY (`id_atleta`) REFERENCES `atleta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `foreing_id_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`),
   ADD CONSTRAINT `foreing_id_competencia` FOREIGN KEY (`id_competencia`) REFERENCES `competencia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 

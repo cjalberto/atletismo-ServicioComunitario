@@ -9,15 +9,16 @@
 	<div class="container">
 <div class="form-wrapper">
 		<div class="form form--step2">
-			<form class="text-center" action="/competencia/modificar/segundo" method="post">
+			<form class="text-center" action="/competencia/modificar" id="editCompe">
 				
 					<div class="row">
-					<div class="col-md-3 info-carrera"><input type="text" class="form-control" name="nombre" value="<%= datosCompe['nombre']%>" required>
+					<div class="col-md-3 info-carrera"><input type="text" class="form-control" name="nombre" value="<%= datosCompe[0]['nombre']%>" required>
 					</div>
-					<div class="col-md-3 info-carrera"><input type="text" class="form-control" name="lugar" value="<%= datosCompe['lugar']%>" required></div>
-					<div class="col-md-3 info-carrera"><input type="date" class="form-control" name="fecha" value="<%= datosCompe['fecha']%>" required></div>
-					<div class="col-md-3 info-carrera"><input type="time" class="form-control" name="hora" value="<%= datosCompe['hora']%>" required></div>
+					<div class="col-md-3 info-carrera"><input type="text" class="form-control" name="lugar" value="<%= datosCompe[0]['lugar']%>" required></div>
+					<div class="col-md-3 info-carrera"><input type="date" class="form-control" name="fecha" value="<%= datosCompe[0]['fecha']%>" required></div>
+					<div class="col-md-3 info-carrera"><input type="time" class="form-control" name="hora" value="<%= datosCompe[0]['hora']%>" required></div>
 				</div>		
+				<input type="hidden" name="id" value="<%= datosCompe[0]['id']%>">
 
 				<div class="table-responsive">
 
@@ -68,7 +69,7 @@
 
 				<div class="btn-container">
 					<a href="../listar" class="btn btn-secondary btn-lg btn-back">Regresar</a>
-					<button type="submit" class="btn btn-secondary btn-lg btn-save" formaction="/competencia/modificar/<%= datosCompe['id']%>">Guardar</button>
+					<button type="submit" class="btn btn-secondary btn-lg btn-save">Guardar</button>
 				</div>
 
 			</form>
