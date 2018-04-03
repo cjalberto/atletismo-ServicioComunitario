@@ -29,6 +29,7 @@ app
 	.use('/gestionar/club',express.static('public'))
 	.use('/gestionar/club/modificar',express.static('public'))
 	.use('/historial',express.static('public'))
+	.use('/historial/detalle-competencia',express.static('public'))
 	.use(routes)
 	.use(routes_competencia)
 	.use(routes_gestionar)

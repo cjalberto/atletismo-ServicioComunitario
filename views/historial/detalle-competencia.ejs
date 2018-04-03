@@ -1,208 +1,101 @@
 <% include ../partials/head %>
 
-  <div class="title text-center" >
-  <h1>HISTORIAL</h1>
-  </div>
+<div class="title text-center" >
+	<h1>HISTORIAL</h1>
+</div>
 
 <div id="addEmployeeModal" class="modal fade bd-example-modal-lg">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <form>
-          <div class="modal-header" >            
-            <h3  class="modal-title" >Premiacion</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          </div>
-          <div class="modal-body">          
-            <div class="form-group">
-              <label><b>Ganador Absoluto Masculino</b></label>
-              <table class="table table-striped table-bordered table-fixed display"  id="Table" >
-              <thead>
-                <tr>
-                  <th scope="col">Pos</th><th scope="col"># Numero</th><th scope="col">Nombre y Apellido</th><th scope="col">Edad</th>
-                  <th scope="col">Club/Equipo</th>
-                  <th scope="col">Tiempo</th>
-                </tr>
-              </thead>
-              <tbody>
-              <tr><th>1</th><th>25</th><td>David Ortega </td><td>27</td><td>Ingenieros</td><td>00:00:25:12</td></tr>
-              </tbody>
-            </table>
-            </div>
-            <div class="form-group">
-              <label><b>Libre Masculino</b></label>
-            </div>
-            <div class="form-group">
-              <label><b>Master "A" Masculino</b></label>
-            </div>
-             <div class="form-group">
-              <label><b>Master "B" Masculino</b></label>
-            </div>
-            <div class="form-group">
-              <label><b>Master "C" Masculino</b></label>
-            </div>
-            <div class="form-group">
-              <label><b>Master "D" Masculino</b></label>
-            </div>
-            <div class="form-group">
-              <label><b>Master "E" Masculino</b></label>
-            </div>
-               
-          </div>
-          <div class="modal-footer">
-            <input type="button" class="btn btn-secondary  text-uppercase " data-dismiss="modal" value="OK">
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header" >            
+					<h3  class="modal-title" >Premiacion</h3>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">          
+					<div class="form-group">
+						<label><b>Ganador Absoluto Masculino</b></label>
+						<table class="table table-striped table-bordered table-fixed display"  id="Table" >
+							<thead>
+								<tr>
+									<th scope="col">Pos</th><th scope="col"># Numero</th><th scope="col">Nombre y Apellido</th><th scope="col">Edad</th>
+									<th scope="col">Club/Equipo</th>
+									<th scope="col">Tiempo</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr><th>1</th><th>25</th><td>David Ortega </td><td>27</td><td>Ingenieros</td><td>00:00:25:12</td></tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="form-group">
+						<label><b>Libre Masculino</b></label>
+					</div>
+					<div class="form-group">
+						<label><b>Master "A" Masculino</b></label>
+					</div>
+					<div class="form-group">
+						<label><b>Master "B" Masculino</b></label>
+					</div>
+					<div class="form-group">
+						<label><b>Master "C" Masculino</b></label>
+					</div>
+					<div class="form-group">
+						<label><b>Master "D" Masculino</b></label>
+					</div>
+					<div class="form-group">
+						<label><b>Master "E" Masculino</b></label>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-secondary  text-uppercase " data-dismiss="modal" value="OK">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 <div class="container">
 
+	<div class="table-title">
 
-<div class="form-wrapper_2" >
-   <div class="table-title">
+		<div class="row">
+			<div class="col-sm-8"><h2>Lista de llegada de Atletas</h2></div>
+			<div class="col-12 col-md-4">
+				<button href="#addEmployeeModal" data-toggle="modal" type="button" class="btn btn-success btn-lg text-uppercase add-new"><i class="fa fa-plus"></i> Premiacion</button>
+			</div>
+		</div>
+	</div>
 
-                <div class="row">
-                    <div class="col-sm-8"><h2>Lista de llegada de Atletas</h2></div>
-                    <div class="col-12 col-md-4">
-                        <button href="#addEmployeeModal" data-toggle="modal" type="button" class="btn btn-secondary btn-lg text-uppercase add-new"><i class="fa fa-plus"></i> Premiacion</button>
-                    </div>
-                </div>
-            </div>
-     
-      <div class="form form--step2">
-        <form class="text-center" action="/competencia/crear/segundo" method="post">
-          <div class="table-responsive">
+	<table class="table table-striped table-bordered table-fixed display" style="width:100%" id="myTableHistoria" cellspacing="0" width="100%">
 
-            <table class="table table-striped table-bordered table-fixed display" style="width:100%" id="myTable1" cellspacing="0" width="100%">
+		<thead>
+			<tr>
+				<th scope="col">Pos</th>
+				<th scope="col"># Numero</th>
+				<th scope="col">Tiempo</th>
+				<th scope="col">Nombre y Apellido</th>
 
-              <thead>
-                <tr>
-                  <th scope="col"># Numero</th>
-                  <th scope="col">Pos</th>
-                  <th scope="col">Tiempo</th>
-                  <th scope="col">Nombre y Apellido</th>
-                  <th scope="col">Categorita</th>
-                  <th scope="col">Club/Equipo</th>
-                </tr>
-              </thead>
-              <tbody>   
+			</tr>
+		</thead>
+		<tbody>   
 
-               <tr>
-                  <th scope="row" class="idCompetidor">15</th>
-                        <td>1 </td>
-                        <td>00:00:30:56 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        
-                </tr>
-                 <tr>
-                  <th scope="row" class="idCompetidor">66</th>
-                        <td>2 </td>
-                        <td>00:00:31:56 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        
-                </tr>
+			<% for(var i=0; i<dataCompetidores.length; i++) {%>
+			<tr>
+				<td><%= i+1 %> </td>
+				<th scope="row" class="idCompetidor"><%= dataCompetidores[i].numero%></th>
+				<td><%= dataCompetidores[i].tiempo%></td>
+				<td><%= dataCompetidores[i].competidor%></td>
 
-              <tr>
-                  <th scope="row" class="idCompetidor">95</th>
-                        <td>3 </td>
-                        <td>00:00:40:56 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        
-                </tr>
+			</tr>
+			<% } %>
 
-                <tr>
-                  <th scope="row" class="idCompetidor">32</th>
-                        <td>4 </td>
-                        <td>00:00:45:56 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        
-                </tr>
-                <tr>
-                  <th scope="row" class="idCompetidor">92</th>
-                        <td>5 </td>
-                        <td>00:00:46:56 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        
-                </tr>
-                  <tr>
-                  <th scope="row" class="idCompetidor">92</th>
-                        <td>5 </td>
-                        <td>00:00:46:56 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        
-                </tr>
-                  <tr>
-                  <th scope="row" class="idCompetidor">92</th>
-                        <td>5 </td>
-                        <td>00:00:46:56 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        
-                </tr>
-                 <tr>
-                  <th scope="row" class="idCompetidor">92</th>
-                        <td>5 </td>
-                        <td>00:00:46:56 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        
-                </tr>
-                  <tr>
-                  <th scope="row" class="idCompetidor">92</th>
-                        <td>5 </td>
-                        <td>00:00:46:56 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        
-                </tr>
-                 <tr>
-                  <th scope="row" class="idCompetidor">92</th>
-                        <td>5 </td>
-                        <td>00:00:46:56 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        
-                </tr>
-                  <tr>
-                  <th scope="row" class="idCompetidor">92</th>
-                        <td>5 </td>
-                        <td>00:00:46:56 </td>
-                        <td>David Ortega</td>
-                        <td>Libre</td>
-                        <td>IDT</td>
-                        
-                </tr>
-                
-              </tbody>
-            </table>
-          </div>
+		</tbody>
+	</table>
 
-          <div class="btn-container">
-          <button type="submit" class="btn btn-secondary btn-lg btn-back" formaction="/historial/detalle-competencia">Buscar Otra Competenciaaaa</button>
-          </div>
-
-
-        </form>
-      </div>
-
-
-    </div>
+	<div class="btn-container text-center">
+		<a class="btn btn-secondary btn-lg btn-back" href="/historial">Buscar Otra Competenciaaaa</a>
+	</div>
 
 </div>
 

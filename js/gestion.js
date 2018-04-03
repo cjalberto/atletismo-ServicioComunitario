@@ -16,6 +16,26 @@ var tableGestion = $('#myTableGestion').DataTable({
 	}
 });
 
+//hitorial
+
+var tableHistorial = $('#myTableHistoria').DataTable({
+	scrollY: "200px",
+	scrollCollapse: true,
+	scrollX: true,
+	paging: false,
+	searching: true,
+	info: false,
+	"order": [[ 2, "asc" ]],
+	language: {
+		zeroRecords: "No se encontraron coincidencias",
+		search: "Buscar:",
+		infoFiltered: "(filtrado de _MAX_ resultados)",
+		infoEmpty: "Mostrando 0 resultados",
+		info: "Mostrando _TOTAL_ resultados",
+	}
+});
+
+
 
 //////////////////////////////Atleta
 	

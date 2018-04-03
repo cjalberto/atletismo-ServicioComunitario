@@ -1,24 +1,46 @@
 <% include partials/head %>
 
-<div class="section-center d-flex align-items-center justify-content-center flex-column content-index">
-	<div class="title text-center">
-  <h1>HISTORIAL</h1>
-  </div>
-<div class="container">
-     <div class="form-wrapper_1" id='oc1'>
-        <form  class="text-center" >
+<div class="section-center d-flex align-items-center justify-content-center flex-column content-carreras">
 
-          <div class="form-group row align-items-center" id='caja1'>
-            <label for="inputNombreCompetencia" class="col-md-2 col-form-label">Nombre de Competencia:</label>
-            <div class="col-md-10">
-              <input type="text" class="form-control" id="inputNombreCompetencia" name="inputNombreCompetencia" placeholder="Nombre de Competencia">
-            </div>
-          </div>
-          <div class="btn-container text-center">
-           <a href="historial1" class="btn btn-secondary btn-lg">Siguiente</a>
-          </div>
-        </form>
-      </div>
-</div>
+	<div class="title text-center">
+		<h1>HISTORIAL</h1>
+	</div>
+
+	<div class="container">
+
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered table-fixed display" style="width:100%" id="myTableCompe" cellspacing="0" width="100%">
+
+				<thead>
+					<tr>
+						<th scope="col">ID</th>
+						<th scope="col">Nombre</th>
+						<th scope="col">Lugar</th>
+						<th scope="col">Fecha</th>
+						<th scope="col">Hora</th>
+						<th scope="col" class="text-center">Acción</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<% for(var i=0; i<datosCompetencia.length; i++) {%>
+					<tr>
+						<th scope="row"><%= datosCompetencia[i]['id'] %></th>
+						<td><%= datosCompetencia[i]['nombre'] %></td>
+						<td><%= datosCompetencia[i]['lugar'] %></td>
+						<td><%= datosCompetencia[i]['fecha'] %></td>
+						<td><%= datosCompetencia[i]['hora'] %></td>
+						<td class="d-flex align-items-center justify-content-center">
+							<a class="btn btn-primary" href="/historial/detalle-competencia/<%= datosCompetencia[i]['id'] %>">Detalle</a>           
+
+						</td>
+					</tr>
+					<% } %>
+				</tbody>
+
+			</table>
+
+		</div>
+	</div>
 </div>
 <% include partials/foot %>
