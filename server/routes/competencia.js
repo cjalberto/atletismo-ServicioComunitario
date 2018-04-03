@@ -16,7 +16,7 @@ router
 			if (err != null) {
             	res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
             }
-			conexion.query(`SELECT at.*, cl.nombre club_nombre , TIMESTAMPDIFF(YEAR,at.fecha_nacimiento,CURDATE()) edad , IFNULL((SELECT categoria.nombre FROM categoria WHERE (edad BETWEEN categoria.edad_min AND categoria.edad_max) AND categoria.sexo=at.sexo) , 'sin categoria') categoria FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id` , (err , atletas) =>{
+			conexion.query(`SELECT at.*, cl.nombre club_nombre , TIMESTAMPDIFF(YEAR,at.fecha_nacimiento,CURDATE()) edad , IFNULL((SELECT categoria.nombre FROM categoria WHERE (edad BETWEEN categoria.edad_min AND categoria.edad_max)) , 'libre') categoria FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id` , (err , atletas) =>{
 				(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body})
 			})
 		})
@@ -49,8 +49,10 @@ router
 	                       			res.render('error', {mensaje : 'Error al guardar la data en la base de datos' , code : 404})
 	                       		}
 	                       		else{
-									res.status(200)
-									res.send({mensaje : 'acept' , code : 200})
+	                     			if (index == req.body.id_atleta.length -1){
+										res.status(200)
+										res.send({mensaje : 'acept' , code : 200})
+	                     			}
 	                       		}
 	                        })
 						})
@@ -98,19 +100,19 @@ router
 			}
 			else{
 				let promesa = new Promise((resolve , reject) => {
-					conexion.query(`SELECT com.nombre as 'nombre' , com.id as 'id' , DATE_FORMAT(com.fecha,'%d/%m/%Y') as 'fecha' , TIME(com.hora) as 'hora' , com.lugar as 'lugar' FROM competencia com  WHERE com.id = ?`, competencia_id , (err , rows) =>{
+					conexion.query(`SELECT com.nombre as 'nombre' , com.id as 'id' , DATE_FORMAT(com.fecha,'%Y-%m-%d') as 'fecha' , TIME(com.hora) as 'hora' , com.lugar as 'lugar' FROM competencia com  WHERE com.id = ?`, competencia_id , (err , rows) =>{
 						if (err){
 							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
 						else{
-							resolve(rows[0])
+							resolve(rows)
 						}
 					})
 				})
 				promesa
 					.then((competencia) => {
 						return new Promise((resolve , reject) => {
-							conexion.query(`SELECT at.*, cl.nombre club_nombre , TIMESTAMPDIFF(YEAR,at.fecha_nacimiento,CURDATE()) edad , IFNULL((SELECT categoria.nombre FROM categoria WHERE (edad BETWEEN categoria.edad_min AND categoria.edad_max) AND categoria.sexo=at.sexo) , 'sin categoria') categoria FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id` , (err , atletas) =>{
+							conexion.query(`SELECT at.*, cl.nombre club_nombre , TIMESTAMPDIFF(YEAR,at.fecha_nacimiento,CURDATE()) edad , IFNULL((SELECT categoria.nombre FROM categoria WHERE (edad BETWEEN categoria.edad_min AND categoria.edad_max)) , 'libre') categoria FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id` , (err , atletas) =>{
 								(err) ? reject({err : new Error('Error al consultar la base de datos') , flag : false}) : resolve({dataCompetencia : competencia , dataAtletas : atletas})
 							})
 						})
@@ -123,6 +125,7 @@ router
 						})
 					})
 					.then((data) => {
+					console.log(data)
 						res.render('competencia/modificar', data)
 					})
 					.catch((err) =>{
@@ -137,15 +140,14 @@ router
 			}
         })
     })
-    .post('/competencia/modificar/:competencia_id', (req, res, next) => {
-    	let competencia_id = req.params.competencia_id
+    .post('/competencia/modificar', (req, res, next) => {
+    	let competencia_id = req.body.id
         let competencia = {
             nombre: req.body.nombre,
             fecha: req.body.fecha,
             hora: req.body.hora,
             lugar: req.body.lugar,
-            finalizado: 0,
-            id_categoria: req.body.id_categoria
+            finalizado: 0
         }
         req.getConnection((err, conexion) => {
         	if (err){
@@ -172,11 +174,11 @@ router
 					})
 					.then(() => {
 						return new Promise((resolve , reject) => {
-							req.body.id_atleta.array.forEach( function(element, index) {
+							req.body.id_atleta.forEach( function(element, index) {
 								let competencia_atleta = {
-	                                id_atleta: element.id,
-	                                id_competencia: competencia_id,
-	                                numero_atleta : element.numero
+	                        		id_atleta: element/*element.id*/,
+	                        		id_competencia: competencia_id,
+	                        		numero_atleta : Math.floor(Math.random()*(500+1))/*element.numero*/
 	                            }
 	                        	conexion.query('INSERT INTO competencia_atleta SET ?', competencia_atleta, (err, rows) => {
 	                        		(err) ? res.render('error', {mensaje : 'Error al guardar la data en la base de datos' , code : 404}) : resolve()
@@ -199,8 +201,6 @@ router
 					})
 			}
         })
-		
-		res.redirect('../listar')
     })
 
     //INICIAR//

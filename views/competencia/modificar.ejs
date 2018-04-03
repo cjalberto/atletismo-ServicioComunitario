@@ -18,7 +18,7 @@
 					<div class="col-md-3 info-carrera"><input type="date" class="form-control" name="fecha" value="<%= datosCompe[0]['fecha']%>" required></div>
 					<div class="col-md-3 info-carrera"><input type="time" class="form-control" name="hora" value="<%= datosCompe[0]['hora']%>" required></div>
 				</div>		
-				<input type="hidden" name="id_categoria" value="<%= datosCompe[0]['id_categoria']%>">
+				<input type="hidden" name="id" value="<%= datosCompe[0]['id']%>">
 
 				<div class="table-responsive">
 
@@ -65,7 +65,7 @@
 
 				<div class="btn-container">
 					<a href="../listar" class="btn btn-secondary btn-lg btn-back">Regresar</a>
-					<button type="submit" class="btn btn-secondary btn-lg btn-save" formaction="/competencia/modificar/<%= datosCompe[0]['id']%>">Guardar</button>
+					<button type="submit" class="btn btn-secondary btn-lg btn-save" formaction="/competencia/modificar%>">Guardar</button>
 				</div>
 
 			</form>
