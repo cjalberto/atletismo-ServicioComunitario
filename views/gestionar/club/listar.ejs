@@ -6,6 +6,10 @@
 		<h1>CLUB</h1>
 	</div>
 
+<% include crear %>
+<% include modificar %>
+
+
 	<div class=container>
 	
 		<div class="table-responsive">
@@ -27,7 +31,7 @@
 					<td><%= listClub[i]['nombre'] %></td>
 					<td><%= listClub[i]['descripcion'] %></td>
 					<td class="d-flex align-items-center justify-content-center">
-	                    <a class="btn btn-secondary" href="/gestionar/club/modificar/<%= listClub[i]['id'] %>">Editar</a>           
+	                    <a class="btn btn-secondary" href="#editClubModal" data-toggle="modal">Editar</a>           
 	                    <form method="post" action="/gestionar/club/eliminar/<%= listClub[i]['id'] %>">
 	                    	<button type="submit" class="btn btn-secondary" name="delete" onClick="return confirm('¿Quieres eliminar el Club?')">Eliminar</button>
 	                    </form>
@@ -40,7 +44,7 @@
 		</div>
 
 		<div class="btn-container text-center">
-			<a href="crear" class="btn btn-secondary btn-lg">CREAR</a>
+			<a href="#crearClubModal" data-toggle="modal" class="btn btn-secondary btn-lg">CREAR</a>
 		</div>
 	   
     </div>
