@@ -51,47 +51,47 @@
 
 
 									<th scope="row" class="idCompetidor"><%= datosAtletas[i]['id'] %></th>
-
-
-									<% for(var j=0; j<datosCompeAtleta.length; j++) {
-										if(datosAtletas[i]['id']==datosCompeAtleta[j].id_atleta){ %>
 									<td class="numCompetidor">
+
+										<% for(var j=0; j<datosCompeAtleta.length; j++) {
+											if(datosAtletas[i]['id']==datosCompeAtleta[j].id_atleta){ %>
+
 										<input type="number" class="numCompetidor" value="<%= datosCompeAtleta[j]['numero_atleta']%>">
 									</td>
 									<% 	j=datosCompeAtleta.length;
 									}else{
 										if(j==datosCompeAtleta.length-1){%>
-									<td class="numCompetidor">
-										<input type="number" class="numCompetidor" value="">
-									</td>
-									<% } } } %> 
+
+									<input type="number" class="numCompetidor" value="">
+							</td>
+							<% } } } %> 
 
 
 
-									<td><%= datosAtletas[i]['cedula'] %></td>
-									<td><%= datosAtletas[i]['primer_nombre'] %></td>
-									<td><%= datosAtletas[i]['primer_apellido'] %></td>
-									<td><%= datosAtletas[i]['club_nombre'] %></td>
-									<td><%= datosAtletas[i]['categoria'] %>-<%= datosAtletas[i]['sexo'][0] %></td>
-								</tr>
-								<% } %>
-							</tbody>
-						</table>
-					</div>
-
-					<div id="inputs">
-
-					</div>
-
-					<div class="btn-container">
-						<a href="../listar" class="btn btn-secondary btn-lg btn-back">Regresar</a>
-						<button type="submit" class="btn btn-secondary btn-lg btn-save">Guardar</button>
-					</div>
-
-				</form>
+							<td><%= datosAtletas[i]['cedula'] %></td>
+							<td><%= datosAtletas[i]['primer_nombre'] %></td>
+							<td><%= datosAtletas[i]['primer_apellido'] %></td>
+							<td><%= datosAtletas[i]['club_nombre'] %></td>
+							<td><%= datosAtletas[i]['categoria'] %>-<%= datosAtletas[i]['sexo'][0] %></td>
+							</tr>
+						<% } %>
+						</tbody>
+					</table>
 			</div>
-		</div>
+
+			<div id="inputs">
+
+			</div>
+
+			<div class="btn-container">
+				<a href="../listar" class="btn btn-secondary btn-lg btn-back">Regresar</a>
+				<button type="submit" class="btn btn-success btn-lg btn-save">Guardar</button>
+			</div>
+
+			</form>
 	</div>
+</div>
+</div>
 
 </div>
 

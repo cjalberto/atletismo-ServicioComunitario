@@ -51,7 +51,7 @@ function inputsCompetidores(){
 
 }
 
-$('#myTable_wrapper .row:eq(0) .col-md-6:eq(0)').html('<a id="select-all" class="btn btn-secondary">Seleccionar Todos</a><a id="deselect-all" class="btn btn-secondary">Deseleccionar Todos</a>');
+$('#myTable_wrapper .row:eq(0) .col-md-6:eq(0)').html('<a id="select-all" class="btn btn-info">Seleccionar Todos</a><a id="deselect-all" class="btn btn-info">Deseleccionar Todos</a>');
 
 $('#myTable_wrapper .row:eq(2) .col-md-7').html('<div class="selected-count"></div>');
 

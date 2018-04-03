@@ -7,8 +7,6 @@
 	</div>
 
 <% include crear %>
-<% include modificar %>
-
 
 	<div class=container>
 	
@@ -31,9 +29,9 @@
 					<td><%= listClub[i]['nombre'] %></td>
 					<td><%= listClub[i]['descripcion'] %></td>
 					<td class="d-flex align-items-center justify-content-center">
-	                    <a class="btn btn-secondary" href="#editClubModal" data-toggle="modal">Editar</a>           
+	                    <a class="btn btn-primary" href="/gestionar/club/modificar/<%= listClub[i]['id'] %>">Editar</a>           
 	                    <form method="post" action="/gestionar/club/eliminar/<%= listClub[i]['id'] %>">
-	                    	<button type="submit" class="btn btn-secondary" name="delete" onClick="return confirm('¿Quieres eliminar el Club?')">Eliminar</button>
+	                    	<button type="submit" class="btn btn-danger" name="delete" onClick="return confirm('¿Quieres eliminar el Club?')">Eliminar</button>
 	                    </form>
 
 					</td>
@@ -44,7 +42,7 @@
 		</div>
 
 		<div class="btn-container text-center">
-			<a href="#crearClubModal" data-toggle="modal" class="btn btn-secondary btn-lg">CREAR</a>
+			<a href="#crearClubModal" data-toggle="modal" class="btn btn-success btn-lg">CREAR</a>
 		</div>
 	   
     </div>
