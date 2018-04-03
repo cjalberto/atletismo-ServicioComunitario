@@ -56,6 +56,7 @@ var idCompe;
 $('#myTable1 tbody').on('click', 'tr', function () {
      $(this).toggleClass('selected');
      idCompe= $('.selected').children('.idAtleta').text();
+     
 });
  
 $('#btn-mod').click(function(){
