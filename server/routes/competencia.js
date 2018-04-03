@@ -22,7 +22,6 @@ router
 		})
 	})
 	.post('/competencia/crear/finalizar' , (req, res , next) => {
-		
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
@@ -40,9 +39,11 @@ router
 					}else{
 						req.body.id_atleta.forEach( function(element, index) {
 							let competencia_atleta = {
-	                        	id_atleta: element/*element.id*/,
+	                        	id_atleta: req.body.id_atleta[index],
 	                        	id_competencia: rows.insertId,
-	                        	numero_atleta : Math.floor(Math.random()*(500+1))/*element.numero*/
+								tiempo: 0,
+	                        	numero_atleta : req.body.num_atleta[index],
+								id_categoria: 1
 	                        }
 	                       	conexion.query('INSERT INTO competencia_atleta SET ?', competencia_atleta, (err, rows) => {
 	                       		if (err) {
@@ -72,6 +73,9 @@ router
             }
         })
     })
+	.get('/competencia/modificar', (req, res , next) => {
+		res.redirect('/competencia/listar')
+	})
 
     //DELETE//
     .post('/competencia/eliminar/:competencia_id', (req, res, next) => {
@@ -92,13 +96,14 @@ router
     //EDIT//
     .get('/competencia/modificar/:competencia_id', (req, res, next) => {
         let competencia_id = req.params.competencia_id
+		
         req.getConnection((err, conexion) => {
         	if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			else{
 				let promesa = new Promise((resolve , reject) => {
-					conexion.query(`SELECT com.nombre as 'nombre' , com.id as 'id' , DATE_FORMAT(com.fecha,'%d/%m/%Y') as 'fecha' , TIME(com.hora) as 'hora' , com.lugar as 'lugar' FROM competencia com  WHERE com.id = ?`, competencia_id , (err , rows) =>{
+					conexion.query(`SELECT com.nombre as 'nombre' , com.id as 'id' , DATE_FORMAT(com.fecha,'%Y-%m-%d') as 'fecha' , TIME(com.hora) as 'hora' , com.lugar as 'lugar' FROM competencia com  WHERE com.id = ?`, competencia_id , (err , rows) =>{
 						if (err){
 							reject({err : new Error('Error al consultar la base de datos') , flag : false})
 						}
@@ -145,8 +150,8 @@ router
             hora: req.body.hora,
             lugar: req.body.lugar,
             finalizado: 0,
-            id_categoria: req.body.id_categoria
         }
+		console.log(competencia)
         req.getConnection((err, conexion) => {
         	if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
