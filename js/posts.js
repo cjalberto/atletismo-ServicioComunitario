@@ -19,7 +19,20 @@ function inputsCompetidores(){
 
 	});
 
+	var hash = {};
+	array = arraynum.filter(function(current) {
+		var exists = !hash[current] || false;
+		hash[current] = true;
+		return exists;
+	});
+
+	if(arraynum.length==array.length){
+		return 1;
+	}else{
+		return 0;
+	}
 }
+
 // Attach a submit handler to the form
 $("#crearCompe").submit(function (event) {
 
@@ -27,54 +40,58 @@ $("#crearCompe").submit(function (event) {
 	event.preventDefault();
 	console.log('crearCompe Click');
 
-	inputsCompetidores();
+	var numEquals=inputsCompetidores();
 
-	// Get some values from elements on the page:
-	var i,flag=0;
-	var $form = $(this),
-		datos = {}
-	datos.nombre = $form.find("input[name='nombre']").val(),
-		datos.fecha = $form.find("input[name='fecha']").val(),
-		datos.hora = $form.find("input[name='hora']").val(),
-		datos.lugar = $form.find("input[name='lugar']").val(),
-		datos.id_atleta = [],
-		datos.num_atleta = [],
-		urlpost = $form.attr("action");
-
-	$form.find("input[name='id_atleta']").each(function (i, element) {
-		datos['id_atleta'][i] = $(element).val();
-	});
-
-	$form.find("input[name='num_atleta']").each(function (i, element) {
-		datos['num_atleta'][i] = $(element).val();
-		if($(element).val()==''){
-			flag=1;
-		}
-	});
-
-	if(flag==1){
-		alert("Todos los atletas seleccionados deben tener un número asociado");
+	if(numEquals==0){
+		alert("Los atletas no pueden tener números iguales")
 	}else{
-		$.ajax({
-			type: 'POST',
-			data: JSON.stringify(datos),
-			contentType: 'application/json',
-			url: urlpost,
-			success: function (msg) {
-				if (msg.mensaje == 'acept') {
-					alert("Competencia " + datos.nombre + " Creada");
-					location.href = "/competencia/iniciar";
-				} else {
-					alert("Error Conectarse con la Base de Datos");
-				}
-			},
-			error: function (xhr, textStatus, errorThrown) {
-				alert(xhr.responseJSON.mensaje)
-			}
 
+		// Get some values from elements on the page:
+		var i,flag=0;
+		var $form = $(this),
+			datos = {}
+		datos.nombre = $form.find("input[name='nombre']").val(),
+			datos.fecha = $form.find("input[name='fecha']").val(),
+			datos.hora = $form.find("input[name='hora']").val(),
+			datos.lugar = $form.find("input[name='lugar']").val(),
+			datos.id_atleta = [],
+			datos.num_atleta = [],
+			urlpost = $form.attr("action");
+
+		$form.find("input[name='id_atleta']").each(function (i, element) {
+			datos['id_atleta'][i] = $(element).val();
 		});
-	}
 
+		$form.find("input[name='num_atleta']").each(function (i, element) {
+			datos['num_atleta'][i] = $(element).val();
+			if($(element).val()==''){
+				flag=1;
+			}
+		});
+
+		if(flag==1){
+			alert("Todos los atletas seleccionados deben tener un número asociado");
+		}else{
+			$.ajax({
+				type: 'POST',
+				data: JSON.stringify(datos),
+				contentType: 'application/json',
+				url: urlpost,
+				success: function (msg) {
+					if (msg.mensaje == 'acept') {
+						alert("Competencia " + datos.nombre + " Creada");
+						location.href = "/competencia/iniciar";
+					} else {
+						alert("Error Conectarse con la Base de Datos");
+					}
+				},
+				error: function (xhr, textStatus, errorThrown) {
+					alert(xhr.responseJSON.mensaje)
+				}
+
+			});
+		}
+	}
 });
 
 
@@ -89,57 +106,60 @@ $("#editCompe").submit(function (event) {
 	event.preventDefault();
 	console.log('editCompe Click');
 
-	inputsCompetidores();
+	var numEquals=inputsCompetidores();
 
-	// Get some values from elements on the page:
-	var i,flag=0;
-	var $form = $(this),
-		datos = {}
-	datos.id = $form.find("input[name='id']").val(),
-		datos.nombre = $form.find("input[name='nombre']").val(),
-		datos.fecha = $form.find("input[name='fecha']").val(),
-		datos.hora = $form.find("input[name='hora']").val(),
-		datos.lugar = $form.find("input[name='lugar']").val(),
-		datos.id_atleta = [],
-		datos.num_atleta = [],
-		urlpost = $form.attr("action");
-
-	$form.find("input[name='id_atleta']").each(function (i, element) {
-		datos['id_atleta'][i] = $(element).val();
-	});
-
-
-	$form.find("input[name='num_atleta']").each(function (i, element) {
-		datos['num_atleta'][i] = $(element).val();
-		if($(element).val()==''){
-			flag=1;
-		}
-	});
-
-	if(flag==1){
-		alert("Todos los atletas seleccionados deben tener un número asociado");
+	if(numEquals==0){
+		alert("Los atletas no pueden tener números iguales")
 	}else{
-		$.ajax({
-			type: 'POST',
-			data: JSON.stringify(datos),
-			contentType: 'application/json',
-			url: urlpost,
-			success: function (msg) {
-				if (msg.mensaje == 'acept') {
-					alert("Competencia " + datos.nombre + " Modificada");
-					location.href = "/competencia/modificar";
-				} else {
-					alert("Error Conectarse con la Base de Datos");
-				}
-			},
-			error: function (xhr, textStatus, errorThrown) {
-				alert(xhr.responseJSON.mensaje)
-			}
+		// Get some values from elements on the page:
+		var i,flag=0;
+		var $form = $(this),
+			datos = {}
+		datos.id = $form.find("input[name='id']").val(),
+			datos.nombre = $form.find("input[name='nombre']").val(),
+			datos.fecha = $form.find("input[name='fecha']").val(),
+			datos.hora = $form.find("input[name='hora']").val(),
+			datos.lugar = $form.find("input[name='lugar']").val(),
+			datos.id_atleta = [],
+			datos.num_atleta = [],
+			urlpost = $form.attr("action");
 
-
+		$form.find("input[name='id_atleta']").each(function (i, element) {
+			datos['id_atleta'][i] = $(element).val();
 		});
-	}
 
+
+		$form.find("input[name='num_atleta']").each(function (i, element) {
+			datos['num_atleta'][i] = $(element).val();
+			if($(element).val()==''){
+				flag=1;
+			}
+		});
+
+		if(flag==1){
+			alert("Todos los atletas seleccionados deben tener un número asociado");
+		}else{
+			$.ajax({
+				type: 'POST',
+				data: JSON.stringify(datos),
+				contentType: 'application/json',
+				url: urlpost,
+				success: function (msg) {
+					if (msg.mensaje == 'acept') {
+						alert("Competencia " + datos.nombre + " Modificada");
+						location.href = "/competencia/modificar";
+					} else {
+						alert("Error Conectarse con la Base de Datos");
+					}
+				},
+				error: function (xhr, textStatus, errorThrown) {
+					alert(xhr.responseJSON.mensaje)
+				}
+
+
+			});
+		}
+	}
 });
 
 
