@@ -44,6 +44,7 @@ router
 								tiempo: 0,
 	                        	numero_atleta : req.body.num_atleta[index]
 	                        }
+							console.log(competencia_atleta)
 	                       	conexion.query('INSERT INTO competencia_atleta SET ?', competencia_atleta, (err, rows) => {
 	                       		if (err) {
 	                       			res.render('error', {mensaje : 'Error al guardar la data en la base de datos' , code : 404})
@@ -181,7 +182,8 @@ router
 								let competencia_atleta = {
 	                        		id_atleta: element/*element.id*/,
 	                        		id_competencia: competencia_id,
-	                        		numero_atleta : Math.floor(Math.random()*(500+1))/*element.numero*/
+									tiempo: 0,
+	                        		numero_atleta : req.body.num_atleta[index]
 	                            }
 	                        	conexion.query('INSERT INTO competencia_atleta SET ?', competencia_atleta, (err, rows) => {
 	                        		(err) ? res.render('error', {mensaje : 'Error al guardar la data en la base de datos' , code : 404}) : resolve()

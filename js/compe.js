@@ -37,10 +37,11 @@ function inputsCompetidores(){
 		arrayid.push($(element).text());
 	});
 
-	$('.selected').children('.numCompetidor').each(function(i,element){
-		arraynum.push($(element).text());
+	$('.selected td').children('.numCompetidor').each(function(i,element){
+		arraynum.push($(element).val());
 	});
 
+	
 
 	$.each(arrayid, function(i, item) {
 		$('#inputs').append('<input type="hidden" name="id_atleta" value='+arrayid[i]+'>')

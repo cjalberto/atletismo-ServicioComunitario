@@ -21,6 +21,7 @@ app
 	.use(express.static(path.join(__dirname , '../public')))
 	.use('/competencia',express.static('public'))
 	.use('/competencia/modificar',express.static('public'))
+	.use('/competencia/crear',express.static('public'))
 	.use('/gestionar',express.static('public'))
 	.use('/gestionar/atleta',express.static('public'))
 	.use('/gestionar/categoria',express.static('public'))
