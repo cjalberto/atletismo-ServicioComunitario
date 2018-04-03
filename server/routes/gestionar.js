@@ -388,13 +388,12 @@ router
 				promesa
 					.then((data) => {
 						return new Promise((resolve , reject) => {
-							conexion.query('SELECT * FROM atleta LEFT JOIN club ON atleta.id_club=club.id', (err, rows) =>{ 
+							conexion.query('SELECT atleta.* , club.nombre nombre_club FROM atleta LEFT JOIN club ON atleta.id_club=club.id', (err, rows) =>{ 
 								(err) ? reject(new Error('Error al consultar la base de datos')) : resolve({dataClubs : data.dataClubs , dataAtletas : rows})           
 							})
 						})
 					})
 					.then((data) => {
-						//console.log(data)
 						res.render('gestionar/atleta/listar' , data)
 					})
 					.catch((err) =>{
@@ -469,8 +468,7 @@ router
       		fecha_nacimiento : req.body.fecha_nacimiento,
       		id_club : req.body.id_club,
       		sexo : req.body.sexo
-    	}	
-    	//console.log(atleta)		
+    	}		
     	req.getConnection((err , conexion) => {
       		if (err){
         		res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
@@ -517,7 +515,6 @@ router
   	})
 	.post('/gestionar/atleta/eliminar/:atleta_cedula', (req, res , next) => {
 		let atleta_cedula = req.params.atleta_cedula
-		console.log(atleta_cedula);
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})

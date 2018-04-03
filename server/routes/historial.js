@@ -34,7 +34,6 @@ router
 		})
 	})
 	.post('/historial/detalle-competencia/premiacion/:id', (req, res , next) => {
-		//let competencia_id = req.body.id
 		let competencia_id = req.params.id 
 		req.getConnection((err , conexion) => {
 			if (err){
@@ -100,4 +99,5 @@ router
 			}
 		})
 	})
+	
 module.exports = router

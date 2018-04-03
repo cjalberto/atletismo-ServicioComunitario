@@ -125,7 +125,6 @@ router
 						})
 					})
 					.then((data) => {
-					console.log(data)
 						res.render('competencia/modificar', data)
 					})
 					.catch((err) =>{
@@ -202,6 +201,10 @@ router
 			}
         })
     })
+    .post('competencia/agregar-tiempos', (req, res, next) => {
+
+    })
+
 
     //INICIAR//
     .get('/competencia/iniciar', (req, res, next) => {
