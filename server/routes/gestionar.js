@@ -62,7 +62,7 @@ router
 				promesa
 					.then(() => {
 						return new Promise((resolve , reject) => {
-							conexion.query(`SELECT categoria.nombre FROM categoria WHERE (${categoria.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max) OR (${categoria.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max)`, (err , rows) =>{
+							conexion.query(`SELECT categoria.nombre FROM categoria WHERE (${categoria.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max) OR (${categoria.edad_max} BETWEEN categoria.edad_min AND categoria.edad_max)`, (err , rows) =>{
 								if (err){
 									reject({err : new Error('Error al consultar la base de datos') , flag : false})
 								}
@@ -172,7 +172,7 @@ router
 				promesa
 					.then(() => {
 						return new Promise((resolve , reject) => {
-							conexion.query(`SELECT categoria.nombre FROM categoria WHERE ((${categoria.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max) OR (${categoria.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max)) AND categoria.nombre != '${req.params.categoria_nombre}'`, (err , rows) =>{
+							conexion.query(`SELECT categoria.nombre FROM categoria WHERE ((${categoria.edad_min} BETWEEN categoria.edad_min AND categoria.edad_max) OR (${categoria.edad_max} BETWEEN categoria.edad_min AND categoria.edad_max)) AND categoria.nombre != '${req.params.categoria_nombre}'`, (err , rows) =>{
 								if (err){
 									reject({err : new Error('Error al consultar la base de datos') , flag : false})
 								}

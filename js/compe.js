@@ -1,7 +1,7 @@
 ///////////////////CREAR///////////////////////////////////
 
 var table = $('#myTable').DataTable({
-	scrollY: "200px",
+	scrollY: "372px",
 	scrollCollapse: true,
 	scrollX: true,
 	paging: false,
@@ -37,10 +37,11 @@ function inputsCompetidores(){
 		arrayid.push($(element).text());
 	});
 
-	$('.selected').children('.numCompetidor').each(function(i,element){
-		arraynum.push($(element).text());
+	$('.selected td').children('.numCompetidor').each(function(i,element){
+		arraynum.push($(element).val());
 	});
 
+	
 
 	$.each(arrayid, function(i, item) {
 		$('#inputs').append('<input type="hidden" name="id_atleta" value='+arrayid[i]+'>')
@@ -50,7 +51,7 @@ function inputsCompetidores(){
 
 }
 
-$('#myTable_wrapper .row:eq(0) .col-md-6:eq(0)').html('<a id="select-all" class="btn btn-secondary">Seleccionar Todos</a><a id="deselect-all" class="btn btn-secondary">Deseleccionar Todos</a>');
+$('#myTable_wrapper .row:eq(0) .col-md-6:eq(0)').html('<a id="select-all" class="btn btn-info">Seleccionar Todos</a><a id="deselect-all" class="btn btn-info">Deseleccionar Todos</a>');
 
 $('#myTable_wrapper .row:eq(2) .col-md-7').html('<div class="selected-count"></div>');
 
@@ -75,7 +76,7 @@ $("#deselect-all").click(function () {
 ////////////////////////MODIFICAR-COMETENCIA
 
 var tableCompe = $('#myTableCompe').DataTable({
-	scrollY: "200px",
+	scrollY: "372px",
 	scrollCollapse: true,
 	scrollX: true,
 	paging: false,

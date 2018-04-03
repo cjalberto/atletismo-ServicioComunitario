@@ -1,10 +1,12 @@
 <% include ../../partials/head %>
 
-<div class="section-center d-flex align-items-center justify-content-center flex-column content-gestionar">
+<div class="content-gestionar">
 	
     <div class="title text-center">
 		<h1>CATEGORÍAS</h1>
 	</div>
+
+<% include crear %>
 
 	<div class=container>
 	
@@ -29,9 +31,9 @@
 					<td><%= listCategorias[i]['edad_min'] %></td>
 					<td><%= listCategorias[i]['edad_max'] %></td>
 					<td class="d-flex align-items-center justify-content-center">
-	                    <a class="btn btn-secondary" href="/gestionar/categoria/modificar/<%= listCategorias[i]['nombre'] %>">Editar</a>           
+	                    <a class="btn btn-primary" href="/gestionar/categoria/modificar/<%= listCategorias[i]['nombre'] %>">Editar</a>           
 	                    <form method="post" action="/gestionar/categoria/eliminar/<%= listCategorias[i]['nombre'] %>">
-	                    	<button type="submit" class="btn btn-secondary" name="delete" onClick="return confirm('¿Quieres eliminar la Categoría?')">Eliminar</button>
+	                    	<button type="submit" class="btn btn-danger" name="delete" onClick="return confirm('¿Quieres eliminar la Categoría?')">Eliminar</button>
 	                    </form>
 
 					</td>
@@ -42,7 +44,7 @@
 		</div>
 
 		<div class="btn-container text-center">
-			<a href="crear" class="btn btn-secondary btn-lg">CREAR</a>
+			<a href="#crearCatModal" data-toggle="modal" class="btn btn-success btn-lg">CREAR</a>
 		</div>
 	   
     </div>

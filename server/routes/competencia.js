@@ -41,7 +41,6 @@ router
 							let competencia_atleta = {
 	                        	id_atleta: req.body.id_atleta[index],
 	                        	id_competencia: rows.insertId,
-								tiempo: 0,
 	                        	numero_atleta : req.body.num_atleta[index]
 	                        }
 	                       	conexion.query('INSERT INTO competencia_atleta SET ?', competencia_atleta, (err, rows) => {
@@ -179,9 +178,9 @@ router
 						return new Promise((resolve , reject) => {
 							req.body.id_atleta.forEach( function(element, index) {
 								let competencia_atleta = {
-	                        		id_atleta: element/*element.id*/,
+	                        		id_atleta: element,
 	                        		id_competencia: competencia_id,
-	                        		numero_atleta : Math.floor(Math.random()*(500+1))/*element.numero*/
+	                        		numero_atleta : req.body.num_atleta[index]
 	                            }
 	                        	conexion.query('INSERT INTO competencia_atleta SET ?', competencia_atleta, (err, rows) => {
 	                        		(err) ? res.render('error', {mensaje : 'Error al guardar la data en la base de datos' , code : 404}) : resolve()
@@ -206,7 +205,22 @@ router
         })
     })
     .post('competencia/agregar-tiempos', (req, res, next) => {
-
+    	req.body.tiempos.forEach( function(element, index) {
+    		req.getConnection((err, conexion) => {
+        		if (err){
+					res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
+				}
+				else{
+					conexion.query(`UPDATE competencia_atleta SET tiempo = ${element.tiempo} WHERE competencia_atleta.id_atleta = ${element.id_atleta} AND competencia_atleta.id_competencia = ${req.body.id_competencia}`, (err , rows) =>{
+						if (err){
+							reject({err : new Error('Error al guardar la data en la base de datos') , flag : false})
+						}
+					})
+				}
+        	})
+    	})
+		res.status(200)
+		res.send({mensaje : 'acept' , code : 200})
     })
 
 

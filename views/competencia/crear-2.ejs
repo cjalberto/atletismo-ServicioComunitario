@@ -1,7 +1,7 @@
 <% include ../partials/head %>
 
 
-<div class="section-center d-flex align-items-center justify-content-center flex-column content-carreras">
+<div class="content-carreras">
 
 	<div class="title text-center">
 		<h1>COMPETENCIA - CREAR</h1>
@@ -47,7 +47,7 @@
 								<% for(var i=0; i<datosCompetidores.length; i++) {%>
 								<tr>
 									<th scope="row" class="idCompetidor"><%= datosCompetidores[i]['id'] %></th>
-									<td class="numCompetidor"><%= datosCompetidores[i]['numero'] %></td>
+									<td class="numCompetidor"><input type="number" class="numCompetidor" value=""></td>
 									<td><%= datosCompetidores[i]['cedula'] %></td>
 									<td><%= datosCompetidores[i]['primer_nombre'] %></td>
 									<td><%= datosCompetidores[i]['primer_apellido'] %></td>
@@ -65,7 +65,7 @@
 
 					<div class="btn-container">
 						<a href="crear" class="btn btn-secondary btn-lg btn-back">Regresar</a>
-						<button type="submit" class="btn btn-secondary btn-lg btn-save">Guardar</button>
+						<button type="submit" class="btn btn-success btn-lg btn-save">Guardar</button>
 					</div>
 
 				</form>

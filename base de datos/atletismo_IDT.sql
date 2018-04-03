@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 03-04-2018 a las 02:22:22
+-- Tiempo de generación: 03-04-2018 a las 18:09:48
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.3
 
@@ -74,7 +74,8 @@ INSERT INTO `categoria` (`id`, `nombre`, `descripcion`, `edad_min`, `edad_max`) 
 (7, 'we', 'sdfaf', 90, 91),
 (13, 'bbb', 'fasfas', 10, 15),
 (15, 'gdfg', 'gsdggdfgdf', 2, 5),
-(17, 'dfgdsg', 'rwqrwe', 7, 8);
+(17, 'dfgdsg', 'rwqrwe', 7, 8),
+(20, 'vxz', 'dfasd', 6, 6);
 
 -- --------------------------------------------------------
 
@@ -125,7 +126,7 @@ INSERT INTO `competencia` (`id`, `nombre`, `fecha`, `hora`, `lugar`, `finalizado
 (13, 'dsfa', '2018-04-12', '01:01:00', 'a', 0),
 (14, 'hnfgh', '2018-04-26', '01:01:00', 'gagf', 0),
 (16, 'utyurt', '2018-04-10', '01:01:00', 'erwtwer', 0),
-(17, 'bbbbbbbb', '2018-05-04', '01:01:00', 'beytrtewtwe', 0);
+(17, 'bbbbbbbb', '2018-05-04', '01:01:00', 'beytrtewtwe', 1);
 
 -- --------------------------------------------------------
 
@@ -137,7 +138,7 @@ CREATE TABLE `competencia_atleta` (
   `id` int(11) NOT NULL,
   `id_atleta` int(11) NOT NULL,
   `id_competencia` int(11) NOT NULL,
-  `tiempo` double NOT NULL,
+  `tiempo` double NOT NULL DEFAULT '9999999',
   `numero_atleta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -146,17 +147,17 @@ CREATE TABLE `competencia_atleta` (
 --
 
 INSERT INTO `competencia_atleta` (`id`, `id_atleta`, `id_competencia`, `tiempo`, `numero_atleta`) VALUES
-(13, 1, 13, 0, 83),
-(14, 2, 13, 0, 54),
-(15, 4, 13, 0, 500),
-(16, 1, 14, 0, 71),
-(17, 2, 14, 0, 272),
-(18, 3, 14, 0, 11),
-(22, 3, 16, 0, 477),
-(23, 4, 16, 0, 400),
-(32, 2, 17, 0, 259),
-(33, 3, 17, 0, 364),
-(34, 4, 17, 0, 494);
+(13, 1, 13, 9999999, 83),
+(14, 2, 13, 9999999, 54),
+(15, 4, 13, 9999999, 500),
+(16, 1, 14, 9999999, 71),
+(17, 2, 14, 9999999, 272),
+(18, 3, 14, 9999999, 11),
+(22, 3, 16, 9999999, 477),
+(23, 4, 16, 9999999, 400),
+(32, 2, 17, 9999999, 259),
+(33, 3, 17, 9999999, 364),
+(34, 4, 17, 9999999, 494);
 
 --
 -- Índices para tablas volcadas
@@ -211,13 +212,13 @@ ALTER TABLE `atleta`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `club`
 --
 ALTER TABLE `club`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `competencia`
