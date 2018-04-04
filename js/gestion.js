@@ -89,8 +89,14 @@ var table = $('#myTable1').DataTable({
 
 var idCompe;
 $('#myTable1 tbody').on('click', 'tr', function () {
+<<<<<<< HEAD
+     $(this).toggleClass('selected');
+     idCompe= $('.selected').children('.idAtleta').text();
+     
+=======
 	$(this).toggleClass('selected');
 	idCompe= $('.selected').children('.idAtleta').text();
+>>>>>>> master
 });
 
 $('#btn-mod').click(function(){
