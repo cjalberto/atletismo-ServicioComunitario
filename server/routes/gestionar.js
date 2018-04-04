@@ -109,7 +109,13 @@ router
 			}
 			else{
 				conexion.query('DELETE FROM categoria where nombre = ?' , categoria_nombre , (err , rows) =>{
-					(err) ? res.render('error', {mensaje : 'Error al eliminar registro de la base de datos' , code : 404}) : res.redirect('/gestionar/categoria')
+					if (err){
+						res.render('error', {mensaje : 'Error al eliminar registro de la base de datos' , code : 404})
+					} 
+					else{
+						res.status(200)
+						res.send({mensaje : 'acept' , code : 200})
+					}
 				})
 			}
 		})
@@ -293,7 +299,13 @@ router
 			}
 			else{
 				conexion.query('DELETE FROM club WHERE id = ?' , club_id , (err , rows) =>{
-					(err) ? res.render('error', {mensaje : 'Error al eliminar registro de la base de datos' , code : 404}) : res.redirect('/gestionar/club')
+					if (err){
+						res.render('error', {mensaje : 'Error al eliminar registro de la base de datos' , code : 404})
+					} 
+					else{
+						res.status(200)
+						res.send({mensaje : 'acept' , code : 200})
+					}
 				})
 			}
 		})
