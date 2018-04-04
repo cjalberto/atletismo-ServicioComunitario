@@ -213,14 +213,23 @@ router
 				else{
 					conexion.query(`UPDATE competencia_atleta SET tiempo = ${element.tiempo} WHERE competencia_atleta.id_atleta = ${element.id_atleta} AND competencia_atleta.id_competencia = ${req.body.id_competencia}`, (err , rows) =>{
 						if (err){
-							reject({err : new Error('Error al guardar la data en la base de datos') , flag : false})
+							res.status(404)
+							res.send({mensaje : 'error al guardar la data en la base de datos' , code : 404})
 						}
 					})
 				}
         	})
     	})
-		res.status(200)
-		res.send({mensaje : 'acept' , code : 200})
+    	conexion.query(`UPDATE competencia SET finalizado = 1 WHERE competencia.id = ${req.body.id_competencia}`, (err , rows) =>{
+			if (err){
+				res.status(404)
+				res.send({mensaje : 'error al guardar la data en la base de datos' , code : 404})
+			}
+			else{
+				res.status(200)
+				res.send({mensaje : 'acept' , code : 200})
+			}
+		})
     })
 
 
