@@ -144,6 +144,25 @@ router
 			}
 	    })
 	})
+	.post('/gestionar/categoria/modificar', (req, res , next) => {
+		let categoria_id = req.body.categoria_id
+		req.getConnection((err , conexion) => {
+			if (err){
+				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
+			}
+			else{
+	        	conexion.query('SELECT * FROM categoria WHERE id = ?' , categoria_id , (err, rows) =>{
+	        		if (err){
+						res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
+					}
+					else{
+						res.status(200)
+						res.send({data : rows[0] , code : 200})
+					}
+	        	})
+			}
+	    })
+	})
 	.post('/gestionar/categoria/modificar/:categoria_nombre', (req, res , next) => {
 		let categoria = {
 			nombre : req.body.nombre,
@@ -333,6 +352,26 @@ router
 	        
 	    })
 	})
+	.post('/gestionar/club/modificar', (req, res , next) => {
+		let club_id = req.body.club_id
+		req.getConnection((err , conexion) => {
+			if (err){
+				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
+			}
+			else{
+				conexion.query('SELECT * FROM club WHERE id = ?' , club_id , (err, rows) =>{
+	            	if (err){
+						res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
+					}
+	            	else{
+						res.status(200)
+						res.send({data : rows[0] , code : 200})
+					}
+	        	})
+			}
+	        
+	    })
+	})
 	.post('/gestionar/club/modificar/:club_id', (req, res , next) => {
 		let club_id = req.params.club_id
 		let club = {
@@ -413,6 +452,26 @@ router
 					})
 			}
 		})
+	})
+	.post('/gestionar/atleta/modificar', (req, res , next) => {
+		let atleta_id = req.body.atleta_id
+		req.getConnection((err , conexion) => {
+			if (err){
+				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
+			}
+			else{
+				conexion.query('SELECT * FROM atleta WHERE id = ?' , atleta_id , (err, rows) =>{
+	            	if (err){
+						res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
+					}
+	            	else{
+						res.status(200)
+						res.send({data : rows[0] , code : 200})
+					}
+	        	})
+			}
+	        
+	    })
 	})
 	.post('/gestionar/atleta/modificar/:atleta_id', (req, res , next) => {
 		let atleta_id = req.params.atleta_id
