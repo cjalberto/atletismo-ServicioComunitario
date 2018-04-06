@@ -111,8 +111,5 @@ $('#editarS').click(function(){
 	$('#modificarAtle1').attr("action", "/gestionar/atleta/modificar/"+idCompe);
 });
 
-function miFuncion(){
 
-	return 2;
-}
 

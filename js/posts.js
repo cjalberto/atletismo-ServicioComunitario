@@ -436,10 +436,7 @@ $("#modiAtle").submit(function (event) {
 			}else{
 				alert("ERROR");
 			}
-		},error: function (xhr, textStatus, errorThrown) {
-					alert(xhr.responseJSON.mensaje)
-				}
-		
+		}
 	});
 
 });
