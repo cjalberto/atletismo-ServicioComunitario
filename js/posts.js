@@ -395,3 +395,32 @@ $("#modificarAtle").submit(function (event) {
 	});
 
 });
+
+
+
+$("#modiAtle").submit(function (event) {
+
+	event.preventDefault();
+
+	var $form = $(this),
+		datos = {}
+	    datos.atleta_id = $form.find("input[name='atleta_id']").val(),
+		urlpost = $form.attr("action");
+
+	$.ajax({
+		type: 'POST',
+		data: JSON.stringify(datos),
+		contentType: 'application/json',
+		url: urlpost,
+		success: function (data) {
+			$('#Pnombre').attr("value", ""+data.data.primer_nombre);
+			$('#Snombre').attr("value", ""+data.data.segundo_nombre);
+			$('#Papellido').attr("value", ""+data.data.primer_apellido);
+			$('#Sapellido').attr("value", ""+data.data.segundo_apellido);
+			$('#Cedu').attr("value", ""+data.data.cedula);
+			$('#Club1').attr("value", ""+data.data.primer_nombre);
+		}
+		
+	});
+
+});

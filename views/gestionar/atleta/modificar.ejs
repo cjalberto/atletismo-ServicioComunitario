@@ -7,38 +7,39 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn-can" >&times;</button>
           </div>
           <div class="modal-body"> 
-           <% for(var i=0; i<dataAtletas.length; i++) {%>
-          <% if(dataAtletas[i]['id']==x){  %>
+        
             <div class="form-group ">
             <div class="row">
                 <label for="inputNombre1Atleta" class="col-md-2 col-form-label">PrimerNombre:</label>
-                  <input type="text" class="form-control" name="primer_nombre" id="Pnombre" value="<%= dataAtletas[i]['primer_nombre'] %>">
+                  <input type="text" class="form-control" name="primer_nombre" id="Pnombre" >
               </div>
             </div>
+
+            
 
             <div class="form-group ">
             <div class="row">
                 <label for="inputNombre2Atleta" class="col-md-2 col-form-label">SegundoNombre:</label>
-                  <input type="text" class="form-control" name="segundo_nombre" id="Snombre" value="<%= dataAtletas[i]['segundo_nombre'] %>">
+                  <input type="text" class="form-control" name="segundo_nombre" id="Snombre" >
               </div>
             </div>
             <div class="form-group ">
             <div class="row">
                 <label for="inputApellido1Atleta" class="col-md-2 col-form-label">PrimerApellido:</label>
-                  <input type="text" class="form-control" name="primer_apellido" id="Papellido" value="<%= dataAtletas[i]['primer_apellido'] %>">
+                  <input type="text" class="form-control" name="primer_apellido" id="Papellido" >
               </div>
             </div>
             <div class="form-group ">
             <div class="row">
                 <label for="inputApellido1Atleta" class="col-md-2 col-form-label">SegundoApellido:</label>
-                  <input type="text" class="form-control" name="segundo_apellido" id="Sapellido" value="<%= dataAtletas[i]['segundo_apellido'] %>"> 
+                  <input type="text" class="form-control" name="segundo_apellido" id="Sapellido" > 
                   
               </div>
             </div>
             <div class="form-group ">
             <div class="row">
                 <label for="inputCedual" class="col-md-2 col-form-label">Cedula:</label>
-                  <input type="number" class="form-control" name="cedula" id="Cedu" value="<%= dataAtletas[i]['cedula'] %>">
+                  <input type="number" class="form-control" name="cedula" id="Cedu" >
               </div>
             </div>
 
@@ -46,7 +47,7 @@
             <div class="row">
                 <label  class="col-md-2 col-form-label">Fechadenacimiento:</label>
                   <div class="col-md-6" style="margin-left: 20%">
-                  <input type="date" class="form-control" name="fecha_nacimiento" value="<%= dataAtletas[i]['fecha_nacimiento'] %>">
+                  <input type="date" class="form-control" name="fecha_nacimiento" >
                   </div>
 
               </div>
@@ -59,7 +60,7 @@
               <div class="col-md-6">
               <select id="inputClub" name="id_club" class="form-control">
                 <% for(var i=0; i<dataClubs.length; i++) {%>
-                <option value="<%= dataClubs[i]['id'] %>"><%= dataClubs[i]['nombre'] %></option>
+                <option id="Club1"><%= dataClubs[i]['nombre'] %></option>
                 <% } %>
               </select>
              </div>
@@ -75,7 +76,7 @@
             </div>
           </div>
 
-          <% }} %>
+          
 
           </div>
           <div class="modal-footer">

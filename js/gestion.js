@@ -89,14 +89,11 @@ var table = $('#myTable1').DataTable({
 
 var idCompe;
 $('#myTable1 tbody').on('click', 'tr', function () {
-<<<<<<< HEAD
+
      $(this).toggleClass('selected');
      idCompe= $('.selected').children('.idAtleta').text();
+     $('#atleta_id').attr("value", idCompe);
      
-=======
-	$(this).toggleClass('selected');
-	idCompe= $('.selected').children('.idAtleta').text();
->>>>>>> master
 });
 
 $('#btn-mod').click(function(){
@@ -109,7 +106,14 @@ $('#btn-can').click(function(){
 $('#btn-can1').click(function(){
 	$("#myTable1 tbody tr").removeClass('selected');
 });
+
 $('#editarS').click(function(){
+ 
 	$('#modificarAtle1').attr("action", "/gestionar/atleta/modificar/"+idCompe);
 });
+
+function miFuncion(){
+
+	return 2;
+}
 
