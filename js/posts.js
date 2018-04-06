@@ -366,7 +366,7 @@ $("#modificarAtle").submit(function (event) {
 
 	var $form = $(this),
 		datos = {}
-	datos.primer_nombre = $form.find("input[name='primer_nombre']").val(),
+		datos.primer_nombre = $form.find("input[name='primer_nombre']").val(),
 		datos.segundo_nombre = $form.find("input[name='segundo_nombre']").val(),
 		datos.primer_apellido = $form.find("input[name='primer_apellido']").val(),
 		datos.segundo_apellido = $form.find("input[name='segundo_apellido']").val(),
@@ -418,7 +418,7 @@ $("#modiAtle").submit(function (event) {
 			$('#Papellido').attr("value", ""+data.data.primer_apellido);
 			$('#Sapellido').attr("value", ""+data.data.segundo_apellido);
 			$('#Cedu').attr("value", ""+data.data.cedula);
-			$('#Club1').attr("value", ""+data.data.primer_nombre);
+			$('#fecha1').attr("value", "2013-01-08");
 		}
 		
 	});

@@ -47,7 +47,7 @@
             <div class="row">
                 <label  class="col-md-2 col-form-label">Fechadenacimiento:</label>
                   <div class="col-md-6" style="margin-left: 20%">
-                  <input type="date" class="form-control" name="fecha_nacimiento" >
+                  <input type="date" class="form-control" name="fecha_nacimiento" id="fecha1">
                   </div>
 
               </div>
@@ -60,7 +60,7 @@
               <div class="col-md-6">
               <select id="inputClub" name="id_club" class="form-control">
                 <% for(var i=0; i<dataClubs.length; i++) {%>
-                <option id="Club1"><%= dataClubs[i]['nombre'] %></option>
+                <option value="<%= dataClubs[i]['id'] %>"><%= dataClubs[i]['nombre'] %></option>
                 <% } %>
               </select>
              </div>
