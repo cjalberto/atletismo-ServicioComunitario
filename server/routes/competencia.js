@@ -67,7 +67,7 @@ router
             if (err != null) {
             	res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
             }else{
-	            conexion.query(`SELECT com.nombre as 'nombre' , com.id as 'id' , DATE_FORMAT(com.fecha,'%d/%m/%Y') as 'fecha' , TIME(com.hora) as 'hora' , com.lugar as 'lugar' FROM competencia com WHERE finalizado=0`, (err, rows) => {
+	            conexion.query(`SELECT com.nombre as 'nombre' , com.id as 'id' , DATE_FORMAT(com.fecha,'%Y-%m-%d') as 'fecha' , TIME(com.hora) as 'hora' , com.lugar as 'lugar' FROM competencia com WHERE finalizado=0`, (err, rows) => {
 	                (err) ? res.render('error', {error: err, mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/listar', { datosCompetencia: rows })
 	            })          	
             }
@@ -240,7 +240,7 @@ router
 	            res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
 	        }
 	        else{
-            	conexion.query(`SELECT competencia.nombre , DATE_FORMAT(competencia.fecha,'%d/%m/%Y') fecha , TIME(competencia.hora) hora , competencia.lugar FROM competencia WHERE finalizado = 0`, (err, rows) => {
+            	conexion.query(`SELECT competencia.nombre , DATE_FORMAT(competencia.fecha,'%Y-%m-%d') fecha , TIME(competencia.hora) hora , competencia.lugar FROM competencia WHERE finalizado = 0`, (err, rows) => {
                 	(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/iniciar', { datosCompetencia: rows })
             	})
 	        }
