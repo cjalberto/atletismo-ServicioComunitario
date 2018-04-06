@@ -92,7 +92,6 @@ $('#myTable1 tbody').on('click', 'tr', function () {
 
      $(this).toggleClass('selected');
      idCompe= $('.selected').children('.idAtleta').text();
-     $('#atleta_id').attr("value", idCompe);
      
 });
 
