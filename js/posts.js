@@ -349,7 +349,7 @@ $("#crearAtleta").submit(function (event) {
 				alert("El Atleta " + datos.primer_nombre + " Creado");
 				location.href = "/gestionar/atleta";
 			} else {
-				alert("ERROR");
+				alert("Error Conectarse con la Base de Datos");
 			}
 		}
 
@@ -389,7 +389,7 @@ $("#modificarAtle").submit(function (event) {
 				alert("Atleta " + datos.primer_nombre + " Modificado");
 				location.href = "/gestionar/atleta";
 			} else {
-				alert("ERROR");
+				alert("Error Conectarse con la Base de Datos");
 			}
 		}
 	});
@@ -404,7 +404,7 @@ $(".modiAtle").submit(function (event) {
 
 	var $form = $(this),
 		datos = {}
-	datos.atleta_id = $form.find("input[name='atleta_id']").val(),
+	    datos.atleta_id = $form.find("input[name='atleta_id']").val(),
 		urlpost = $form.attr("action");
 
 	$.ajax({
@@ -425,14 +425,39 @@ $(".modiAtle").submit(function (event) {
 				selectRol.val(data.data.sexo).attr('selected', 'selected');
 				console.log(data.data.nombre_club);
 				selectRol1.val(data.data.nombre_club).attr('selected', 'selected');
-				alert("Atleta " + datos.primer_nombre + " modificando");
-				//location.href = "/gestionar/atleta";
 			}else{
-				alert("ERROR");
+			     alert("Error Conectarse con la Base de Datos");
 			}
 		},
 		error: function (xhr, textStatus, errorThrown) {
 			alert(xhr.responseJSON.mensaje)
+		}
+	});
+
+});
+
+//eliminar atleta
+
+$(".eliminarAtle").submit(function (event) {
+
+	event.preventDefault();
+	var $form = $(this),
+	datos = {}
+	datos.atleta_cedula = $form.find("input[name='atleta_cedula']").val(),
+	urlpost = $form.attr("action");
+
+	$.ajax({
+		type: 'POST',
+		data: JSON.stringify(datos),
+		contentType: 'application/json',
+		url: urlpost,
+		success: function (data) {
+			if (data.mensaje == 'acept') {
+				alert("Atleta Eliminado");
+				location.href = "/gestionar/atleta";
+			} else {
+				alert("Error Conectarse con la Base de Datos");
+			}
 		}
 	});
 
