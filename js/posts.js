@@ -366,7 +366,7 @@ $("#modificarAtle").submit(function (event) {
 
 	var $form = $(this),
 		datos = {}
-		datos.primer_nombre = $form.find("input[name='primer_nombre']").val(),
+	datos.primer_nombre = $form.find("input[name='primer_nombre']").val(),
 		datos.segundo_nombre = $form.find("input[name='segundo_nombre']").val(),
 		datos.primer_apellido = $form.find("input[name='primer_apellido']").val(),
 		datos.segundo_apellido = $form.find("input[name='segundo_apellido']").val(),
@@ -398,19 +398,14 @@ $("#modificarAtle").submit(function (event) {
 
 
 
-$("#modiAtle").submit(function (event) {
+$(".modiAtle").submit(function (event) {
 
 	event.preventDefault();
 
 	var $form = $(this),
 		datos = {}
-	    datos.atleta_id = [],
+	datos.atleta_id = $form.find("input[name='atleta_id']").val(),
 		urlpost = $form.attr("action");
-
-		$form.find("input[name='atleta_id']").each(function (i, element) {
-			datos['atleta_id'][i] = $(element).val();
-		});
-
 
 	$.ajax({
 		type: 'POST',
@@ -418,24 +413,26 @@ $("#modiAtle").submit(function (event) {
 		contentType: 'application/json',
 		url: urlpost,
 		success: function (data) {
-			console.log(data.code);
 			if (data.code==200) {
-			$('#Pnombre').attr("value", data.data.primer_nombre);
-			$('#Snombre').attr("value", data.data.segundo_nombre);
-			$('#Papellido').attr("value", data.data.primer_apellido);
-			$('#Sapellido').attr("value", data.data.segundo_apellido);
-			$('#Cedu').attr("value", data.data.cedula);
-			$('#fecha1').attr("value", data.data.fecha);
-			var selectRol = $("select#inputCategoria1");
-			var selectRol1 = $("select#inputClub1");
-			selectRol.val(data.data.sexo).attr('selected', 'selected');
-			console.log(data.data.nombre_club);
-			selectRol1.val(data.data.nombre_club).attr('selected', 'selected');
-			alert("Atleta " + datos.primer_nombre + " modificando");
-			//location.href = "/gestionar/atleta";
+				$('#Pnombre').attr("value", data.data.primer_nombre);
+				$('#Snombre').attr("value", data.data.segundo_nombre);
+				$('#Papellido').attr("value", data.data.primer_apellido);
+				$('#Sapellido').attr("value", data.data.segundo_apellido);
+				$('#Cedu').attr("value", data.data.cedula);
+				$('#fecha1').attr("value", data.data.fecha);
+				var selectRol = $("select#inputCategoria1");
+				var selectRol1 = $("select#inputClub1");
+				selectRol.val(data.data.sexo).attr('selected', 'selected');
+				console.log(data.data.nombre_club);
+				selectRol1.val(data.data.nombre_club).attr('selected', 'selected');
+				alert("Atleta " + datos.primer_nombre + " modificando");
+				//location.href = "/gestionar/atleta";
 			}else{
 				alert("ERROR");
 			}
+		},
+		error: function (xhr, textStatus, errorThrown) {
+			alert(xhr.responseJSON.mensaje)
 		}
 	});
 
