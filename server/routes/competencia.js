@@ -211,7 +211,7 @@ router
 					res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 				}
 				else{
-					conexion.query(`UPDATE competencia_atleta SET tiempo = ${element.tiempo} WHERE competencia_atleta.id_atleta = ${element.id_atleta} AND competencia_atleta.id_competencia = ${req.body.id_competencia}`, (err , rows) =>{
+					conexion.query(`UPDATE competencia_atleta SET tiempo = ${element.tiempo} WHERE competencia_atleta.numero_atleta = ${element.numero_atleta} AND competencia_atleta.id_competencia = ${req.body.id_competencia}`, (err , rows) =>{
 						if (err){
 							res.status(404)
 							res.send({mensaje : 'error al guardar la data en la base de datos' , code : 404})
@@ -240,7 +240,7 @@ router
 	            res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
 	        }
 	        else{
-            	conexion.query(`SELECT competencia.nombre , DATE_FORMAT(competencia.fecha,'%Y-%m-%d') fecha , TIME(competencia.hora) hora , competencia.lugar FROM competencia WHERE finalizado = 0`, (err, rows) => {
+            	conexion.query(`SELECT competencia.nombre , DATE_FORMAT(competencia.fecha,'%Y-%m-%d') fecha , TIME(competencia.hora) hora , competencia.lugar , competencia.id FROM competencia WHERE finalizado = 0`, (err, rows) => {
                 	(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/iniciar', { datosCompetencia: rows })
             	})
 	        }

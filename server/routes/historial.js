@@ -21,7 +21,7 @@ router
 			promesa
 				.then((dataCompetencia) => {
 					return new Promise((resolve , reject) => {
-						conexion.query(`SELECT CONCAT(atl.primer_nombre , ' ' , atl.primer_apellido) as 'competidor', com_at.numero_atleta as 'numero' , SEC_TO_TIME(com_at.tiempo) as 'tiempo' FROM competencia_atleta com_at LEFT JOIN atleta atl ON com_at.id_atleta=atl.id WHERE com_at.id_competencia=${competencia_id}  ORDER BY tiempo ASC`, (err , rows) =>{
+						conexion.query(`SELECT CONCAT(atl.primer_nombre , ' ' , atl.primer_apellido) as 'competidor', com_at.numero_atleta as 'numero' , SEC_TO_TIME(com_at.tiempo) as 'tiempo' FROM competencia_atleta com_at LEFT JOIN atleta atl ON com_at.id_atleta=atl.id WHERE com_at.id_competencia=${competencia_id} AND tiempo != 9999999 ORDER BY tiempo ASC`, (err , rows) =>{
 							(err) ? reject(new Error('Error al consultar la base de datos')) : resolve({dataCompetencia : dataCompetencia , dataCompetidores : rows})
 						})
 					})
@@ -41,7 +41,7 @@ router
 					return new Promise((resolve , reject) => {
 						categorias.forEach( (element, index) => {
 							let promesa2 = new Promise((resolve2 , reject2) => {
-								conexion.query(`SELECT CONCAT(atl.primer_nombre , ' ' , atl.primer_apellido) competidor , atl.sexo , cl.nombre, com_at.numero_atleta numero , SEC_TO_TIME(com_at.tiempo) tiempo FROM competencia_atleta com_at LEFT JOIN atleta atl ON com_at.id_atleta=atl.id LEFT JOIN club cl ON atl.id_club=cl.id LEFT JOIN competencia com ON com_at.id_competencia = com.id WHERE com.id = ${competencia_id} and atl.sexo = 'Femenino' HAVING IFNULL((SELECT categoria.nombre FROM categoria WHERE (TIMESTAMPDIFF(YEAR,atl.fecha_nacimiento,CURDATE()) BETWEEN categoria.edad_min AND categoria.edad_max)) , 'libre') = '${element.nombre}' ORDER BY tiempo LIMIT 5`, (err , rows) =>{
+								conexion.query(`SELECT CONCAT(atl.primer_nombre , ' ' , atl.primer_apellido) competidor , atl.sexo , cl.nombre, com_at.numero_atleta numero , SEC_TO_TIME(com_at.tiempo) tiempo FROM competencia_atleta com_at LEFT JOIN atleta atl ON com_at.id_atleta=atl.id LEFT JOIN club cl ON atl.id_club=cl.id LEFT JOIN competencia com ON com_at.id_competencia = com.id WHERE com.id = ${competencia_id} and atl.sexo = 'Femenino' HAVING IFNULL((SELECT categoria.nombre FROM categoria WHERE (TIMESTAMPDIFF(YEAR,atl.fecha_nacimiento,CURDATE()) BETWEEN categoria.edad_min AND categoria.edad_max)) , 'libre') = '${element.nombre}' AND tiempo != 9999999 ORDER BY tiempo LIMIT 5`, (err , rows) =>{
 									if (err){
 										reject(new Error('Error al consultar la base de datos'))
 									}
@@ -53,7 +53,7 @@ router
 							})
 							promesa2
 								.then(() => {
-									conexion.query(`SELECT CONCAT(atl.primer_nombre , ' ' , atl.primer_apellido) competidor , atl.sexo , cl.nombre, com_at.numero_atleta numero , SEC_TO_TIME(com_at.tiempo) tiempo FROM competencia_atleta com_at LEFT JOIN atleta atl ON com_at.id_atleta=atl.id LEFT JOIN club cl ON atl.id_club=cl.id LEFT JOIN competencia com ON com_at.id_competencia = com.id WHERE com.id = ${competencia_id} and atl.sexo = 'Masculino' HAVING IFNULL((SELECT categoria.nombre FROM categoria WHERE (TIMESTAMPDIFF(YEAR,atl.fecha_nacimiento,CURDATE()) BETWEEN categoria.edad_min AND categoria.edad_max)) , 'libre') = '${element.nombre}' ORDER BY tiempo LIMIT 5`, (err , rows) =>{
+									conexion.query(`SELECT CONCAT(atl.primer_nombre , ' ' , atl.primer_apellido) competidor , atl.sexo , cl.nombre, com_at.numero_atleta numero , SEC_TO_TIME(com_at.tiempo) tiempo FROM competencia_atleta com_at LEFT JOIN atleta atl ON com_at.id_atleta=atl.id LEFT JOIN club cl ON atl.id_club=cl.id LEFT JOIN competencia com ON com_at.id_competencia = com.id WHERE com.id = ${competencia_id} and atl.sexo = 'Masculino' HAVING IFNULL((SELECT categoria.nombre FROM categoria WHERE (TIMESTAMPDIFF(YEAR,atl.fecha_nacimiento,CURDATE()) BETWEEN categoria.edad_min AND categoria.edad_max)) , 'libre') = '${element.nombre}' AND tiempo != 9999999 ORDER BY tiempo LIMIT 5`, (err , rows) =>{
 										if (err){
 											reject(new Error('Error al consultar la base de datos'))
 										}
