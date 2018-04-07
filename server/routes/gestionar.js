@@ -455,17 +455,18 @@ router
 	})
 	.post('/gestionar/atleta/modificar', (req, res , next) => {
 		let atleta_id = req.body.atleta_id
+		console.log(req.body)
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			else{
-				conexion.query(`SELECT  atleta.cedula , atleta.primer_apellido , atleta.primer_nombre , atleta.segundo_apellido , atleta.segundo_nombre, DATE_FORMAT(atleta.fecha_nacimiento,'%Y-%m-%d') fecha, atleta.sexo , club.nombre nombre_club FROM atleta LEFT JOIN club ON atleta.id_club=club.id  WHERE atleta.id = ?` , atleta_id , (err, rows) =>{
+				conexion.query(`SELECT  atleta.cedula , atleta.primer_apellido , atleta.primer_nombre , atleta.segundo_apellido , atleta.segundo_nombre, DATE_FORMAT(atleta.fecha_nacimiento,'%Y-%m-%d') fecha, atleta.sexo , club.nombre nombre_club FROM atleta LEFT JOIN club ON atleta.id_club=club.id  WHERE atleta.id = ${atleta_id}`, (err, rows) =>{
 	            	if (err){
 						res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
 					}
 	            	else{
-						res.status(200)
+	            		res.status(200)
 						res.send({data : rows[0] , code : 200})
 					}
 	        	})
