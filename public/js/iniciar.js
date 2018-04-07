@@ -118,18 +118,20 @@ var table = $('#Tablecompe').DataTable({
       "bInfo": false  
    
 });
- var Nom,lug,fec,hor;
+
+ var Nom,lug,fec,hor, seleccion=1;
+ 
  $('#Tablecompe tbody').on('click', 'tr', function () {
       $(this).toggleClass('selected');  
       Nom= $('.selected').children('.nombreCompetencia').text();
       lug= $('.selected').children('.lugarCompetencia').text();
       fec= $('.selected').children('.fechaCompetencia').text();
       hor= $('.selected').children('.horaCompetencia').text();
-      $('#nom1').attr("value", Nom);
-      $('#lugar').attr("value", lug);
-      $('#fecha').attr("value", fec);
-      $('#hora').attr("value", hor);
- 
+      $('#nom1').attr("value", "Nombre: "+Nom);
+      $('#lugar').attr("value", "Lugar: "+lug);
+      $('#fecha').attr("value", "Fecha: "+fec);
+      $('#hora').attr("value", "Hora: "+hor);
+     
  });
    
 $('#btn-ini').click(function(){
@@ -137,3 +139,20 @@ $('#btn-ini').click(function(){
    document.getElementById("compe").disabled = true;
 });
 
+$('#cancelarC').click(function(){
+   $("#Tablecompe tbody tr").removeClass('selected');
+   $('#nom1').attr("value", "Nombre: ");
+   $('#lugar').attr("value", "Lugar: ");
+   $('#fecha').attr("value", "Fecha: ");
+   $('#hora').attr("value", "Hora: ");
+ 
+});
+
+$('#closeC').click(function(){
+   $("#Tablecompe tbody tr").removeClass('selected');
+   $('#nom1').attr("value", "Nombre: ");
+   $('#lugar').attr("value", "Lugar: ");
+   $('#fecha').attr("value", "Fecha: ");
+   $('#hora').attr("value", "Hora: ");
+ 
+});
