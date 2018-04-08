@@ -12,14 +12,15 @@
           <table class="table table-striped table-bordered table-fixed display"  id="Tablecompe" >
               <thead>
                 <tr>
-                  <th scope="col">Nombre</th><th scope="col">Lugar</th><th scope="col">Fecha</th><th scope="col">HORA</th>
+                  <th scope="col">ID</th><th scope="col">Nombre</th><th scope="col">Lugar</th><th scope="col">Fecha</th><th scope="col">HORA</th>
                 </tr>
               </thead>
               <tbody>
 
                 <% for(var i=0; i<datosCompetencia.length; i++) {%>
-               <tr>
-                <th scope="row" class="nombreCompetencia"><%= datosCompetencia[i]['nombre'] %></th>
+                <tr>
+                <th scope="row" class="idCompetencia"><%= datosCompetencia[i]['id'] %></th>
+                <td scope="row" class="nombreCompetencia"><%= datosCompetencia[i]['nombre'] %></td>
                 <td class="lugarCompetencia"><%= datosCompetencia[i]['lugar'] %></td>
                 <td class="fechaCompetencia"><%= datosCompetencia[i]['fecha'] %></td>
                 <td class="horaCompetencia"><%= datosCompetencia[i]['hora'] %></td>

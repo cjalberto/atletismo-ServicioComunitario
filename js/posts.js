@@ -545,39 +545,38 @@ $("#modificarAtle").submit(function (event) {
 
 $(".modiAtle").submit(function (event) {
 
-    event.preventDefault();
+	event.preventDefault();
 
-    var $form = $(this),
-        datos = {}
-    datos.atleta_id = $form.find("input[name='atleta_id']").val(),
-        urlpost = $form.attr("action");
+	var $form = $(this),
+		datos = {}
+	    datos.atleta_id = $form.find("input[name='atleta_id']").val(),
+		urlpost = $form.attr("action");
 
-    $.ajax({
-        type: 'POST',
-        data: JSON.stringify(datos),
-        contentType: 'application/json',
-        url: urlpost,
-        success: function (data) {
-            if (data.code==200) {
-                $('#Pnombre').attr("value", data.data.primer_nombre);
-                $('#Snombre').attr("value", data.data.segundo_nombre);
-                $('#Papellido').attr("value", data.data.primer_apellido);
-                $('#Sapellido').attr("value", data.data.segundo_apellido);
-                $('#Cedu').attr("value", data.data.cedula);
-                $('#fecha1').attr("value", data.data.fecha);
-                var selectRol = $("select#inputCategoria1");
-                var selectRol1 = $("select#inputClub1");
-                selectRol.val(data.data.sexo).attr('selected', 'selected');
-                console.log(data.data.nombre_club);
-                selectRol1.val(data.data.nombre_club).attr('selected', 'selected');
-            }else{
-                alert("Error Conectarse con la Base de Datos");
-            }
-        },
-        error: function (xhr, textStatus, errorThrown) {
-            alert(xhr.responseJSON.mensaje)
-        }
-    });
+	$.ajax({
+		type: 'POST',
+		data: JSON.stringify(datos),
+		contentType: 'application/json',
+		url: urlpost,
+		success: function (data) {
+			if (data.code==200) {
+				$('#Pnombre').attr("value", data.data.primer_nombre);
+				$('#Snombre').attr("value", data.data.segundo_nombre);
+				$('#Papellido').attr("value", data.data.primer_apellido);
+				$('#Sapellido').attr("value", data.data.segundo_apellido);
+				$('#Cedu').attr("value", data.data.cedula);
+				$('#fecha1').attr("value", data.data.fecha);
+				var selectRol = $("select#inputCategoria1");
+				var selectRol1 = $("select#inputClub1");
+				selectRol.val(data.data.sexo).attr('selected', 'selected');
+				selectRol1.val(data.data.id).attr('selected', 'selected');
+			}else{
+			     alert("Error Conectarse con la Base de Datos");
+			}
+		},
+		error: function (xhr, textStatus, errorThrown) {
+			alert(xhr.responseJSON.mensaje)
+		}
+	});
 
 });
 
