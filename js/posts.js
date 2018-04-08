@@ -423,8 +423,7 @@ $(".modiAtle").submit(function (event) {
 				var selectRol = $("select#inputCategoria1");
 				var selectRol1 = $("select#inputClub1");
 				selectRol.val(data.data.sexo).attr('selected', 'selected');
-				console.log(data.data.nombre_club);
-				selectRol1.val(data.data.nombre_club).attr('selected', 'selected');
+				selectRol1.val(data.data.id).attr('selected', 'selected');
 			}else{
 			     alert("Error Conectarse con la Base de Datos");
 			}

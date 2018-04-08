@@ -204,7 +204,7 @@ router
 			}
         })
     })
-    .post('competencia/agregar-tiempos', (req, res, next) => {
+    .post('/competencia/agregar-tiempos', (req, res, next) => {
     	req.body.tiempos.forEach( function(element, index) {
     		req.getConnection((err, conexion) => {
         		if (err){

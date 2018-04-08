@@ -92,6 +92,8 @@ function Guardar(){
 var campo2="campo"+e;
 var num2="num"+e;
 console.log(document.getElementById(campo2).innerText); console.log(document.getElementById(num2).value);
+$('#enviar').append('<input type="hidden" class="tiempo" name="tiempo" value='+document.getElementById(campo2).innerText+'>')
+$('#enviar').append('<input type="hidden" class="numero_atleta" name="numero_atleta" value='+document.getElementById(num2).value+'>')
    }
 }
 
@@ -119,7 +121,7 @@ var table = $('#Tablecompe').DataTable({
    
 });
 
- var Nom,lug,fec,hor, seleccion=1;
+ var Nom,lug,fec,hor, seleccion=1,idC;
  
  $('#Tablecompe tbody').on('click', 'tr', function () {
       $(this).toggleClass('selected');  
@@ -127,10 +129,12 @@ var table = $('#Tablecompe').DataTable({
       lug= $('.selected').children('.lugarCompetencia').text();
       fec= $('.selected').children('.fechaCompetencia').text();
       hor= $('.selected').children('.horaCompetencia').text();
+      idC= $('.selected').children('.idCompetencia').text();
       $('#nom1').attr("value", "Nombre: "+Nom);
       $('#lugar').attr("value", "Lugar: "+lug);
       $('#fecha').attr("value", "Fecha: "+fec);
       $('#hora').attr("value", "Hora: "+hor);
+      $('#id_competencia').attr("value", idC);
      
  });
    
