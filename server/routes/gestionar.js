@@ -145,13 +145,13 @@ router
 	    })
 	})
 	.post('/gestionar/categoria/modificar', (req, res , next) => {
-		let categoria_id = req.body.categoria_id
+		let cat_nombre = req.body.cat_nombre
 		req.getConnection((err , conexion) => {
 			if (err){
 				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 			}
 			else{
-	        	conexion.query('SELECT * FROM categoria WHERE id = ?' , categoria_id , (err, rows) =>{
+	        	conexion.query('SELECT * FROM categoria WHERE nombre = ?' , cat_nombre , (err, rows) =>{
 	        		if (err){
 						res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
 					}
@@ -330,28 +330,6 @@ router
 		})
 	})
 	//edit
-	.get('/gestionar/club/modificar/:club_id', (req, res , next) => {
-		let club_id = req.params.club_id
-		req.getConnection((err , conexion) => {
-			if (err){
-				res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
-			}
-			else{
-				conexion.query('SELECT * FROM club WHERE id = ?' , club_id , (err, rows) =>{
-	            	if (err){
-						res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404})
-					}
-	            	res.render('gestionar/club/modificar', {
-	            		title: 'Editar Club', 
-	            		id: rows[0].id,
-	            		nombre: rows[0].nombre,
-	            		descripcion: rows[0].descripcion                    
-	            	})
-	        	})
-			}
-	        
-	    })
-	})
 	.post('/gestionar/club/modificar', (req, res , next) => {
 		let club_id = req.body.club_id
 		req.getConnection((err , conexion) => {

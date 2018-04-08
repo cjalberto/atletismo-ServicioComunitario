@@ -1,35 +1,48 @@
-<% include ../../partials/head %>
+<div id="editarClubModal" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" >
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-<div class="section-center d-flex align-items-center justify-content-center flex-column content-gestionar">
-	
-    <div class="title text-center">
-		<h1>CLUB</h1>
-	</div>
+            <div class="modal-header">
+                <h5 class="modal-title">Modificar Club</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-	<div class=container>
-		<form class="text-center" action="/gestionar/club/modificar/<%= id %>" id="editClub">
 
-			<div class="form-group row align-items-center">
-				<label for="nombreClub" class="col-md-2 col-form-label">Nombre del Club:</label>
-				<div class="col-md-10">
-					<input type="text" class="form-control" name="nombre" placeholder="Nombre del Club" value="<%= nombre %>" required>
-				</div>
-			</div>
-			
-			<div class="form-group row align-items-center">
-				<label for="descripcionClub" class="col-md-2 col-form-label">Descripción del Club:</label>
-				<div class="col-md-10">
-					<input type="text" class="form-control" name="descripcion" placeholder="Descripción del Club" value="<%= descripcion %>" required>
-				</div>
-			</div>
 
-			<button type="submit" class="btn btn-primary btn-lg">EDITAR</button>
+            <form class="text-center" action="/gestionar/club/modificar" id="editClub">
 
-		</form>
-	   
+
+                <div class="modal-body"> 
+
+
+                    <div class="form-group row align-items-center">
+                        <label for="nombreClub" class="col-md-4 col-form-label">Nombre del Club:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="nombre" id="editNombreClub" placeholder="Nombre del Club" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label for="descripcionClub" class="col-md-4 col-form-label">Descripción del Club:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="descripcion" id="editDescripcionClub" placeholder="Descripción del Club" required>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                    <button type="submit" class="btn btn-primary">EDITAR</button>
+                </div>
+
+            </form>
+
+        </div>
     </div>
-
 </div>
 
 
-<% include ../../partials/foot %>
+

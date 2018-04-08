@@ -34,10 +34,10 @@
 					</tbody>
 				</table>
 
-				<% for(var i=0; i<Object.keys(dataPremiacion).length; i++) {
+				<% 
+                for(var i=0; i<Object.keys(dataPremiacion).length; i++) {
 					var objeto = Object.keys(dataPremiacion)[i];
-					var objeto2 = Object.values(dataPremiacion)[i];
-
+					var objeto2 = _.values(dataPremiacion)[i];
 					%>
 				<div>
 
@@ -57,9 +57,9 @@
 							<tr>
 
 								<th scope="row"><%=j+1%></th>
-								<td><%= Object.values(objeto2)[j].numero %></td>
-								<td> <%= Object.values(objeto2)[j].tiempo %></td>
-								<td><%= Object.values(objeto2)[j].competidor %></td>
+								<td><%= _.values(objeto2)[j].numero %></td>
+								<td> <%= _.values(objeto2)[j].tiempo %></td>
+								<td><%= _.values(objeto2)[j].competidor %></td>
 
 							</tr>
 							<%}%>

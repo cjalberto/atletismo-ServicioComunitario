@@ -72,7 +72,8 @@ router
 					})
 				})
 				.then((data) => {
-					res.render('historial/detalle-competencia', {dataDetalle : dataView , dataPremiacion : data})
+                    var lodash = require('lodash')
+					res.render('historial/detalle-competencia', {dataDetalle : dataView , dataPremiacion : data, _ : lodash })
 				})
 				.catch((err) =>{
 					res.render('error', {mensaje : err.message , code : 404})
