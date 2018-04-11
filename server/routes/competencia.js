@@ -205,8 +205,9 @@ router
         })
     })
     .post('/competencia/agregar-tiempos', (req, res, next) => {
-    	req.body.tiempos.forEach( function(element, index) {
-    		req.getConnection((err, conexion) => {
+
+    	req.getConnection((err, conexion) => {
+    		req.body.tiempos.forEach( function(element, index) {
         		if (err){
 					res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
 				}
@@ -219,17 +220,17 @@ router
 					})
 				}
         	})
+    		conexion.query(`UPDATE competencia SET finalizado = 1 WHERE competencia.id = ${req.body.id_competencia}`, (err , rows) =>{
+				if (err){
+					res.status(404)
+					res.send({mensaje : 'error al guardar la data en la base de datos' , code : 404})
+				}
+				else{
+					res.status(200)
+					res.send({mensaje : 'acept' , code : 200})
+				}
+			})
     	})
-    	conexion.query(`UPDATE competencia SET finalizado = 1 WHERE competencia.id = ${req.body.id_competencia}`, (err , rows) =>{
-			if (err){
-				res.status(404)
-				res.send({mensaje : 'error al guardar la data en la base de datos' , code : 404})
-			}
-			else{
-				res.status(200)
-				res.send({mensaje : 'acept' , code : 200})
-			}
-		})
     })
 
 
