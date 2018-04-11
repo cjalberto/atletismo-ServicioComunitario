@@ -218,7 +218,7 @@ router
 							res.send({mensaje : 'error al guardar la data en la base de datos' , code : 404})
 						}
 						else{
-							if(cont == index){
+							if(count == index){
 								conexion.query(`UPDATE competencia SET finalizado = 1 WHERE competencia.id = ${req.body.id_competencia}`, (err , rows) =>{
 									if (err){
 										res.status(404)
@@ -231,7 +231,7 @@ router
 								})
 							}
 						}
-						cont++
+						count++
 					})
 				}
         	})
