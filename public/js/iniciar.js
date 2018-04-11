@@ -63,7 +63,7 @@ function cronometro () {
 		Horas.innerHTML = horas;
 	}
 }
-var i=0;
+var w=0;
 var ban=0;
 
 function mostrar(){ban=1;}
@@ -72,30 +72,65 @@ function mostrar(){ban=1;}
 function info(elEvento) {
          var evento = elEvento || window.event // definir objeto event
          if (evento.type ==  "keypress" && evento.keyCode==13 && ban==1) { //el número de caracter sólo está en el evento keypress
-         	if(i==0){inicio();}
-            $('#addr'+i).html("</td><td class='text-center' id='campo"+i+"'>"+horas+':'+minutos+':'+segundos+':'+centesimas+"</td><td ><input  id='num"+i+"'  placeholder='Numero' ></td></td>");
-			$('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
+         	if(w==0){inicio();}
+            $('#addr'+w).html("</td><td class='text-center' id='campo"+w+"'>"+horas+':'+minutos+':'+segundos+':'+centesimas+"</td><td ><input  id='num"+w+"'  placeholder='Numero' ></td></td>");
+			$('#tab_logic').append('<tr id="addr'+(w+1)+'"></tr>');
 
-      		i++; 
+      		w++; 
             } 
 
              if (evento.type ==  "keypress" && evento.keyCode==115 ) {
-              if(i>1){
-				 $("#addr"+(i-1)).html('');
-				 i--;
+              if(w>1){
+				 $("#addr"+(w-1)).html('');
+				 w--;
 				 }
              }
 
 } 
-function Guardar(){
-  for(var e=1; e<i;e++){
-var campo2="campo"+e;
-var num2="num"+e;
-console.log(document.getElementById(campo2).innerText); console.log(document.getElementById(num2).value);
-$('#enviar').append('<input type="hidden" class="tiempo" name="tiempo" value='+document.getElementById(campo2).innerText+'>')
-$('#enviar').append('<input type="hidden" class="numero_atleta" name="numero_atleta" value='+document.getElementById(num2).value+'>')
-   }
+
+
+ var Nom,lug,fec,hor, seleccion=1,idC;
+
+function convertir_tiempo(v){
+ 	var variable_float=0, cont=0;
+	for (var i = v.split(":").length - 1; i>=0; i--) {
+		if (i < v.split(":").length - 1) {
+			variable_float = variable_float + (Math.pow(60,cont - 1) * parseFloat(v.split(":")[i]));
+		}
+		cont++;
+	}
+  return variable_float + parseFloat(v.split(":")[v.split(":").length - 1])/100;
 }
+
+$('#Guardar1').click(function(){
+    	var data = {
+    		id_competencia : parseInt(idC),
+    		tiempos : [] 
+    	}
+
+    	for(var e=1; e<w;e++){
+			var campo2="campo"+e;
+			var num2="num"+e;
+			data.tiempos.push({numero_atleta : parseInt(document.getElementById(num2).value) , tiempo : convertir_tiempo(document.getElementById(campo2).innerText)})
+		}
+		/*$.post("/competencia/agregar-tiempos", data, (informacion, estado) =>{
+        	alert("Información: " + informacion + "\nEstado: " + estado);
+    	});*/
+        $.ajax({
+                url : '/competencia/agregar-tiempos',
+                data : JSON.stringify(data), 
+                method : 'post', //en este caso
+                contentType: 'application/json',
+                success : function(response){
+                        alert("Competencia Guardada");
+                        location.href = "/historial";
+                },
+                error: function(error){
+                      console.log(error);
+                }
+        });
+});
+
 
 window.onload = function() { //acceso a los eventos.
 document.onkeypress = info;
@@ -121,7 +156,6 @@ var table = $('#Tablecompe').DataTable({
    
 });
 
- var Nom,lug,fec,hor, seleccion=1,idC;
  
  $('#Tablecompe tbody').on('click', 'tr', function () {
       $(this).toggleClass('selected');  
