@@ -57,6 +57,8 @@ var tableHistorial = $('#myTableHistoriaDetalle').DataTable({
 var table = $('#myTable1').DataTable({
 	scrollY: "372px",
 	scrollCollapse: true,
+	paging: false,
+	
 
 	"language": 
 	{
@@ -110,8 +112,4 @@ $('#editarS').click(function(){
  
 	$('#modificarAtle1').attr("action", "/gestionar/atleta/modificar/"+idCompe);
 });
-
-
-
-
 

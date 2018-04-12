@@ -17,6 +17,7 @@ function parar(){
 	clearInterval(control);
 	document.getElementById("parar1").disabled = true;
 	document.getElementById("continuar").disabled = false;
+	  document.getElementById("Guardar1").disabled = false;
 }
 function reinicio(){
 	clearInterval(control);
@@ -99,6 +100,7 @@ function convertir_tiempo(v){
 		}
 		cont++;
 	}
+	console.log(variable_float)
   return variable_float + parseFloat(v.split(":")[v.split(":").length - 1])/100;
 }
 
@@ -113,17 +115,17 @@ $('#Guardar1').click(function(){
 			var num2="num"+e;
 			data.tiempos.push({numero_atleta : parseInt(document.getElementById(num2).value) , tiempo : convertir_tiempo(document.getElementById(campo2).innerText)})
 		}
-		/*$.post("/competencia/agregar-tiempos", data, (informacion, estado) =>{
-        	alert("Información: " + informacion + "\nEstado: " + estado);
-    	});*/
         $.ajax({
                 url : '/competencia/agregar-tiempos',
                 data : JSON.stringify(data), 
                 method : 'post', //en este caso
                 contentType: 'application/json',
                 success : function(response){
-                        alert("Competencia Guardada");
-                        location.href = "/historial";
+                	  swal({ 
+                            title: "Tiempos de atletas Guardados!", 
+                            text: "En historial se encuentran los resultados de la competencia", 
+                            type: "success" 
+                        }).then(function() { window.location = "/historial"; });
                 },
                 error: function(error){
                       console.log(error);

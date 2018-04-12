@@ -28,7 +28,8 @@
     "express-myconnection": "^1.0.4",
     "express-url-breadcrumb": "0.0.8",
     "lodash": "^4.17.5",
-    "mysql": "^2.15.0"
+    "mysql": "^2.15.0",
+    "sweetalert": "^2.1.0"
   },
   "devDependencies": {
     "browserify": "^16.1.1",
