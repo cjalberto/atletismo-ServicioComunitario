@@ -207,22 +207,23 @@ router
     .post('/competencia/agregar-tiempos', (req, res, next) => {
     	let count = 0
     	req.getConnection((err, conexion) => {
-    		req.body.tiempos.forEach( function(element, index) {
-        		if (err){
-					res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
-				}
-				else{
+    		if (err){
+				res.status(404)
+				res.send({mensaje : 'Error al conectarse a la base de datos' , code : 404})
+			}
+			else{
+    			req.body.tiempos.forEach( function(element, index) {
 					conexion.query(`UPDATE competencia_atleta SET tiempo = ${element.tiempo} WHERE competencia_atleta.numero_atleta = ${element.numero_atleta} AND competencia_atleta.id_competencia = ${req.body.id_competencia}`, (err , rows) =>{
 						if (err){
 							res.status(404)
-							res.send({mensaje : 'error al guardar la data en la base de datos' , code : 404})
+							res.send({mensaje : 'Error al guardar la data en la base de datos' , code : 404})
 						}
 						else{
 							if(count == index){
 								conexion.query(`UPDATE competencia SET finalizado = 1 WHERE competencia.id = ${req.body.id_competencia}`, (err , rows) =>{
 									if (err){
 										res.status(404)
-										res.send({mensaje : 'error al guardar la data en la base de datos' , code : 404})
+										res.send({mensaje : 'Error al guardar la data en la base de datos' , code : 404})
 									}
 									else{
 										res.status(200)
@@ -233,9 +234,30 @@ router
 						}
 						count++
 					})
-				}
-        	})
-    		
+        		})	
+			}    		
+    	})
+    })
+    .post('/competencia/obtener-competidores-iniciar', (req, res, next) => {
+    	let id_competencia = req.body.id_competencia
+
+    	req.getConnection((err, conexion) => {
+    		if (err){
+				res.status(404)
+				res.send({mensaje : 'Error al conectarse a la base de datos' , code : 404})
+			}
+			else{
+    			conexion.query(`SELECT * FROM competencia_atleta WHERE competencia_atleta.id_competencia = ${id_competencia}`, (err , rows) =>{
+					if (err){
+						res.status(404)
+						res.send({mensaje : 'Error al consultar la base de datos' , code : 404})
+					}
+					else{
+						res.status(200)
+						res.send({mensaje : rows , code : 200})
+					}
+				})
+			}    		
     	})
     })
 
