@@ -65,27 +65,36 @@ function cronometro () {
 	}
 }
 var w=0;
-var ban=0;
+var ban=0, ban2=0, cont_atleta, cont_atletas=0;
 
-function mostrar(){ban=1;}
 
 		
 function info(elEvento) {
          var evento = elEvento || window.event // definir objeto event
-         if (evento.type ==  "keypress" && evento.keyCode==13 && ban==1) { //el número de caracter sólo está en el evento keypress
+            if (evento.type ==  "keypress" && evento.keyCode==13 && ban==1  && cont_atleta!=0) { //el número de caracter sólo está en el evento keypress
          	if(w==0){inicio();}
             $('#addr'+w).html("</td><td class='text-center' id='campo"+w+"'>"+horas+':'+minutos+':'+segundos+':'+centesimas+"</td><td ><input  id='num"+w+"'  placeholder='Numero' ></td></td>");
 			$('#tab_logic').append('<tr id="addr'+(w+1)+'"></tr>');
 
       		w++; 
-            } 
+      		cont_atleta--;
+            }else{ban2=1}
+           
 
              if (evento.type ==  "keypress" && evento.keyCode==115 ) {
               if(w>1){
 				 $("#addr"+(w-1)).html('');
 				 w--;
+				 cont_atleta++;
+				 ban2=0
 				 }
              }
+
+              if(cont_atleta==0 && ban2==1){ swal({ 
+                    title: "Lo siento!", 
+                    text: "En esta competencia solo compiten " + cont_atletas + " Atletas", 
+                    type: "warning" 
+             })}
 
 } 
 
@@ -132,6 +141,36 @@ $('#Guardar1').click(function(){
                 }
         });
 });
+
+$('#btn-ini').click(function(){
+	ban=1;
+
+	event.preventDefault();
+
+		var data = {
+    		id_competencia : parseInt(idC)}
+    	
+
+        $.ajax({
+                url : '/competencia/obtener-competidores-iniciar',
+                data : JSON.stringify(data), 
+                method : 'post', //en este caso
+                contentType: 'application/json',
+                success : function(data){
+                	if (data.code==200) {
+						cont_atleta=data.mensaje.length+1;
+						cont_atletas=data.mensaje.length;
+			
+					}else{
+			     		alert("Error Conectarse con la Base de Datos");
+					}
+                },
+                error: function(error){
+                      console.log(error);
+                }
+        });
+});
+
 
 
 window.onload = function() { //acceso a los eventos.
