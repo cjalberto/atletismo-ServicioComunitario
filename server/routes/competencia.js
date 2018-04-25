@@ -16,7 +16,7 @@ router
 			if (err != null) {
             	res.render('error', {mensaje : 'Error al conectarse a la base de datos' , code : 404})
             }
-			conexion.query(`SELECT at.*, cl.nombre club_nombre , TIMESTAMPDIFF(YEAR,at.fecha_nacimiento,CURDATE()) edad , IFNULL((SELECT categoria.nombre FROM categoria WHERE (edad BETWEEN categoria.edad_min AND categoria.edad_max)) , 'libre') categoria FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id` , (err , atletas) =>{
+			conexion.query(`SELECT at.*, cl.nombre club_nombre , TIMESTAMPDIFF(YEAR,at.fecha_nacimiento,CURDATE()) edad , Year(CURDATE()) - YEAR(at.fecha_nacimiento) edad_categoria , IFNULL((SELECT categoria.nombre FROM categoria WHERE (edad_categoria BETWEEN categoria.edad_min AND categoria.edad_max)) , 'libre') categoria FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id` , (err , atletas) =>{
 				(err) ? res.render('error', {mensaje : 'Error al consultar la base de datos' , code : 404}) : res.render('competencia/crear-2',{datosCompetidores: atletas, datosCompetencia: req.body})
 			})
 		})
@@ -115,7 +115,7 @@ router
 				promesa
 					.then((competencia) => {
 						return new Promise((resolve , reject) => {
-							conexion.query(`SELECT at.*, cl.nombre club_nombre , TIMESTAMPDIFF(YEAR,at.fecha_nacimiento,CURDATE()) edad , IFNULL((SELECT categoria.nombre FROM categoria WHERE (edad BETWEEN categoria.edad_min AND categoria.edad_max)) , 'libre') categoria FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id` , (err , atletas) =>{
+							conexion.query(`SELECT at.*, cl.nombre club_nombre , TIMESTAMPDIFF(YEAR,at.fecha_nacimiento,CURDATE()) edad , Year(CURDATE()) - YEAR(at.fecha_nacimiento) edad_categoria , IFNULL((SELECT categoria.nombre FROM categoria WHERE (edad_categoria BETWEEN categoria.edad_min AND categoria.edad_max)) , 'libre') categoria FROM atleta at LEFT JOIN club cl ON at.id_club=cl.id` , (err , atletas) =>{
 								(err) ? reject({err : new Error('Error al consultar la base de datos') , flag : false}) : resolve({dataCompetencia : competencia , dataAtletas : atletas})
 							})
 						})
