@@ -13,7 +13,6 @@ function inicio(){
 	document.getElementById("reinicio1").disabled = false;
 }
 function parar(){
-	console.log("entro");
 	clearInterval(control);
 	document.getElementById("parar1").disabled = true;
 	document.getElementById("continuar").disabled = false;
@@ -73,7 +72,7 @@ function info(elEvento) {
          var evento = elEvento || window.event // definir objeto event
             if (evento.type ==  "keypress" && evento.keyCode==13 && ban==1  && cont_atleta!=0) { //el número de caracter sólo está en el evento keypress
          	if(w==0){inicio();}
-            $('#addr'+w).html("</td><td class='text-center' id='campo"+w+"'>"+horas+':'+minutos+':'+segundos+':'+centesimas+"</td><td ><input  id='num"+w+"'  placeholder='Numero' ></td></td>");
+            $('#addr'+w).html("</td><td class='text-center' id='campo"+w+"'>"+horas+':'+minutos+':'+segundos+':'+centesimas+"</td><td ><input type='number' id='num"+w+"'  placeholder='Numero' ></td></td>");
 			$('#tab_logic').append('<tr id="addr'+(w+1)+'"></tr>');
 
       		w++; 
@@ -90,7 +89,7 @@ function info(elEvento) {
 				 }
              }
 
-              if(cont_atleta==0 && ban2==1){ swal({ 
+              if(cont_atleta==0 && evento.keyCode==13 && ban2==1){ swal({ 
                     title: "Lo siento!", 
                     text: "En esta competencia solo compiten " + cont_atletas + " Atletas", 
                     type: "warning" 
@@ -109,7 +108,6 @@ function convertir_tiempo(v){
 		}
 		cont++;
 	}
-	console.log(variable_float)
   return variable_float + parseFloat(v.split(":")[v.split(":").length - 1])/100;
 }
 
@@ -125,16 +123,24 @@ $('#Guardar1').click(function(){
 			data.tiempos.push({numero_atleta : parseInt(document.getElementById(num2).value) , tiempo : convertir_tiempo(document.getElementById(campo2).innerText)})
 		}
         $.ajax({
+        	    method : 'post', //en este caso
+        	    data : JSON.stringify(data), 
+        	    contentType: 'application/json',
                 url : '/competencia/agregar-tiempos',
-                data : JSON.stringify(data), 
-                method : 'post', //en este caso
-                contentType: 'application/json',
-                success : function(response){
-                	  swal({ 
+                success : function(dataa){
+                	console.log(dataa)
+                	if (dataa.mensaje=='acept') {
+                		
+						 swal({ 
                             title: "Tiempos de atletas Guardados!", 
                             text: "En historial se encuentran los resultados de la competencia", 
                             type: "success" 
-                        }).then(function() { window.location = "/historial"; });
+                        }).then(function() { window.location = "/historial";});
+			
+					}else{
+			     		alert("Error Conectarse con la Base de Datos");
+					}
+                	 
                 },
                 error: function(error){
                       console.log(error);
@@ -144,8 +150,6 @@ $('#Guardar1').click(function(){
 
 $('#btn-ini').click(function(){
 	ban=1;
-
-	event.preventDefault();
 
 		var data = {
     		id_competencia : parseInt(idC)}
