@@ -205,7 +205,6 @@ router
         })
     })
     .post('/competencia/agregar-tiempos', (req, res, next) => {
-    	let count = 0
     	req.getConnection((err, conexion) => {
     		if (err){
 				res.status(404)
@@ -219,7 +218,7 @@ router
 							res.send({mensaje : 'Error al guardar la data en la base de datos' , code : 404})
 						}
 						else{
-							if(count == req.body.tiempos.length-1){
+							if(index == req.body.tiempos.length-1){
 								conexion.query(`UPDATE competencia SET finalizado = 1 WHERE competencia.id = ${req.body.id_competencia}`, (err , rows) =>{
 									if (err){
 										res.status(404)
@@ -233,7 +232,6 @@ router
 								})
 							}
 						}
-						count++
 					})
         		})	
 			}    		
