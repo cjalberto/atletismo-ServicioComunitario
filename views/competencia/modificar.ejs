@@ -12,11 +12,19 @@
 				<form class="text-center" action="/competencia/modificar" id="editCompe">
 
 					<div class="row">
-						<div class="col-md-3 info-carrera"><input type="text" class="form-control" name="nombre" value="<%= datosCompe[0]['nombre']%>" required>
+						<div class="col-md-3 info-carrera">
+							<div class="label">Nombre</div>
+							<input type="text" class="form-control" name="nombre" value="<%= datosCompe[0]['nombre']%>" required>
 						</div>
-						<div class="col-md-3 info-carrera"><input type="text" class="form-control" name="lugar" value="<%= datosCompe[0]['lugar']%>" required></div>
-						<div class="col-md-3 info-carrera"><input type="date" class="form-control" name="fecha" value="<%= datosCompe[0]['fecha']%>" required></div>
-						<div class="col-md-3 info-carrera"><input type="time" class="form-control" name="hora" value="<%= datosCompe[0]['hora']%>" required></div>
+						<div class="col-md-3 info-carrera">
+							<div class="label">Lugar</div>
+							<input type="text" class="form-control" name="lugar" value="<%= datosCompe[0]['lugar']%>" required></div>
+						<div class="col-md-3 info-carrera">
+							<div class="label">Fecha</div>
+							<input type="date" class="form-control" name="fecha" value="<%= datosCompe[0]['fecha']%>" required></div>
+						<div class="col-md-3 info-carrera">
+							<div class="label">Hora</div>
+							<input type="time" class="form-control" name="hora" value="<%= datosCompe[0]['hora']%>" required></div>
 					</div>		
 					<input type="hidden" name="id" value="<%= datosCompe[0]['id']%>">
 

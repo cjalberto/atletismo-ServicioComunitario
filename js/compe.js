@@ -58,9 +58,9 @@ $('#myTable_wrapper .row:eq(2) .col-md-7').html('<div class="selected-count"></d
 $('.selected-count').text(countRow());
 
 $('#myTable tbody').on('click', 'tr', function () {
-	$(this).toggleClass('selected');
-	$(this).children('#idCompetidor').attr("value", "<%= datosCompetidores[i]['id'] %>");
-	$('.selected-count').text(countRow());
+		$(this).toggleClass('selected');
+		$(this).children('#idCompetidor').attr("value", "<%= datosCompetidores[i]['id'] %>");
+		$('.selected-count').text(countRow());
 });
 
 $("#select-all").click(function () {
